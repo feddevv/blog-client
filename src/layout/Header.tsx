@@ -37,12 +37,13 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-4">
-          <button>
-            <LuMoon className="text-xl text-muted-foreground cursor-pointer" />
+          <button aria-label="Toggle theme">
+            <LuMoon className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
           </button>
 
           <button
             className="md:hidden flex flex-col justify-between w-5 h-4 cursor-pointer"
+            aria-label={!isOpen ? 'Open menu' : 'Close menu'}
             onClick={handleOpenMenu}
           >
             <span
@@ -60,12 +61,15 @@ export default function Header() {
 
       <nav
         className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 ${isOpen ? 'h-auto' : ''}`}
+        aria-hidden={!isOpen}
       >
         <div className="flex flex-col p-4 gap-4">
           <NavLink
             className={(state) =>
               `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
             }
+            tabIndex={!isOpen ? -1 : 0}
+
             to={'/'}
           >
             Home
@@ -74,12 +78,17 @@ export default function Header() {
             className={(state) =>
               `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
             }
+            tabIndex={!isOpen ? -1 : 0}
+
             to={'/about'}
           >
             About
           </NavLink>
 
-          <button className="bg-primary text-primary-foreground py-1 hover:bg-zinc-800 cursor-pointer transition-colors duration-200 outline-muted-foreground outline-offset-3 focus:bg-zinc-800">
+          <button
+            tabIndex={!isOpen ? -1 : 0}
+            className="bg-primary text-primary-foreground py-1 hover:bg-zinc-800 cursor-pointer transition-colors duration-200 outline-muted-foreground outline-offset-3 focus:bg-zinc-800"
+          >
             Sign In
           </button>
         </div>
