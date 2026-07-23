@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import { useState } from 'react';
 import { IoBookOutline } from 'react-icons/io5';
 import { LuMoon } from 'react-icons/lu';
@@ -85,12 +86,9 @@ export default function Header() {
             About
           </NavLink>
 
-          <button
-            tabIndex={!isOpen ? -1 : 0}
-            className="bg-primary text-primary-foreground py-1 hover:bg-zinc-800 cursor-pointer transition-colors duration-200 outline-muted-foreground outline-offset-3 focus:bg-zinc-800"
-          >
+          <Button tabIndex={!isOpen ? -1 : 0} intent={'primary'} size={'sm'}>
             Sign In
-          </button>
+          </Button>
         </div>
       </nav>
     </>
