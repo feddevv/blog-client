@@ -55,11 +55,11 @@ export default function Header() {
       </header>
 
       <nav
-        className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 ${isOpen ? 'h-auto' : ''}`}
+        className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 fixed top-16 left-0 right-0 border-b border-b-border ${isOpen ? 'h-auto' : ''}`}
         aria-hidden={!isOpen}
         id="menu-content"
       >
-        <div className="flex flex-col p-4 pt-20 gap-4">
+        <div className="flex flex-col p-4 gap-4">
           <NavLink
             className={(state) =>
               `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
