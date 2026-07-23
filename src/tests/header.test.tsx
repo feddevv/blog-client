@@ -43,4 +43,15 @@ describe('Header component', () => {
       screen.getByRole('heading', { name: /about page/i })
     ).toBeInTheDocument();
   });
+
+  it('should open mobile menu when click on hamburger button', async () => {
+    const user = userEvent.setup();
+
+    render(<RouterStub />);
+    const hamburger = screen.getByRole('button', { name: 'Menu' });
+
+    expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+    await user.click(hamburger);
+    expect(hamburger).toHaveAttribute('aria-expanded', 'true');
+  });
 });

@@ -9,7 +9,6 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
   const handleOpenMenu = () => setIsOpen(!isOpen);
 
-  // TODO: ENHANCE A11Y
   return (
     <>
       <header className="h-16 flex items-center justify-between p-4 overflow-hidden bg-background border-b border-border fixed left-0 top-0 right-0">
