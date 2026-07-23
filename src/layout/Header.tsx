@@ -44,6 +44,9 @@ export default function Header() {
           </button>
 
           <Hamburger isOpen={isOpen} handleOpenMenu={handleOpenMenu} />
+          <Button intent={'primary'} size={'sm'} className="hidden md:inline">
+            Sign In
+          </Button>
         </div>
       </header>
 
