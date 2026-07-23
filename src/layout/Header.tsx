@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { IoBookOutline } from 'react-icons/io5';
 import { LuMoon } from 'react-icons/lu';
 import { NavLink } from 'react-router';
+import Hamburger from './Hamburger';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
@@ -42,21 +43,7 @@ export default function Header() {
             <LuMoon className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
           </button>
 
-          <button
-            className="md:hidden flex flex-col justify-between w-5 h-4 cursor-pointer"
-            aria-label={!isOpen ? 'Open menu' : 'Close menu'}
-            onClick={handleOpenMenu}
-          >
-            <span
-              className={`w-full h-0.5 bg-muted-foreground transition-transform duration-300 ${isOpen ? 'translate-y-1.75 rotate-45' : ''}`}
-            ></span>
-            <span
-              className={`w-full h-0.5 bg-muted-foreground transition-transform duration-300 ${isOpen ? 'translate-x-10' : ''}`}
-            ></span>
-            <span
-              className={`w-full h-0.5 bg-muted-foreground transition-transform duration-300 ${isOpen ? '-translate-y-1.75 -rotate-45' : ''}`}
-            ></span>
-          </button>
+          <Hamburger isOpen={isOpen} handleOpenMenu={handleOpenMenu} />
         </div>
       </header>
 
