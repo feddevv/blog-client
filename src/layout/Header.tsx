@@ -19,7 +19,7 @@ export default function Header() {
           <h1 className="font-bold text-xl">The Codex</h1>
         </div>
 
-        <div className="hidden md:flex md:gap-4 md:text-muted-foreground">
+        <nav className="hidden md:flex md:gap-4 md:text-muted-foreground">
           <NavLink
             to={'/'}
             className={(state) =>
@@ -36,7 +36,7 @@ export default function Header() {
           >
             About
           </NavLink>
-        </div>
+        </nav>
 
         <div className="flex items-center gap-4">
           <button aria-label="Toggle theme">
