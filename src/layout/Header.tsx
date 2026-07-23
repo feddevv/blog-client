@@ -44,7 +44,11 @@ export default function Header() {
             <LuMoon className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
           </button>
 
-          <Hamburger isOpen={isOpen} handleOpenMenu={handleOpenMenu} />
+          <Hamburger
+            isOpen={isOpen}
+            handleOpenMenu={handleOpenMenu}
+            controlsId={'menu-content'}
+          />
           <Button intent={'primary'} size={'sm'} className="hidden md:inline">
             Sign In
           </Button>
@@ -54,8 +58,9 @@ export default function Header() {
       <nav
         className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 ${isOpen ? 'h-auto' : ''}`}
         aria-hidden={!isOpen}
+        id="menu-content"
       >
-        <div className="flex flex-col p-4 gap-4">
+        <div className="flex flex-col p-4 pt-20 gap-4">
           <NavLink
             className={(state) =>
               `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
