@@ -17,6 +17,7 @@ const labelVariants = cva('font-paragraph font-medium', {
 
   defaultVariants: {
     intent: 'primary',
+    size: 'sm',
   },
 });
 
