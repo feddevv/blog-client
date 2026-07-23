@@ -5,7 +5,7 @@ import { type LabelHTMLAttributes } from 'react';
 const labelVariants = cva('font-paragraph font-medium', {
   variants: {
     intent: {
-      wrapper: 'flex items-center gap-1',
+      wrapper: 'flex items-center gap-2 py-1.5 px-2',
       primary: 'text-foreground',
     },
     size: {
