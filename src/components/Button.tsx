@@ -23,6 +23,10 @@ const buttonVariants = cva(
         sm: 'py-1 px-6',
       },
     },
+    defaultVariants: {
+      intent: 'primary',
+      size: 'sm',
+    },
   }
 );
 type ButtonProps = VariantProps<typeof buttonVariants> &
