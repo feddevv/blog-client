@@ -10,7 +10,7 @@ const labelVariants = cva('font-paragraph font-medium', {
     },
     size: {
       sm: 'text-[12px]',
-      md: 'text-[16px]',
+      md: 'text-base',
       xl: 'text-xl',
     },
   },
@@ -21,8 +21,9 @@ const labelVariants = cva('font-paragraph font-medium', {
   },
 });
 
-type LabelProps = VariantProps<typeof labelVariants> &
-  LabelHTMLAttributes<HTMLLabelElement>;
+type BaseProps = LabelHTMLAttributes<HTMLLabelElement>;
+
+type LabelProps = VariantProps<typeof labelVariants> & BaseProps;
 
 export default function Label({
   children,
@@ -36,6 +37,14 @@ export default function Label({
       {...props}
       className={cn(labelVariants({ intent, size, className }))}
     >
+      {children}
+    </label>
+  );
+}
+
+export function LabelWrapper({ children, className, ...props }: BaseProps) {
+  return (
+    <label {...props} className={cn(`${className} flex items-center gap-2`)}>
       {children}
     </label>
   );
