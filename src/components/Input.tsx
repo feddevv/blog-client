@@ -3,14 +3,13 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { type InputHTMLAttributes } from 'react';
 
 const inputVariants = cva(
-  'flex w-full text-sm font-paragraph font-light outline-none focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'flex w-full text-sm font-normal outline-none focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm',
   {
     variants: {
       intent: {
-        unstyled:
-          'bg-transparent border-0 placeholder:text-muted-foreground placeholder:text-[12px]',
+        unstyled: 'bg-transparent border-0 placeholder:text-muted-foreground',
         primary:
-          'bg-white text-foreground p-2 border border-border placeholder:text-muted-foreground placeholder:text-[14px]',
+          'bg-white text-foreground p-2 border border-border placeholder:text-muted-foreground',
       },
     },
     defaultVariants: {
