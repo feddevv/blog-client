@@ -20,6 +20,10 @@
   --color-border: rgba(0, 0, 0, 0.08);
   --color-input-background: #ffffff;
   --color-switch-background: #cbced4;
+
+  /* FONTS */
+  --font-heading: 'Fraunces';
+  --font-paragraph: 'DM Mono';
 }
 
 html {
