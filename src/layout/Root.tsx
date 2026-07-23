@@ -6,7 +6,9 @@ export default function Root() {
     <>
       <Header />
 
-      <Outlet />
+      <main className="mt-16">
+        <Outlet />
+      </main>
 
       <footer></footer>
     </>
