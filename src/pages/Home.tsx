@@ -1,7 +1,11 @@
+import Input from '@/components/Input';
+import { LabelWrapper } from '@/components/Label';
+import { LuSearch } from 'react-icons/lu';
+
 export default function Home() {
   return (
     <>
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 border-b border-border">
         <p className="text-accent text-[clamp(12px,2vw,14px)] font-paragraph mb-4">
           INDEPENDENT · THOUGHTFUL · TECHNICAL
         </p>
@@ -12,6 +16,15 @@ export default function Home() {
           Deep-dive articles on engineering, design, and the intersection of
           technology and life — written by practitioners.
         </p>
+
+        <LabelWrapper className="bg-white p-2 border border-border mt-4">
+          <LuSearch className="text-base" />
+          <Input
+            intent={'unstyled'}
+            type="search"
+            placeholder="Search 5000+ posts..."
+          />
+        </LabelWrapper>
       </section>
     </>
   );
