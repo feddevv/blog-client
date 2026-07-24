@@ -101,15 +101,17 @@ export default function Home() {
         </LabelWrapper>
       </section>
 
-      <section className="p-6 grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {mockCards.map((card) => (
-          <Card
-            img={card.img}
-            title={card.title}
-            description={card.description}
-            likes={card.likes}
-          />
-        ))}
+      <section className="px-6 py-10">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {mockCards.map((card) => (
+            <Card
+              img={card.img}
+              title={card.title}
+              description={card.description}
+              likes={card.likes}
+            />
+          ))}
+        </div>
       </section>
     </>
   );
