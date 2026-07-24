@@ -23,7 +23,9 @@ export default function Card({ img, title, description, likes }: CardProps) {
         <h3 className="font-heading font-bold text-[18px] mb-2 group-hover/card:text-accent transition-colors duration-250">
           {title}
         </h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">
+          {description}
+        </p>
 
         <div className="h-px w-ull bg-muted my-4 self-stretch"></div>
 
