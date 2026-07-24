@@ -2,6 +2,7 @@ import Input from '@/components/Input';
 import { LabelWrapper } from '@/components/Label';
 import { LuSearch } from 'react-icons/lu';
 import Card, { type CardProps } from '@/components/Card';
+import Button from '@/components/Button';
 
 const mockCards: CardProps[] = [
   {
@@ -112,6 +113,10 @@ export default function Home() {
             />
           ))}
         </div>
+
+        <Button intent={'secondary'} size={'md'}>
+          Load more posts
+        </Button>
       </section>
     </>
   );
