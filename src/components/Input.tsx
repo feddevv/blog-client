@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { type InputHTMLAttributes } from 'react';
 
 const inputVariants = cva(
-  'flex w-full text-sm font-normal outline-none focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm',
+  'flex w-full text-sm font-normal outline-none focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm rounded-xs',
   {
     variants: {
       intent: {

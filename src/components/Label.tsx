@@ -47,7 +47,7 @@ export function LabelWrapper({ children, className, ...props }: BaseProps) {
     <label
       {...props}
       className={cn(
-        `${className} flex items-center gap-2 focus-within:ring focus-within:ring-accent`
+        `${className} flex items-center gap-2 focus-within:ring focus-within:ring-accent rounded-xs`
       )}
     >
       {children}
