@@ -18,7 +18,7 @@ export default function Home() {
         </p>
 
         <LabelWrapper className="bg-white p-2 border border-border mt-4">
-          <LuSearch className="text-base" />
+          <LuSearch className="text-base text-muted-foreground" />
           <Input
             intent={'unstyled'}
             type="search"
