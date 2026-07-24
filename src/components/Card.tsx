@@ -1,6 +1,6 @@
 import { LuHeart } from 'react-icons/lu';
 
-interface CardProps {
+export interface CardProps {
   img: string;
   title: string;
   description: string;
@@ -15,7 +15,7 @@ export default function Card({ img, title, description, likes }: CardProps) {
           src={img}
           width={350}
           height={250}
-          className="w-full group-hover/card:scale-105 object-cover transition-transform duration-250"
+          className="aspect-video w-full group-hover/card:scale-105 object-cover transition-transform duration-250"
           alt=""
         />
       </div>
