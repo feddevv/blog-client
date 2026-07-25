@@ -102,7 +102,7 @@ export default function Home() {
         </LabelWrapper>
       </section>
 
-      <section className="px-6 py-10 flex flex-col items-center gap-10">
+      <section className="px-4 py-10 flex flex-col items-center gap-10">
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {mockCards.map((card) => (
             <Card
