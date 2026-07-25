@@ -29,12 +29,15 @@ export default function Card({ img, title, description, likes }: CardProps) {
 
         <div className="h-px w-ull bg-muted my-4 self-stretch"></div>
 
-        <div className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes">
+        <button
+          aria-label="Like"
+          className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes"
+        >
           <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive" />
           <p className="text-sm text-muted-foreground group-hover/likes:text-destructive">
             {likes}
           </p>
-        </div>
+        </button>
       </div>
     </article>
   );
