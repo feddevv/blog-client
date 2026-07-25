@@ -1,14 +1,17 @@
 import Button from '@/components/Button';
 import { useState } from 'react';
 import { IoBookOutline } from 'react-icons/io5';
-import { LuMoon } from 'react-icons/lu';
+import { LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
   const handleOpenMenu = () => setIsOpen(!isOpen);
+  const { theme, setTheme } = useTheme();
 
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
   return (
     <>
       <header className="h-16 flex items-center justify-between p-4 overflow-hidden bg-background border-b border-border fixed left-0 top-0 right-0 z-100">
@@ -39,8 +42,12 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-4">
-          <button aria-label="Toggle theme">
-            <LuMoon className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
+          <button aria-label="Toggle theme" onClick={toggleTheme}>
+            {theme === 'light' ? (
+              <LuMoon className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
+            ) : (
+              <LuSun className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
+            )}
           </button>
 
           <Hamburger
