@@ -19,11 +19,11 @@ export default function Card({ img, title, description, likes }: CardProps) {
           alt=""
         />
       </div>
-      <div className="p-4 flex flex-col">
-        <h3 className="font-heading font-bold text-[18px] mb-2 group-hover/card:text-accent transition-colors duration-250">
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-heading font-bold text-[18px] mb-2 group-hover/card:text-accent transition-colors duration-250 line-clamp-2">
           {title}
         </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2">
+        <p className="text-sm text-muted-foreground line-clamp-2 flex-1">
           {description}
         </p>
 
