@@ -13,10 +13,10 @@ export default function Header() {
     <>
       <header className="h-16 flex items-center justify-between p-4 overflow-hidden bg-background border-b border-border fixed left-0 top-0 right-0 z-100">
         <div className="flex items-center gap-2">
-          <div className="bg-black p-2">
+          <div className="bg-primary p-2">
             <IoBookOutline className="text-primary-foreground text-xl cursor-pointer" />
           </div>
-          <h1 className="font-bold text-xl">The Codex</h1>
+          <h1 className="font-bold text-xl text-primary">The Codex</h1>
         </div>
 
         <nav className="hidden md:flex md:gap-4 md:text-muted-foreground">

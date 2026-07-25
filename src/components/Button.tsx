@@ -15,9 +15,9 @@ const buttonVariants = cva(
   {
     variants: {
       intent: {
-        primary: 'bg-primary text-primary-foreground hover:bg-zinc-800',
+        primary: 'bg-primary text-primary-foreground hover:bg-button-hover',
         secondary:
-          'bg-white text-secondary-foreground border border-border hover:bg-muted hover:border-black',
+          'bg-secondary text-secondary-foreground border border-border hover:border-secondary-foreground',
       },
       size: {
         xs: 'text-[14px] py-1 px-4',

@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-muted border-t border-border px-4 py-12">
       <FiRss className="text-accent text-2xl mb-4" />
-      <h2 className="font-heading font-bold text-[clamp(20px,2vw,24px)] mb-1">
+      <h2 className="text-primary font-heading font-bold text-[clamp(20px,2vw,24px)] mb-1">
         Get the best articles in your inbox.
       </h2>
       <p className="text-muted-foreground text-[clamp(14px,1.5vw,16px)] mb-4">

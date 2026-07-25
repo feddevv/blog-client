@@ -92,12 +92,13 @@ export default function Home() {
           technology and life — written by practitioners.
         </p>
 
-        <LabelWrapper className="bg-white p-2 border border-border mt-4">
+        <LabelWrapper className="bg-input-background p-2 border border-border mt-4">
           <LuSearch className="text-base text-muted-foreground" />
           <Input
             intent={'unstyled'}
             type="search"
             placeholder="Search 5000+ posts..."
+            className="font-3xl"
           />
         </LabelWrapper>
       </section>

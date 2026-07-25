@@ -20,6 +20,8 @@
   --border: rgba(0, 0, 0, 0.08);
   --input-background: #ffffff;
   --switch-background: #cbced4;
+
+  --button-hover: #27272a;
 }
 
 :root.dark {
@@ -42,6 +44,8 @@
   --border: rgba(255, 255, 255, 0.08);
   --input: #2a2825;
   --input-background: #2a2825;
+
+  --button-hover: #e5e5e5;
 }
 
 @theme {
@@ -62,8 +66,9 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
-  --color-input-background: var(--color-input-background);
+  --color-input-background: var(--input-background);
   --color-switch-background: var(--switch-background);
+  --color-button-hover: var(--button-hover);
 
   /* FONTS */
   --font-heading: 'Fraunces';
