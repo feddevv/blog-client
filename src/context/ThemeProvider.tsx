@@ -4,10 +4,10 @@ import { useState, useEffect, type ReactNode } from 'react';
 type Theme = 'light' | 'dark';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
     return (
       (localStorage.getItem('theme') as Theme) ??
-      (window.matchMedia('(prefers-color-schema: dark)').matches
+      (window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light')
     );
