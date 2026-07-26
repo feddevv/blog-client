@@ -83,7 +83,7 @@ export default function SignForm({ id, ...props }: SignInProps) {
           </p>
         </div>
 
-        <form className="flex flex-col">
+        <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
           {!isSignIn && (
             <div className="mb-2">
               <Label intent={'secondary'} size={'sm'} htmlFor="text">
