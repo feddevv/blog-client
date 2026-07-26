@@ -97,6 +97,7 @@ export default function SignForm({ id, ...props }: SignInProps) {
                   intent={'unstyled'}
                   placeholder="you@example.com"
                   className="placeholder:text-base"
+                  name="username"
                 />
               </div>
             </div>
@@ -114,6 +115,7 @@ export default function SignForm({ id, ...props }: SignInProps) {
                 intent={'unstyled'}
                 placeholder="johndoe"
                 className="placeholder:text-base"
+                name="email"
               />
             </div>
           </div>
@@ -144,6 +146,7 @@ export default function SignForm({ id, ...props }: SignInProps) {
                 intent={'unstyled'}
                 placeholder="••••••••"
                 className="placeholder:text-base"
+                name="password"
               />
             </div>
           </div>
