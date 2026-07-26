@@ -62,7 +62,7 @@ export default function Header() {
       </header>
 
       <nav
-        className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 fixed top-16 left-0 right-0 border-b border-b-border ${isOpen ? 'h-auto' : ''}`}
+        className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 fixed z-100 top-16 left-0 right-0 border-b border-b-border ${isOpen ? 'h-auto' : ''}`}
         aria-hidden={!isOpen}
         id="menu-content"
       >
