@@ -5,6 +5,7 @@ import { LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
+import SignForm from '@/components/SignForm';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
@@ -55,7 +56,13 @@ export default function Header() {
             handleOpenMenu={handleOpenMenu}
             controlsId={'menu-content'}
           />
-          <Button intent={'primary'} size={'sm'} className="hidden md:inline">
+          <Button
+            command="show-modal"
+            commandfor="account-modal"
+            intent={'primary'}
+            size={'sm'}
+            className="hidden md:inline"
+          >
             Sign In
           </Button>
         </div>
@@ -88,11 +95,19 @@ export default function Header() {
             About
           </NavLink>
 
-          <Button tabIndex={!isOpen ? -1 : 0} intent={'primary'} size={'sm'}>
+          <Button
+            command="show-modal"
+            commandfor="account-modal"
+            tabIndex={!isOpen ? -1 : 0}
+            intent={'primary'}
+            size={'sm'}
+          >
             Sign In
           </Button>
         </div>
       </nav>
+
+      <SignForm id="account-modal" closedby="any" />
     </>
   );
 }
