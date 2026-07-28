@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router';
 import Header from './Header';
-import Footer from './Footer';
 
 export default function Root() {
   return (
@@ -10,8 +9,6 @@ export default function Root() {
       <main className="mt-16 flex-1">
         <Outlet />
       </main>
-
-      <Footer />
     </>
   );
 }

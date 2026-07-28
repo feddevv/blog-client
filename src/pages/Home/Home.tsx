@@ -3,6 +3,7 @@ import { LabelWrapper } from '@/components/Label';
 import { LuSearch } from 'react-icons/lu';
 import Card, { type CardProps } from '@/components/Card';
 import Button from '@/components/Button';
+import Footer from '@/pages/Home/Footer';
 
 const mockCards: CardProps[] = [
   {
@@ -119,6 +120,8 @@ export default function Home() {
           Load more posts
         </Button>
       </section>
+
+      <Footer />
     </>
   );
 }
