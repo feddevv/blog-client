@@ -15,7 +15,7 @@ export default function SignForm({ id, ...props }: SignInProps) {
 
   return (
     <dialog
-      className="inset-0 m-auto bg-background max-w-130 w-full backdrop:backdrop-blur-sm backdrop:bg-[rgba(0,0,0,0.4)]"
+      className="m-auto bg-background max-w-130 w-full backdrop:backdrop-blur-sm backdrop:bg-[rgba(0,0,0,0.4)]"
       id={id}
       {...props}
     >
@@ -35,13 +35,14 @@ export default function SignForm({ id, ...props }: SignInProps) {
           className="group cursor-pointer hover:bg-muted transition-colors duration-200 rounded-full"
           command="close"
           commandfor={id}
+          aria-label="Close"
         >
           <IoIosClose className="text-3xl text-muted-foreground group-hover:text-primary transition-colors duration-200" />
         </button>
       </div>
 
       <div className="p-6">
-        <div className="bg-muted p-1 flex">
+        <div className="bg-muted p-1 flex" data-testid="switch-container">
           <Button
             onClick={() => setIsSignIn(true)}
             intent={'secondary'}
@@ -57,7 +58,6 @@ export default function SignForm({ id, ...props }: SignInProps) {
             Sign Up
           </Button>
         </div>
-
         <div className="flex gap-4 mt-4">
           <Button
             intent={'secondary'}
@@ -76,14 +76,17 @@ export default function SignForm({ id, ...props }: SignInProps) {
             GitHub
           </Button>
         </div>
-
         <div className="h-[.7px] bg-border my-4 relative">
           <p className="text-sm text-muted-foreground absolute left-1/2 -translate-x-1/2 -top-3 bg-background px-3">
             or
           </p>
         </div>
-
-        <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
+        {/* TODO: SWAP PLACEHOLDER FOR USERNAME AND EMAIL. THEY'RE MISMATCHED */}
+        <form
+          className="flex flex-col"
+          aria-label="Sign form"
+          onSubmit={(e) => e.preventDefault()}
+        >
           {!isSignIn && (
             <div className="mb-2">
               <Label intent={'secondary'} size={'sm'} htmlFor="text">
