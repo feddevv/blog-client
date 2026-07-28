@@ -20,9 +20,9 @@ const buttonVariants = cva(
           'bg-background text-muted-foreground border border-border hover:border-secondary-foreground',
       },
       size: {
-        xs: 'text-[14px] py-1 px-4',
-        sm: 'py-1 px-6 text-[clamp(14px,2vw,16px)] ',
-        md: 'py-2 px-8 text-[clamp(16px,2vw,18px)]',
+        xs: 'py-1 px-[clamp(.7rem,2vw,1rem)] text-[clamp(12px,2vw,14px)]',
+        sm: 'py-1 px-[clamp(1rem,2vw,1.5rem)] text-[clamp(14px,2vw,16px)]',
+        md: 'py-2 px-[clamp(1.5rem,3vw,2rem)] text-[clamp(16px,2vw,18px)]',
       },
     },
     defaultVariants: {

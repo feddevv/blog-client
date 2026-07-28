@@ -22,18 +22,12 @@ export default function Post() {
           </div>
 
           <div className="flex gap-2">
-            <Button
-              intent={'secondary'}
-              className="flex items-center gap-1 px-[clamp(1rem,2vw,1.5rem)]"
-            >
+            <Button intent={'secondary'} className="flex items-center gap-1">
               <LuHeart className="text-sm" />
               312
             </Button>
 
-            <Button
-              intent={'secondary'}
-              className="flex items-center gap-1 px-[clamp(1rem,2vw,1.5rem)]"
-            >
+            <Button intent={'secondary'} className="flex items-center gap-1">
               <LuCopy className="text-sm" />
               Share
             </Button>
