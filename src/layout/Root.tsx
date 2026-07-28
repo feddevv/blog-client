@@ -7,7 +7,7 @@ export default function Root() {
     <>
       <Header />
 
-      <main className="mt-16">
+      <main className="mt-16 flex-1">
         <Outlet />
       </main>
 

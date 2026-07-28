@@ -17,12 +17,12 @@ const buttonVariants = cva(
       intent: {
         primary: 'bg-primary text-primary-foreground hover:bg-button-hover',
         secondary:
-          'bg-secondary text-secondary-foreground border border-border hover:border-secondary-foreground',
+          'bg-background text-muted-foreground border border-border hover:border-secondary-foreground',
       },
       size: {
         xs: 'text-[14px] py-1 px-4',
-        sm: 'py-1 px-6',
-        md: 'py-2 px-8 text-base',
+        sm: 'py-1 px-6 text-[clamp(14px,2vw,16px)] ',
+        md: 'py-2 px-8 text-[clamp(16px,2vw,18px)]',
       },
     },
     defaultVariants: {
