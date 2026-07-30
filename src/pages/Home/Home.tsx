@@ -8,17 +8,36 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/services/posts';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
+import { useSearchParams } from 'react-router';
 
 export default function Home() {
-  const [search, setSearch] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('search') || '';
+
+  const [search, setSearch] = useState<string>(query);
   const debouncedSearch = useDebounce(search, 1000);
 
   const { data, isPending } = useQuery({
     queryKey: ['posts', { search: debouncedSearch }],
     queryFn: () => getPosts(debouncedSearch),
   });
+
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        if (debouncedSearch.trim()) {
+          prev.set('search', debouncedSearch);
+        } else prev.delete('search');
+
+        return prev;
+      },
+      { replace: true }
+    );
+  }, [debouncedSearch]);
+
+  useEffect(() => setSearch(query), [query]);
 
   return (
     <>
@@ -62,6 +81,7 @@ export default function Home() {
                   title={card.title}
                   description={card.description ?? 'No description'}
                   likes={100}
+                  key={card.id}
                 />
               ))}
             </div>
