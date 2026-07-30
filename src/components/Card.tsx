@@ -33,8 +33,8 @@ export default function Card({ img, title, description, likes }: CardProps) {
           aria-label="Like"
           className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes"
         >
-          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive-foreground" />
-          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive-foreground">
+          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive" />
+          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive">
             {likes}
           </p>
         </button>
