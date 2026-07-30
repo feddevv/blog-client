@@ -8,11 +8,16 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts } from '@/services/posts';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
+import { useState } from 'react';
+import useDebounce from '@/hooks/useDebounce';
 
 export default function Home() {
+  const [search, setSearch] = useState<string>('');
+  const debouncedSearch = useDebounce(search, 1000);
+
   const { data, isPending } = useQuery({
-    queryKey: ['posts'],
-    queryFn: getPosts,
+    queryKey: ['posts', { search: debouncedSearch }],
+    queryFn: () => getPosts(debouncedSearch),
   });
 
   return (
@@ -29,15 +34,20 @@ export default function Home() {
           technology and life — written by practitioners.
         </p>
 
-        <LabelWrapper className="bg-input-background p-2 border border-border mt-4">
-          <LuSearch className="text-base text-muted-foreground" />
-          <Input
-            intent={'unstyled'}
-            type="search"
-            placeholder="Search 5000+ posts..."
-            className="font-3xl"
-          />
-        </LabelWrapper>
+        <form onSubmit={(e) => e.preventDefault()} role="search">
+          <LabelWrapper className="bg-input-background p-2 border border-border mt-4">
+            <LuSearch className="text-base text-muted-foreground" />
+            <Input
+              intent={'unstyled'}
+              type="search"
+              name="search"
+              placeholder="Search 5000+ posts..."
+              className="font-3xl"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </LabelWrapper>
+        </form>
       </section>
 
       <section className="px-4 py-10 flex flex-col items-center gap-10 min-h-100">
