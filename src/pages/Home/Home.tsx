@@ -10,7 +10,7 @@ import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -76,13 +76,19 @@ export default function Home() {
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {data.map((card) => (
-                <Card
-                  img={'https://placehold.co/400x300'}
-                  title={card.title}
-                  description={card.description ?? 'No description'}
-                  likes={100}
-                  key={card.id}
-                />
+                <Link to={`/post/${card.id}`}>
+                  <Card
+                    img={'https://placehold.co/400x300'}
+                    title={card.title}
+                    description={card.description ?? 'No description'}
+                    likes={100}
+                    key={card.id}
+                    onLikeClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  />
+                </Link>
               ))}
             </div>
 
