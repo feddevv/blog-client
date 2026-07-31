@@ -4,25 +4,21 @@ import { LuSearch } from 'react-icons/lu';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import Footer from '@/pages/Home/Footer';
-import { useQuery } from '@tanstack/react-query';
-import { getPosts } from '@/services/posts';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
 import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import { Link, useSearchParams } from 'react-router';
+import { usePosts } from '@/hooks/usePosts';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search') || '';
 
   const [search, setSearch] = useState<string>(query);
-  const debouncedSearch = useDebounce(search, 1000);
+  const debouncedSearch = useDebounce(search, 600);
 
-  const { data, isPending } = useQuery({
-    queryKey: ['posts', { search: debouncedSearch }],
-    queryFn: () => getPosts(debouncedSearch),
-  });
+  const { data, isPending } = usePosts(debouncedSearch);
 
   useEffect(() => {
     setSearchParams(
