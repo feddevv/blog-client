@@ -9,7 +9,7 @@ export default function PostMain({ post }: PostMainProps) {
   if (!post) return <p>Not found</p>;
 
   return (
-    <section className="max-w-270 mx-auto px-4 py-16">
+    <section className="max-w-270 mx-auto px-4 py-16 flex-1">
       <p className="font-paragraph text-muted-foreground text-sm mb-8">
         {`${formatDate(post.createdAt, 'N/A')}`} · 4 823 views
       </p>
