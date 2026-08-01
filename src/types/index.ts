@@ -5,8 +5,8 @@ export interface Post {
   title: string;
   description?: string;
   content?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   userId: number;
   state: PostState;
 }

@@ -1,11 +1,16 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { LuCopy, LuHeart } from 'react-icons/lu';
-import { NavLink } from 'react-router';
+import { NavLink, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
+import { usePostById } from '@/hooks/usePosts';
 
 export default function Post() {
+  const { id } = useParams();
+
+  const { data: post } = usePostById(Number(id));
+
   return (
     <>
       <div className="sticky top-16 left-0 right-0 bg-background border-b border-border px-4 py-2">
@@ -35,7 +40,7 @@ export default function Post() {
         </div>
       </div>
 
-      <PostMain />
+      <PostMain post={post} />
 
       <CommentsSection />
     </>

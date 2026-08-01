@@ -72,7 +72,7 @@ export default function Home() {
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {data.map((card) => (
-                <Link to={`/post/${card.id}`}>
+                <Link to={`/post/${card.id}`} className="flex">
                   <Card
                     img={'https://placehold.co/400x300'}
                     title={card.title}

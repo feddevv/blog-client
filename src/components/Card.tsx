@@ -17,7 +17,7 @@ export default function Card({
   onLikeClick,
 }: CardProps) {
   return (
-    <article className="border border-border inline-flex flex-col bg-card cursor-pointer group/card hover:shadow hover:-translate-y-1 transition-all duration-250">
+    <article className="border border-border inline-flex flex-col bg-card cursor-pointer group/card hover:shadow hover:-translate-y-1 transition-all duration-250 w-full">
       <div className="overflow-hidden w-full">
         <img
           src={img}

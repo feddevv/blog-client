@@ -13,3 +13,15 @@ export const getPosts = async (search?: string): Promise<Post[]> => {
 
   return res.json();
 };
+
+export const getPostById = async (id: number): Promise<Post> => {
+  const url = `https://blog-api-65st.onrender.com/api/posts/${id}`;
+
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Error occurred! Status code: ${res.status}`);
+  }
+
+  return res.json();
+};
