@@ -1,4 +1,5 @@
 import type { Post } from '@/types';
+import { formatDate } from '@/utils/formatDate';
 
 interface PostMainProps {
   post?: Post;
@@ -10,7 +11,7 @@ export default function PostMain({ post }: PostMainProps) {
   return (
     <section className="max-w-270 mx-auto px-4 py-16">
       <p className="font-paragraph text-muted-foreground text-sm mb-8">
-        {post.createdAt} · 4 823 views
+        {`${formatDate(post.createdAt, 'N/A')}`} · 4 823 views
       </p>
 
       <h2 className="font-heading text-primary text-[clamp(1.7rem,3vw,3rem)] font-bold mb-4">
