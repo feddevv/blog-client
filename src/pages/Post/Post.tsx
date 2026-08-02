@@ -9,7 +9,7 @@ import { usePostById } from '@/hooks/usePosts';
 export default function Post() {
   const { id } = useParams();
 
-  const { data: post } = usePostById(Number(id));
+  const { data: post, isPending, isError, error } = usePostById(Number(id));
 
   return (
     <>
@@ -40,7 +40,12 @@ export default function Post() {
         </div>
       </div>
 
-      <PostMain post={post} />
+      <PostMain
+        post={post}
+        isPending={isPending}
+        isError={isError}
+        error={error}
+      />
 
       <CommentsSection />
     </>
