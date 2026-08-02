@@ -1,7 +1,7 @@
 export type PostState = 'PUBLISHED' | 'HIDDEN' | 'DRAFT';
 
 export interface Post {
-  id: string;
+  id: number;
   title: string;
   description?: string;
   content?: string;

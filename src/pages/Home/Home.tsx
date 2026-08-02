@@ -72,13 +72,12 @@ export default function Home() {
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {data.map((card) => (
-                <Link to={`/post/${card.id}`} className="flex">
+                <Link to={`/post/${card.id}`} className="flex" key={card.id}>
                   <Card
                     img={'https://placehold.co/400x300'}
                     title={card.title}
                     description={card.description ?? 'No description'}
                     likes={100}
-                    key={card.id}
                     onLikeClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
