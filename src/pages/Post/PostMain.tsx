@@ -1,5 +1,7 @@
 import type { Post } from '@/types';
 import { formatDate } from '@/utils/formatDate';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface PostMainProps {
   post?: Post;
@@ -9,7 +11,7 @@ export default function PostMain({ post }: PostMainProps) {
   if (!post) return <p>Not found</p>;
 
   return (
-    <section className="max-w-270 mx-auto px-4 py-16 flex-1">
+    <section className="max-w-270 w-full mx-auto px-4 py-16 flex-1">
       <p className="font-paragraph text-muted-foreground text-sm mb-8">
         {`${formatDate(post.createdAt, 'N/A')}`} · 4 823 views
       </p>
@@ -29,7 +31,9 @@ export default function PostMain({ post }: PostMainProps) {
         className="object-cover w-full h-100 mb-8"
       />
 
-      <p className="text-muted-foreground max-w-200 mx-auto">{post.content}</p>
+      <div className="max-w-200 mx-auto prose dark:prose-invert">
+        <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+      </div>
     </section>
   );
 }
