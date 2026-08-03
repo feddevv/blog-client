@@ -4,12 +4,9 @@ import { NavLink, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
-import { usePostById } from '@/hooks/usePosts';
 
 export default function Post() {
   const { id } = useParams();
-
-  const { data: post, isPending, isError, error } = usePostById(Number(id));
 
   return (
     <>
@@ -40,14 +37,9 @@ export default function Post() {
         </div>
       </div>
 
-      <PostMain
-        post={post}
-        isPending={isPending}
-        isError={isError}
-        error={error}
-      />
+      <PostMain id={Number(id)} />
 
-      <CommentsSection />
+      <CommentsSection id={Number(id)} />
     </>
   );
 }

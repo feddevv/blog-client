@@ -1,22 +1,16 @@
 import Spinner from '@/components/Spinner';
-import type { Post } from '@/types';
+import { usePostById } from '@/hooks/usePosts';
 import { formatDate } from '@/utils/formatDate';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 interface PostMainProps {
-  post?: Post;
-  isPending: boolean;
-  isError: boolean;
-  error: Error | null;
+  id: number;
 }
 
-export default function PostMain({
-  post,
-  isPending,
-  isError,
-  error,
-}: PostMainProps) {
+export default function PostMain({ id }: PostMainProps) {
+  const { data: post, isPending, isError, error } = usePostById(id);
+
   if (isError)
     return (
       <p className="flex-1 flex items-center justify-center">

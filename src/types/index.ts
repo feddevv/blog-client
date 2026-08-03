@@ -10,3 +10,15 @@ export interface Post {
   userId: number;
   state: PostState;
 }
+
+export interface Comment {
+  id: number;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+  postId: number;
+  user: {
+    username: string;
+  };
+}
