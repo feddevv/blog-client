@@ -15,7 +15,9 @@ export default function Comment({
   return (
     <article>
       <div className="flex items-center gap-2">
-        <h3 className="font-medium text-[17px]">{username ?? 'Unknown'}</h3>
+        <h3 className="font-medium text-[17px] text-foreground">
+          {username ?? 'Unknown'}
+        </h3>
         <p className="font-paragraph text-muted-foreground text-[15px]">
           {formatDate(createdAt)}
         </p>
