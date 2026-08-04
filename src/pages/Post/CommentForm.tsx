@@ -1,30 +1,32 @@
 import Button from '@/components/Button';
 import Label from '@/components/Label';
 import { useCreateComment } from '@/hooks/useComments';
-import { useState, type ChangeEventHandler } from 'react';
 import { LuSend } from 'react-icons/lu';
 import { useParams } from 'react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { commentSchema, type CommentType } from '@/types/zod';
 
 export default function CommentForm() {
   const { id } = useParams();
   const { mutate, isPending } = useCreateComment();
-  const [comment, setComment] = useState<string>('');
 
-  const handleSubmit: ChangeEventHandler = (e) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<CommentType>({
+    resolver: zodResolver(commentSchema),
+  });
 
-    mutate(
-      { content: comment, postId: Number(id) },
-      {
-        onSuccess: () => setComment(''),
-      }
-    );
+  const onSubmit: SubmitHandler<CommentType> = (data) => {
+    mutate({ content: data.content, postId: Number(id) });
   };
 
   return (
     <form
       className="bg-background p-6 border border-border"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-col">
         <Label
@@ -40,9 +42,14 @@ export default function CommentForm() {
           id="comment"
           rows={3}
           placeholder="Share your thoughts..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+
+          {...register('content')}
         ></textarea>
+        {errors.content && (
+          <p className="text-sm text-destructive mt-1">
+            {errors.content.message}
+          </p>
+        )}
       </div>
 
       <div className="flex justify-between items-center gap-2 mt-4">
