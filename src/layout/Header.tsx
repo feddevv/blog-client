@@ -5,7 +5,7 @@ import { LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
-import SignForm from '@/components/SignForm';
+import SignForm from '@/components/Auth/AuthForm';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
