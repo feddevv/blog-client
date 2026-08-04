@@ -2,6 +2,7 @@ import Spinner from '@/components/Spinner';
 import { useCommentsByPostId } from '@/hooks/useComments';
 import { LuMessageCircle } from 'react-icons/lu';
 import Comment from './Comment';
+import CommentForm from './CommentForm';
 
 interface CommentsSectionProps {
   id: number;
@@ -33,6 +34,8 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
                   key={comment.id}
                 />
               ))}
+
+            <CommentForm />
           </div>
         </div>
       )}
