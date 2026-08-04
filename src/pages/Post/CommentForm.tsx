@@ -15,12 +15,18 @@ export default function CommentForm() {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm<CommentType>({
     resolver: zodResolver(commentSchema),
   });
 
   const onSubmit: SubmitHandler<CommentType> = (data) => {
-    mutate({ content: data.content, postId: Number(id) });
+    mutate(
+      { content: data.content, postId: Number(id) },
+      {
+        onSuccess: () => reset(),
+      }
+    );
   };
 
   return (
