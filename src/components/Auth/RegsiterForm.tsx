@@ -5,15 +5,35 @@ import { GoLock } from 'react-icons/go';
 import Button from '../Button';
 import { FiUser } from 'react-icons/fi';
 import { type Dispatch, type SetStateAction } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { registerSchema, type RegisterType } from '@/types/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ErrorMessage from '../ErrorMessage';
 
 interface RegisterProps {
   setIsSignIn: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function RegisterForm({ setIsSignIn }: RegisterProps) {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<RegisterType>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit: SubmitHandler<RegisterType> = (data) => {
+    console.log('Registered');
+  };
+
   return (
-    <form className="flex flex-col" aria-label="Sign form">
-      <div className="mb-2">
+    <form
+      className="flex flex-col"
+      aria-label="Sign form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <div>
         <Label intent={'secondary'} size={'sm'} htmlFor="text">
           USERNAME
         </Label>
@@ -25,11 +45,17 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
             intent={'unstyled'}
             placeholder="johndoe"
             className="placeholder:text-base"
+            {...register('username')}
           />
         </div>
       </div>
+      {errors.username && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {errors.username.message}
+        </ErrorMessage>
+      )}
 
-      <div className="mb-2">
+      <div className="mt-2">
         <Label intent={'secondary'} size={'sm'} htmlFor="email">
           EMAIL
         </Label>
@@ -41,12 +67,17 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
             intent={'unstyled'}
             placeholder="you@example.com"
             className="placeholder:text-base"
-            name="email"
+            {...register('email')}
           />
         </div>
       </div>
+      {errors.email && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {errors.email.message}
+        </ErrorMessage>
+      )}
 
-      <div>
+      <div className="mt-2">
         <div className="flex items-center justify-between">
           <Label
             intent={'secondary'}
@@ -66,10 +97,15 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
             intent={'unstyled'}
             placeholder="••••••••"
             className="placeholder:text-base"
-            name="password"
+            {...register('password')}
           />
         </div>
       </div>
+      {errors.password && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {errors.password.message}
+        </ErrorMessage>
+      )}
 
       <Button className="w-full mt-4" size={'md'}>
         Create account
