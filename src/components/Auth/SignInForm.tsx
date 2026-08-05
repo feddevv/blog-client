@@ -1,6 +1,5 @@
 import Label from '../Label';
 import Input from '../Input';
-import { MdOutlineEmail } from 'react-icons/md';
 import { GoLock } from 'react-icons/go';
 import Button from '../Button';
 import type { Dispatch, SetStateAction } from 'react';
@@ -8,6 +7,8 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { signInSchema, type SignInType } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '../ErrorMessage';
+import { useLogin } from '@/hooks/useAuth';
+import { FiUser } from 'react-icons/fi';
 
 interface SignInFormProps {
   setIsSignIn: Dispatch<SetStateAction<boolean>>;
@@ -22,8 +23,10 @@ export default function SignInForm({ setIsSignIn }: SignInFormProps) {
     resolver: zodResolver(signInSchema),
   });
 
+  const { mutate } = useLogin();
+
   const onSubmit: SubmitHandler<SignInType> = (data) => {
-    console.log('Logged in');
+    mutate({ username: data.username, password: data.password });
   };
 
   return (
@@ -33,24 +36,24 @@ export default function SignInForm({ setIsSignIn }: SignInFormProps) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
-        <Label intent={'secondary'} size={'sm'} htmlFor="email">
-          EMAIL
+        <Label intent={'secondary'} size={'sm'} htmlFor="text">
+          USERNAME
         </Label>
         <div className="bg-muted py-2 px-3 flex items-center gap-2 border border-border mt-1">
-          <MdOutlineEmail className="text-muted-foreground" />
+          <FiUser className="text-muted-foreground" />
           <Input
-            type="email"
-            id="email"
+            type="text"
+            id="text"
             intent={'unstyled'}
-            placeholder="you@example.com"
+            placeholder="johndoe"
             className="placeholder:text-base"
-            {...register('email')}
+            {...register('username')}
           />
         </div>
       </div>
-      {errors.email && (
+      {errors.username && (
         <ErrorMessage size={'sm'} className="mt-1">
-          {errors.email.message}
+          {errors.username.message}
         </ErrorMessage>
       )}
 

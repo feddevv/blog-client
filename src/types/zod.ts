@@ -9,28 +9,6 @@ export type CommentType = z.infer<typeof commentSchema>;
 
 // AUTH SCHEMAS
 export const signInSchema = object({
-  email: z
-    .email({
-      error: (issue) =>
-        issue.input === undefined
-          ? 'Email is required'
-          : 'Invalid email format',
-    })
-    .trim()
-    .max(255, 'Email must not exceed 255 characters')
-    .toLowerCase(),
-
-  password: z
-    .string({
-      error: (issue) =>
-        issue.input === undefined ? 'Password is required' : 'Not a string',
-    })
-    .min(8, 'Password must be at least 8 characters')
-    .max(120, 'Password must not exceed 120 characters'),
-});
-export type SignInType = z.infer<typeof signInSchema>;
-
-export const registerSchema = signInSchema.extend({
   username: z
     .string({
       error: (issue) =>
@@ -43,5 +21,27 @@ export const registerSchema = signInSchema.extend({
       /^[a-zA-Z0-9_-]+$/,
       'Username can only contain letters, numbers, underscores, and hyphens'
     ),
+
+  password: z
+    .string({
+      error: (issue) =>
+        issue.input === undefined ? 'Password is required' : 'Not a string',
+    })
+    .min(8, 'Password must be at least 8 characters')
+    .max(120, 'Password must not exceed 120 characters'),
+});
+export type SignInType = z.infer<typeof signInSchema>;
+
+export const registerSchema = signInSchema.extend({
+  email: z
+    .email({
+      error: (issue) =>
+        issue.input === undefined
+          ? 'Email is required'
+          : 'Invalid email format',
+    })
+    .trim()
+    .max(255, 'Email must not exceed 255 characters')
+    .toLowerCase(),
 });
 export type RegisterType = z.infer<typeof registerSchema>;

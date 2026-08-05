@@ -9,6 +9,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { registerSchema, type RegisterType } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '../ErrorMessage';
+import { useRegister } from '@/hooks/useAuth';
 
 interface RegisterProps {
   setIsSignIn: Dispatch<SetStateAction<boolean>>;
@@ -23,8 +24,14 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
     resolver: zodResolver(registerSchema),
   });
 
+  const { mutate } = useRegister();
+
   const onSubmit: SubmitHandler<RegisterType> = (data) => {
-    console.log('Registered');
+    mutate({
+      email: data.email,
+      password: data.password,
+      username: data.username,
+    });
   };
 
   return (
