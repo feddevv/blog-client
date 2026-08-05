@@ -24,7 +24,7 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
     resolver: zodResolver(registerSchema),
   });
 
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterType> = (data) => {
     mutate({
@@ -114,7 +114,7 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
         </ErrorMessage>
       )}
 
-      <Button className="w-full mt-4" size={'md'}>
+      <Button className="w-full mt-4" size={'md'} disabled={isPending}>
         Create account
       </Button>
 

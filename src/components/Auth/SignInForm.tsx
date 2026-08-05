@@ -23,7 +23,7 @@ export default function SignInForm({ setIsSignIn }: SignInFormProps) {
     resolver: zodResolver(signInSchema),
   });
 
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const onSubmit: SubmitHandler<SignInType> = (data) => {
     mutate({ username: data.username, password: data.password });
@@ -91,7 +91,7 @@ export default function SignInForm({ setIsSignIn }: SignInFormProps) {
         </ErrorMessage>
       )}
 
-      <Button className="w-full mt-4" size={'md'}>
+      <Button className="w-full mt-4" size={'md'} disabled={isPending}>
         Sign In
       </Button>
 
