@@ -22,3 +22,7 @@ export interface Comment {
     username: string;
   };
 }
+
+export interface AuthResponse {
+  token: string;
+}

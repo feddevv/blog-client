@@ -35,3 +35,23 @@ export async function register({ username, password, email }: RegisterType) {
 
   return res.json();
 }
+
+export async function getUser() {
+  const url = 'https://blog-api-65st.onrender.com/api/auth/me';
+
+  const options: RequestInit = {};
+
+  if (localStorage.getItem('token')) {
+    options.headers = {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+  }
+
+  const res = await fetch(url, options);
+
+  if (!res.ok) {
+    throw new Error(`Error occurred! Status code: ${res.status}`);
+  }
+
+  return res.json();
+}

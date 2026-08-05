@@ -27,11 +27,19 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
   const { mutate, isPending } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterType> = (data) => {
-    mutate({
-      email: data.email,
-      password: data.password,
-      username: data.username,
-    });
+    mutate(
+      {
+        email: data.email,
+        password: data.password,
+        username: data.username,
+      },
+      {
+        onSuccess: () => {
+          alert("You're successfully registered!");
+          setIsSignIn(true);
+        },
+      }
+    );
   };
 
   return (

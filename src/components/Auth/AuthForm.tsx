@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
 import Button from '../Button';
 import { FcGoogle } from 'react-icons/fc';
 import { FiGithub } from 'react-icons/fi';
 import SignInForm from './SignInForm';
-import RegisterForm from './RegsiterForm';
+import RegisterForm from './RegisterForm';
 
 type SignInProps = React.DialogHTMLAttributes<HTMLDialogElement>;
 
 export default function AuthForm({ id, ...props }: SignInProps) {
   const [isSignIn, setIsSignIn] = useState<boolean>(true);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const closeModal = () => dialogRef.current?.close();
 
   return (
     <dialog
       className="m-auto bg-background max-w-130 w-full backdrop:backdrop-blur-sm backdrop:bg-[rgba(0,0,0,0.4)]"
       id={id}
       {...props}
+      ref={dialogRef}
     >
       <div className="p-6 border-b border-border flex items-center justify-between">
         <div>
@@ -81,7 +85,7 @@ export default function AuthForm({ id, ...props }: SignInProps) {
         </div>
 
         {isSignIn ? (
-          <SignInForm setIsSignIn={setIsSignIn} />
+          <SignInForm setIsSignIn={setIsSignIn} closeModal={closeModal} />
         ) : (
           <RegisterForm setIsSignIn={setIsSignIn} />
         )}

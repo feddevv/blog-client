@@ -9,12 +9,18 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '../ErrorMessage';
 import { useLogin } from '@/hooks/useAuth';
 import { FiUser } from 'react-icons/fi';
+import type { AuthResponse } from '@/types';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SignInFormProps {
   setIsSignIn: Dispatch<SetStateAction<boolean>>;
+  closeModal: () => void;
 }
 
-export default function SignInForm({ setIsSignIn }: SignInFormProps) {
+export default function SignInForm({
+  setIsSignIn,
+  closeModal,
+}: SignInFormProps) {
   const {
     handleSubmit,
     register,
@@ -24,9 +30,21 @@ export default function SignInForm({ setIsSignIn }: SignInFormProps) {
   });
 
   const { mutate, isPending } = useLogin();
+  const queryClient = useQueryClient();
 
   const onSubmit: SubmitHandler<SignInType> = (data) => {
-    mutate({ username: data.username, password: data.password });
+    mutate(
+      { username: data.username, password: data.password },
+      {
+        onSuccess: (data: AuthResponse) => {
+          localStorage.setItem('token', data.token);
+
+          queryClient.invalidateQueries({ queryKey: ['user'] });
+
+          closeModal();
+        },
+      }
+    );
   };
 
   return (

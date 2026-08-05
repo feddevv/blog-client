@@ -1,6 +1,6 @@
-import { login, register } from '@/services/auth';
+import { getUser, login, register } from '@/services/auth';
 import type { RegisterType, SignInType } from '@/types/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useLogin = () => {
   return useMutation({
@@ -11,5 +11,14 @@ export const useLogin = () => {
 export const useRegister = () => {
   return useMutation({
     mutationFn: (obj: RegisterType) => register(obj),
+  });
+};
+
+export const useUser = () => {
+  return useQuery({
+    queryKey: ['user'],
+    queryFn: getUser,
+    retry: false,
+    enabled: !!localStorage.getItem('token'),
   });
 };
