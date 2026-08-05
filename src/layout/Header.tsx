@@ -1,18 +1,30 @@
 import Button from '@/components/Button';
 import { useState } from 'react';
 import { IoBookOutline } from 'react-icons/io5';
-import { LuMoon, LuSun } from 'react-icons/lu';
+import { LuLogOut, LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
 import SignForm from '@/components/Auth/AuthForm';
+import { useUser } from '@/hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import Spinner from '@/components/Spinner';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
   const handleOpenMenu = () => setIsOpen(!isOpen);
   const { theme, setTheme } = useTheme();
 
+  const { data: user, isFetching } = useUser();
+  const queryClient = useQueryClient();
+
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+  const logout = () => {
+    localStorage.removeItem('token');
+
+    queryClient.setQueryData(['user'], null);
+  };
+
   return (
     <>
       <header className="h-16 flex items-center justify-between p-4 overflow-hidden bg-background border-b border-border fixed left-0 top-0 right-0 z-100">
@@ -56,15 +68,26 @@ export default function Header() {
             handleOpenMenu={handleOpenMenu}
             controlsId={'menu-content'}
           />
-          <Button
-            command="show-modal"
-            commandfor="account-modal"
-            intent={'primary'}
-            size={'sm'}
-            className="hidden md:inline"
-          >
-            Sign In
-          </Button>
+          {user ? (
+            <button onClick={logout} className="hidden md:inline">
+              <LuLogOut className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
+            </button>
+          ) : (
+            <Button
+              command="show-modal"
+              commandfor="account-modal"
+              intent={'primary'}
+              size={'sm'}
+              className="hidden md:inline"
+              disabled={isFetching}
+            >
+              {isFetching ? (
+                <Spinner className="border-secondary border-r-transparent w-6 h-6" />
+              ) : (
+                'Sign In'
+              )}
+            </Button>
+          )}
         </div>
       </header>
 
@@ -95,15 +118,26 @@ export default function Header() {
             About
           </NavLink>
 
-          <Button
-            command="show-modal"
-            commandfor="account-modal"
-            tabIndex={!isOpen ? -1 : 0}
-            intent={'primary'}
-            size={'sm'}
-          >
-            Sign In
-          </Button>
+          {user ? (
+            <Button intent={'secondary'} className="group" onClick={logout}>
+              <LuLogOut className="text-xl text-muted-foreground cursor-pointer group-hover:text-primary transition-colors duration-200" />
+            </Button>
+          ) : (
+            <Button
+              command="show-modal"
+              commandfor="account-modal"
+              intent={'primary'}
+              size={'sm'}
+              className="md:hidden"
+              disabled={isFetching}
+            >
+              {isFetching ? (
+                <Spinner className="border-secondary border-r-transparent w-6 h-6" />
+              ) : (
+                'Sign In'
+              )}
+            </Button>
+          )}
         </div>
       </nav>
 

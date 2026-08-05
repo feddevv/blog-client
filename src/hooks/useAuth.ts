@@ -19,6 +19,5 @@ export const useUser = () => {
     queryKey: ['user'],
     queryFn: getUser,
     retry: false,
-    enabled: !!localStorage.getItem('token'),
   });
 };
