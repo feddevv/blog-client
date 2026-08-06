@@ -12,5 +12,7 @@ export function usePostById(id: number) {
   return useQuery({
     queryKey: ['posts', id],
     queryFn: () => getPostById(id),
+    throwOnError: true,
+    retry: false,
   });
 }

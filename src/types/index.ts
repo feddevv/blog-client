@@ -26,3 +26,13 @@ export interface Comment {
 export interface AuthResponse {
   token: string;
 }
+
+export interface ApiErrorDetails {
+  message: string;
+  path: string;
+}
+
+export interface ApiError {
+  message: string;
+  errors?: ApiErrorDetails[];
+}
