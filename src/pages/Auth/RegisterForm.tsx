@@ -1,47 +1,42 @@
-import Label from '../Label';
-import Input from '../Input';
+import Label from '@/components/Label';
+import Input from '@/components/Input';
+import { MdOutlineEmail } from 'react-icons/md';
 import { GoLock } from 'react-icons/go';
-import Button from '../Button';
-import type { Dispatch, SetStateAction } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
-import { signInSchema, type SignInType } from '@/types/zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import ErrorMessage from '../ErrorMessage';
-import { useLogin } from '@/hooks/useAuth';
+import Button from '@/components/Button';
 import { FiUser } from 'react-icons/fi';
-import type { AuthResponse } from '@/types';
-import { useQueryClient } from '@tanstack/react-query';
+import { type Dispatch, type SetStateAction } from 'react';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { registerSchema, type RegisterType } from '@/types/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import ErrorMessage from '@/components/ErrorMessage';
+import { useRegister } from '@/hooks/useAuth';
 
-interface SignInFormProps {
+interface RegisterProps {
   setIsSignIn: Dispatch<SetStateAction<boolean>>;
-  closeModal: () => void;
 }
 
-export default function SignInForm({
-  setIsSignIn,
-  closeModal,
-}: SignInFormProps) {
+export default function RegisterForm({ setIsSignIn }: RegisterProps) {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignInType>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<RegisterType>({
+    resolver: zodResolver(registerSchema),
   });
 
-  const { mutate, isPending } = useLogin();
-  const queryClient = useQueryClient();
+  const { mutate, isPending } = useRegister();
 
-  const onSubmit: SubmitHandler<SignInType> = (data) => {
+  const onSubmit: SubmitHandler<RegisterType> = (data) => {
     mutate(
-      { username: data.username, password: data.password },
       {
-        onSuccess: (data: AuthResponse) => {
-          localStorage.setItem('token', data.token);
-
-          queryClient.invalidateQueries({ queryKey: ['user'] });
-
-          closeModal();
+        email: data.email,
+        password: data.password,
+        username: data.username,
+      },
+      {
+        onSuccess: () => {
+          alert("You're successfully registered!");
+          setIsSignIn(true);
         },
       }
     );
@@ -76,6 +71,28 @@ export default function SignInForm({
       )}
 
       <div className="mt-2">
+        <Label intent={'secondary'} size={'sm'} htmlFor="email">
+          EMAIL
+        </Label>
+        <div className="bg-muted py-2 px-3 flex items-center gap-2 border border-border mt-1">
+          <MdOutlineEmail className="text-muted-foreground" />
+          <Input
+            type="email"
+            id="email"
+            intent={'unstyled'}
+            placeholder="you@example.com"
+            className="placeholder:text-base"
+            {...register('email')}
+          />
+        </div>
+      </div>
+      {errors.email && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {errors.email.message}
+        </ErrorMessage>
+      )}
+
+      <div className="mt-2">
         <div className="flex items-center justify-between">
           <Label
             intent={'secondary'}
@@ -85,10 +102,6 @@ export default function SignInForm({
           >
             PASSWORD
           </Label>
-
-          <a href="#" className="text-accent text-[12px] font-medium">
-            Forgot?
-          </a>
         </div>
 
         <div className="bg-muted py-2 px-3 flex items-center gap-2 border border-border mt-1">
@@ -110,18 +123,18 @@ export default function SignInForm({
       )}
 
       <Button className="w-full mt-4" size={'md'} disabled={isPending}>
-        Sign In
+        Create account
       </Button>
 
       <div className="m-auto mt-2">
         <p className="text-muted-foreground text-sm">
-          No account?{' '}
+          Already have one?{' '}
           <button
             className="text-accent font-medium cursor-pointer"
             type="button"
-            onClick={() => setIsSignIn(false)}
+            onClick={() => setIsSignIn(true)}
           >
-            Sign up for free
+            Sign In
           </button>
         </p>
       </div>

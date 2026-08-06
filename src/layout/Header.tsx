@@ -5,10 +5,10 @@ import { LuLogOut, LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
-import SignForm from '@/components/Auth/AuthForm';
 import { useUser } from '@/hooks/useAuth';
 import { useQueryClient } from '@tanstack/react-query';
 import Spinner from '@/components/Spinner';
+import AuthForm from '@/pages/Auth/AuthForm';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<true | false>(false);
@@ -141,7 +141,7 @@ export default function Header() {
         </div>
       </nav>
 
-      <SignForm id="account-modal" closedby="any" />
+      <AuthForm id="account-modal" closedby="any" />
     </>
   );
 }

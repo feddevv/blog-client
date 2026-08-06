@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
-import Button from '../Button';
+import Button from '@/components/Button';
 import { FcGoogle } from 'react-icons/fc';
 import { FiGithub } from 'react-icons/fi';
 import SignInForm from './SignInForm';
