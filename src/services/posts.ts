@@ -1,27 +1,21 @@
 import type { Post } from '@/types';
+import { blogApi } from './config';
+import type { AxiosRequestConfig } from 'axios';
 
 export const getPosts = async (search?: string): Promise<Post[]> => {
-  let url = 'https://blog-api-65st.onrender.com/api/posts';
+  const config: AxiosRequestConfig = {
+    params: {
+      search: search?.trim() || undefined,
+    },
+  };
 
-  if (search && search.trim()) url += `?search=${search}`;
+  const res = await blogApi.get<Post[]>('/api/posts', config);
 
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error(`Error occurred! Status code: ${res.status}`);
-  }
-
-  return res.json();
+  return res.data;
 };
 
 export const getPostById = async (id: number): Promise<Post> => {
-  const url = `https://blog-api-65st.onrender.com/api/posts/${id}`;
+  const res = await blogApi.get<Post>(`/api/posts/${id}`);
 
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    throw new Error(`Error occurred! Status code: ${res.status}`);
-  }
-
-  return res.json();
+  return res.data;
 };

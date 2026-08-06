@@ -1,57 +1,34 @@
 import type { RegisterType, SignInType } from '@/types/zod';
+import { blogApi } from './config';
 
-export async function login({ username, password }: SignInType) {
-  const url = 'https://blog-api-65st.onrender.com/api/auth/login';
-
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  });
-
-  if (!res.ok) {
-    throw new Error(`Error occurred! Status code: ${res.status}`);
-  }
-
-  return res.json();
+interface LoginResponse {
+  token: string;
 }
+export const login = async (data: SignInType): Promise<LoginResponse> => {
+  const res = await blogApi.post<LoginResponse>('/api/auth/login', data);
 
-export async function register({ username, password, email }: RegisterType) {
-  const url = 'https://blog-api-65st.onrender.com/api/auth/register';
+  return res.data;
+};
 
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password, email }),
-  });
-
-  if (!res.ok) {
-    throw new Error(`Error occurred! Status code: ${res.status}`);
-  }
-
-  return res.json();
+interface RegisterResponse {
+  message: string;
 }
+export const register = async (
+  data: RegisterType
+): Promise<RegisterResponse> => {
+  const res = await blogApi.post<RegisterResponse>('/api/auth/register', data);
 
-export async function getUser() {
-  const url = 'https://blog-api-65st.onrender.com/api/auth/me';
+  return res.data;
+};
 
-  const options: RequestInit = {};
-
-  if (localStorage.getItem('token')) {
-    options.headers = {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    };
-  }
-
-  const res = await fetch(url, options);
-
-  if (!res.ok) {
-    throw new Error(`Error occurred! Status code: ${res.status}`);
-  }
-
-  return res.json();
+interface UserResponse {
+  id: number;
+  username: string;
+  email: string;
+  role: 'ADMIN' | 'EDITOR' | 'USER';
 }
+export const getUser = async (): Promise<UserResponse> => {
+  const res = await blogApi.get<UserResponse>('/api/auth/me');
+
+  return res.data;
+};
