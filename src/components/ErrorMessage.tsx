@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import type { ButtonHTMLAttributes } from 'react';
+import type { ParamHTMLAttributes } from 'react';
 
 const errorMessageVariants = cva('text-destructive', {
   variants: {
@@ -15,7 +15,7 @@ const errorMessageVariants = cva('text-destructive', {
   },
 });
 
-type ErrorMessageProps = ButtonHTMLAttributes<HTMLButtonElement> &
+type ErrorMessageProps = ParamHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof errorMessageVariants>;
 
 export default function ErrorMessage({
