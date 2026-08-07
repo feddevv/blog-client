@@ -21,8 +21,11 @@ export default function CommentForm() {
   });
 
   const onSubmit: SubmitHandler<CommentType> = (data) => {
+    const postId = Number(id);
+    if (!Number.isFinite(postId)) return;
+
     mutate(
-      { content: data.content, postId: Number(id) },
+      { content: data.content, postId },
       {
         onSuccess: () => reset(),
       }
