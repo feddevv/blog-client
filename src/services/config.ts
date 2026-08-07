@@ -1,7 +1,7 @@
-import { create } from 'axios';
+import axios from 'axios';
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
-export const blogApi: AxiosInstance = create({
+export const blogApi: AxiosInstance = axios.create({
   baseURL: 'https://blog-api-65st.onrender.com',
   timeout: 5000,
 });
