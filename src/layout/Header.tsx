@@ -11,7 +11,7 @@ import Spinner from '@/components/Spinner';
 import AuthForm from '@/pages/Auth/AuthForm';
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState<true | false>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleOpenMenu = () => setIsOpen(!isOpen);
   const { theme, setTheme } = useTheme();
 
