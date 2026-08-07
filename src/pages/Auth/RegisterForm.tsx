@@ -105,16 +105,14 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
       )}
 
       <div className="mt-2">
-        <div className="flex items-center justify-between">
-          <Label
-            intent={'secondary'}
-            size={'sm'}
-            htmlFor="password"
-            className="mt-1 flex items-center"
-          >
-            PASSWORD
-          </Label>
-        </div>
+        <Label
+          intent={'secondary'}
+          size={'sm'}
+          htmlFor="password"
+          className="mt-1 flex items-center"
+        >
+          PASSWORD
+        </Label>
 
         <div className="bg-muted py-2 px-3 flex items-center gap-2 border border-border mt-1">
           <GoLock className="text-muted-foreground" />
