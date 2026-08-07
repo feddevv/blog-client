@@ -9,14 +9,7 @@ interface PostMainProps {
 }
 
 export default function PostMain({ id }: PostMainProps) {
-  const { data: post, isPending, isError, error } = usePostById(id);
-
-  if (isError)
-    return (
-      <p className="flex-1 flex items-center justify-center">
-        {error?.message}
-      </p>
-    );
+  const { data: post, isPending } = usePostById(id);
 
   return isPending ? (
     <div className="flex-1 flex items-center justify-center">
