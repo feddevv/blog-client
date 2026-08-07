@@ -69,7 +69,11 @@ export default function Header() {
             controlsId={'menu-content'}
           />
           {user ? (
-            <button onClick={logout} className="hidden md:inline">
+            <button
+              onClick={logout}
+              className="hidden md:inline"
+              aria-label="Log out"
+            >
               <LuLogOut className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
             </button>
           ) : (
