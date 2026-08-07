@@ -6,7 +6,7 @@ export interface CardProps {
   title: string;
   description: string;
   likes: number;
-  onLikeClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onLikeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Card({
