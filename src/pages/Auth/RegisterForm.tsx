@@ -64,15 +64,16 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
           />
         </div>
       </div>
-      {errors.username && (
+      {errors.username ? (
         <ErrorMessage size={'sm'} className="mt-1">
           {errors.username.message}
         </ErrorMessage>
-      )}
-      {isError && (
-        <ErrorMessage size={'sm'} className="mt-1">
-          {apiError.message}
-        </ErrorMessage>
+      ) : (
+        isError && (
+          <ErrorMessage size={'sm'} className="mt-1">
+            {apiError.message}
+          </ErrorMessage>
+        )
       )}
 
       <div className="mt-2">
@@ -91,15 +92,16 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
           />
         </div>
       </div>
-      {errors.email && (
+      {errors.email ? (
         <ErrorMessage size={'sm'} className="mt-1">
           {errors.email.message}
         </ErrorMessage>
-      )}
-      {isError && (
-        <ErrorMessage size={'sm'} className="mt-1">
-          {apiError.message}
-        </ErrorMessage>
+      ) : (
+        isError && (
+          <ErrorMessage size={'sm'} className="mt-1">
+            {apiError.message}
+          </ErrorMessage>
+        )
       )}
 
       <div className="mt-2">
