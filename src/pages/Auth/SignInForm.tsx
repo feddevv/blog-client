@@ -29,7 +29,7 @@ export default function SignInForm({
     resolver: zodResolver(signInSchema),
   });
 
-  const { mutate, isPending } = useLogin();
+  const { mutate, isPending, error: apiError, isError } = useLogin();
   const queryClient = useQueryClient();
 
   const onSubmit: SubmitHandler<SignInType> = (data) => {
@@ -69,10 +69,16 @@ export default function SignInForm({
           />
         </div>
       </div>
-      {errors.username && (
+      {errors.username ? (
         <ErrorMessage size={'sm'} className="mt-1">
           {errors.username.message}
         </ErrorMessage>
+      ) : (
+        isError && (
+          <ErrorMessage size={'sm'} className="mt-1">
+            {apiError.message}
+          </ErrorMessage>
+        )
       )}
 
       <div className="mt-2">
@@ -103,10 +109,16 @@ export default function SignInForm({
           />
         </div>
       </div>
-      {errors.password && (
+      {errors.password ? (
         <ErrorMessage size={'sm'} className="mt-1">
           {errors.password.message}
         </ErrorMessage>
+      ) : (
+        isError && (
+          <ErrorMessage size={'sm'} className="mt-1">
+            {apiError.message}
+          </ErrorMessage>
+        )
       )}
 
       <Button className="w-full mt-4" size={'md'} disabled={isPending}>

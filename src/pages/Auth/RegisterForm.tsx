@@ -24,7 +24,7 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
     resolver: zodResolver(registerSchema),
   });
 
-  const { mutate, isPending } = useRegister();
+  const { mutate, isPending, error: apiError, isError } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterType> = (data) => {
     mutate(
@@ -69,6 +69,11 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
           {errors.username.message}
         </ErrorMessage>
       )}
+      {isError && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {apiError.message}
+        </ErrorMessage>
+      )}
 
       <div className="mt-2">
         <Label intent={'secondary'} size={'sm'} htmlFor="email">
@@ -89,6 +94,11 @@ export default function RegisterForm({ setIsSignIn }: RegisterProps) {
       {errors.email && (
         <ErrorMessage size={'sm'} className="mt-1">
           {errors.email.message}
+        </ErrorMessage>
+      )}
+      {isError && (
+        <ErrorMessage size={'sm'} className="mt-1">
+          {apiError.message}
         </ErrorMessage>
       )}
 

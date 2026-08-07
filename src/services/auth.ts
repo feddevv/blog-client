@@ -1,13 +1,22 @@
 import type { RegisterType, SignInType } from '@/types/zod';
 import { blogApi } from './config';
+import { isAxiosError } from 'axios';
+import type { ApiError } from '@/types';
 
 interface LoginResponse {
   token: string;
 }
 export const login = async (data: SignInType): Promise<LoginResponse> => {
-  const res = await blogApi.post<LoginResponse>('/api/auth/login', data);
+  try {
+    const res = await blogApi.post<LoginResponse>('/api/auth/login', data);
 
-  return res.data;
+    return res.data;
+  } catch (err) {
+    if (isAxiosError<ApiError>(err)) {
+      throw new Error(err.response?.data.message || err.message);
+    }
+    throw err;
+  }
 };
 
 interface RegisterResponse {
@@ -16,9 +25,19 @@ interface RegisterResponse {
 export const register = async (
   data: RegisterType
 ): Promise<RegisterResponse> => {
-  const res = await blogApi.post<RegisterResponse>('/api/auth/register', data);
+  try {
+    const res = await blogApi.post<RegisterResponse>(
+      '/api/auth/register',
+      data
+    );
 
-  return res.data;
+    return res.data;
+  } catch (err) {
+    if (isAxiosError<ApiError>(err)) {
+      throw new Error(err.response?.data.message || err.message);
+    }
+    throw err;
+  }
 };
 
 interface UserResponse {
