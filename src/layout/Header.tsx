@@ -15,14 +15,14 @@ export default function Header() {
   const handleOpenMenu = () => setIsOpen(!isOpen);
   const { theme, setTheme } = useTheme();
 
-  const { data: user, isFetching } = useUser();
+  const { data: user, isPending } = useUser();
   const queryClient = useQueryClient();
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
   const logout = () => {
     localStorage.removeItem('token');
 
-    queryClient.setQueryData(['user'], null);
+    queryClient.resetQueries({ queryKey: ['user'] });
   };
 
   return (
@@ -79,9 +79,9 @@ export default function Header() {
               intent={'primary'}
               size={'sm'}
               className="hidden md:inline"
-              disabled={isFetching}
+              disabled={isPending}
             >
-              {isFetching ? (
+              {isPending ? (
                 <Spinner className="border-secondary border-r-transparent w-6 h-6" />
               ) : (
                 'Sign In'
@@ -129,9 +129,9 @@ export default function Header() {
               intent={'primary'}
               size={'sm'}
               className="md:hidden"
-              disabled={isFetching}
+              disabled={isPending}
             >
-              {isFetching ? (
+              {isPending ? (
                 <Spinner className="border-secondary border-r-transparent w-6 h-6" />
               ) : (
                 'Sign In'
