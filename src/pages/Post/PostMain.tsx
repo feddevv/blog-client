@@ -38,7 +38,7 @@ export default function PostMain({ id }: PostMainProps) {
         />
 
         <div className="max-w-200 mx-auto prose dark:prose-invert">
-          <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+          <Markdown remarkPlugins={[remarkGfm]}>{post.content ?? ''}</Markdown>
         </div>
       </section>
     )
