@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { LuHeart } from 'react-icons/lu';
 
 export interface CardProps {
@@ -5,11 +6,18 @@ export interface CardProps {
   title: string;
   description: string;
   likes: number;
+  onLikeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function Card({ img, title, description, likes }: CardProps) {
+export default function Card({
+  img,
+  title,
+  description,
+  likes,
+  onLikeClick,
+}: CardProps) {
   return (
-    <article className="border border-border inline-flex flex-col bg-card cursor-pointer group/card hover:shadow hover:-translate-y-1 transition-all duration-250">
+    <article className="border border-border inline-flex flex-col bg-card cursor-pointer group/card hover:shadow hover:-translate-y-1 transition-all duration-250 w-full">
       <div className="overflow-hidden w-full">
         <img
           src={img}
@@ -32,9 +40,10 @@ export default function Card({ img, title, description, likes }: CardProps) {
         <button
           aria-label="Like"
           className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes"
+          onClick={onLikeClick}
         >
-          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive-foreground" />
-          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive-foreground">
+          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive" />
+          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive">
             {likes}
           </p>
         </button>

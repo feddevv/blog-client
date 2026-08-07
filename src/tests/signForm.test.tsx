@@ -1,4 +1,4 @@
-import SignForm from '@/components/SignForm';
+import AuthForm from '@/pages/Auth/AuthForm';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 describe('SignForm component', () => {
   describe('UI & Switching', () => {
     it('renders the sign-in state', () => {
-      render(<SignForm open />);
+      render(<AuthForm open />);
 
       const dialog = screen.getByRole('dialog');
       const ui = within(dialog);
@@ -45,7 +45,7 @@ describe('SignForm component', () => {
     it('switches to the sign-up state', async () => {
       const user = userEvent.setup();
 
-      render(<SignForm open />);
+      render(<AuthForm open />);
 
       const dialog = screen.getByRole('dialog');
       const ui = within(dialog);
@@ -80,7 +80,7 @@ describe('SignForm component', () => {
     it('should switch back to sing in form correctly', async () => {
       const user = userEvent.setup();
 
-      render(<SignForm open />);
+      render(<AuthForm open />);
 
       const dialog = screen.getByRole('dialog');
       const ui = within(dialog);
@@ -121,7 +121,7 @@ describe('SignForm component', () => {
     it('should focus on inputs when labels are clicked', async () => {
       const user = userEvent.setup();
 
-      render(<SignForm open />);
+      render(<AuthForm open />);
       const email = screen.getByText(/email/i);
       const password = screen.getByText(/password/i);
 
@@ -140,7 +140,7 @@ describe('SignForm component', () => {
     it('should type into inputs', async () => {
       const user = userEvent.setup();
 
-      render(<SignForm open />);
+      render(<AuthForm open />);
       const email = screen.getByText(/email/i);
       const password = screen.getByText(/password/i);
 
