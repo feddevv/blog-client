@@ -1,6 +1,6 @@
 import Spinner from '@/components/Spinner';
 import { usePostById } from '@/hooks/usePosts';
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from '@/utils/utils';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
