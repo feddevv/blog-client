@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import { Link, useSearchParams } from 'react-router';
 import { usePosts } from '@/hooks/usePosts';
+import FailedToLoad from '@/components/FailedToLoad';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +19,7 @@ export default function Home() {
   const [search, setSearch] = useState<string>(query);
   const debouncedSearch = useDebounce(search, 600);
 
-  const { data, isPending } = usePosts(debouncedSearch);
+  const { data, isPending, isError, refetch } = usePosts(debouncedSearch);
 
   useEffect(() => {
     setSearchParams(
@@ -68,6 +69,13 @@ export default function Home() {
       <section className="px-4 py-10 flex flex-col items-center gap-10 min-h-100">
         {isPending ? (
           <Spinner className="m-auto" />
+        ) : isError ? (
+          <FailedToLoad
+            className="bg-card p-8 border border-border m-auto"
+            isPending={isPending}
+            refetch={refetch}
+            title="Failed to load posts"
+          />
         ) : data && data.length ? (
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
