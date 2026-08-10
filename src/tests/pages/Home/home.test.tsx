@@ -5,12 +5,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { createRoutesStub } from 'react-router';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { type ReactNode } from 'react';
 import userEvent from '@testing-library/user-event';
 
 const createWrapper = () => {
-  const client = new QueryClient();
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
   return ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
   );
@@ -48,22 +54,23 @@ describe('Home component', () => {
     expect(posts).toHaveLength(0);
   });
 
-  // it('should show an error message with refetch button when error happens', async () => {
-  //   server.use(
-  //     http.get(
-  //       blogApi('/api/posts'),
-  //       () => new HttpResponse(null, { status: 500 })
-  //     )
-  //   );
-  //   render(<Stub />, { wrapper: createWrapper() });
+  it('should show an error message with refetch button when error happens', async () => {
+    server.use(
+      http.get(
+        blogApi('/api/posts'),
+        () => new HttpResponse(null, { status: 500 })
+      )
+    );
+    render(<Stub />, { wrapper: createWrapper() });
 
-  //   expect(
-  //     await screen.findByRole('heading', { name: /failed to load posts/i })
-  //   ).toBeInTheDocument();
-  //   expect(
-  //     screen.getByRole('button', { name: /try again/i })
-  //   ).toBeInTheDocument();
-  // });
+    expect(
+      await screen.findByRole('heading', { name: /failed to load posts/i })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('button', { name: /try again/i })
+    ).toBeInTheDocument();
+  });
 
   it('should search for posts', async () => {
     const user = userEvent.setup();
