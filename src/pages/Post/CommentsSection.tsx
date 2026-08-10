@@ -1,9 +1,9 @@
 import Spinner from '@/components/Spinner';
 import { useCommentsByPostId } from '@/hooks/useComments';
-import { LuCircleAlert, LuMessageCircle } from 'react-icons/lu';
+import { LuMessageCircle } from 'react-icons/lu';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
-import Button from '@/components/Button';
+import FailedToLoad from '@/components/FailedToLoad';
 
 interface CommentsSectionProps {
   id: number;
@@ -20,21 +20,11 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
   if (isError) {
     return (
       <section className="bg-muted py-16 border-t border-border flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <LuCircleAlert className="text-4xl text-destructive" />
-          <h2 className="font-medium text-xl text-primary mt-2">
-            Failed to load comments
-          </h2>
-          <Button
-            intent={'secondary'}
-            size={'md'}
-            onClick={() => refetch()}
-            className="mt-2"
-            disabled={isPending}
-          >
-            Try again
-          </Button>
-        </div>
+        <FailedToLoad
+          isPending={isPending}
+          refetch={refetch}
+          title="Failed to load comments"
+        />
       </section>
     );
   }
