@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRoutesStub, Outlet } from 'react-router';
 import { describe, expect, it } from 'vitest';
+import { createWrapper } from './testUtils';
 
 describe('Header component', () => {
   const RouterStub = createRoutesStub([
@@ -34,7 +35,7 @@ describe('Header component', () => {
   it('should redirect to another page when click the link', async () => {
     const user = userEvent.setup();
 
-    render(<RouterStub initialEntries={['/']} />);
+    render(<RouterStub initialEntries={['/']} />, { wrapper: createWrapper() });
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
     await user.click(aboutLink);
@@ -47,7 +48,7 @@ describe('Header component', () => {
   it('should open mobile menu when click on hamburger button', async () => {
     const user = userEvent.setup();
 
-    render(<RouterStub />);
+    render(<RouterStub />, { wrapper: createWrapper() });
     const hamburger = screen.getByRole('button', { name: 'Menu' });
 
     expect(hamburger).toHaveAttribute('aria-expanded', 'false');
