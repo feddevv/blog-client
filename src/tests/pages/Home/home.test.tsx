@@ -1,26 +1,12 @@
 import { server } from '@/mocks/node';
 import Home from '@/pages/Home/Home';
 import { blogApi } from '@/utils/utils';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, waitFor } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { createRoutesStub } from 'react-router';
 import { describe, expect, it } from 'vitest';
-import { type ReactNode } from 'react';
 import userEvent from '@testing-library/user-event';
-
-const createWrapper = () => {
-  const client = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
-  return ({ children }: { children: ReactNode }) => (
-    <QueryClientProvider client={client}>{children}</QueryClientProvider>
-  );
-};
+import { createWrapper } from '@/tests/testUtils';
 
 describe('Home component', () => {
   const Stub = createRoutesStub([

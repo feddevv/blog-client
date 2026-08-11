@@ -20,4 +20,15 @@ export const postsHandlers = [
 
     return HttpResponse.json(filtered);
   }),
+
+  http.get<{ id: string }>(blogApi('/api/posts/:id'), async ({ params }) => {
+    await delay(100);
+
+    const { id } = params;
+    const idNumber = Number(id);
+
+    const post = mockPosts.find((post) => post.id === idNumber);
+
+    return HttpResponse.json(post);
+  }),
 ];
