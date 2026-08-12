@@ -18,5 +18,6 @@ export const useCreateComment = () => {
       queryClient.invalidateQueries({
         queryKey: ['post', variables.postId, 'comments'],
       }),
+    mutationKey: ['createComment'],
   });
 };
