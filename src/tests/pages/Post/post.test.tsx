@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { createWrapper } from '@/tests/testUtils';
 import { createRoutesStub } from 'react-router';
 import Post from '@/pages/Post/Post';
@@ -6,10 +6,15 @@ import { render, screen, waitFor } from '@testing-library/react';
 import ErrorPage from '@/components/ErrorPage';
 import { server } from '@/mocks/node';
 import { blogApi } from '@/utils/utils';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import userEvent from '@testing-library/user-event';
+import { populateComments } from '@/mocks/data/comments';
 
 describe('Post component', () => {
+  beforeEach(() => {
+    populateComments();
+  });
+
   const Stub = createRoutesStub([
     {
       path: '/posts/:id',
@@ -164,6 +169,47 @@ describe('Post component', () => {
       expect(
         screen.getByRole('button', { name: /try again/i })
       ).toBeInTheDocument();
+    });
+  });
+
+  describe('Comment Optimistic UI', () => {
+    it('should instantly show the comment without waiting for the response', async () => {
+      const user = userEvent.setup();
+
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const input = await screen.findByRole('textbox');
+      const postButton = screen.getByRole('button', { name: /post/i });
+      await user.type(input, 'new comment');
+      await user.click(postButton);
+
+      expect(screen.getAllByRole('article')).toHaveLength(3);
+    });
+
+    it('should rollback when error occurs', async () => {
+      server.use(
+        http.post(blogApi('/api/posts/:id/comments'), async () => {
+          await delay(100);
+          return new HttpResponse(null, { status: 500 });
+        })
+      );
+      const user = userEvent.setup();
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const input = await screen.findByRole('textbox');
+      const postButton = screen.getByRole('button', { name: /post/i });
+      await user.type(input, 'new comment');
+      await user.click(postButton);
+
+      expect(screen.getAllByRole('article')).toHaveLength(3);
+
+      await waitFor(() => {
+        expect(screen.getAllByRole('article')).toHaveLength(2);
+      });
     });
   });
 });

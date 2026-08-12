@@ -1,7 +1,7 @@
 import type { RegisterType, SignInType } from '@/types/zod';
 import { blogApi } from './config';
 import { isAxiosError } from 'axios';
-import type { ApiError } from '@/types';
+import type { ApiError, User } from '@/types';
 
 interface LoginResponse {
   token: string;
@@ -40,14 +40,8 @@ export const register = async (
   }
 };
 
-interface UserResponse {
-  id: number;
-  username: string;
-  email: string;
-  role: 'ADMIN' | 'EDITOR' | 'USER';
-}
-export const getUser = async (): Promise<UserResponse> => {
-  const res = await blogApi.get<UserResponse>('/api/auth/me');
+export const getUser = async (): Promise<User> => {
+  const res = await blogApi.get<User>('/api/auth/me');
 
   return res.data;
 };

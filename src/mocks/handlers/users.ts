@@ -1,6 +1,7 @@
 import { blogApi } from '@/utils/utils';
-import { http, HttpResponse, type PathParams } from 'msw';
+import { http, HttpResponse, type DefaultBodyType, type PathParams } from 'msw';
 import { mockUsers } from '../data/users';
+import type { User } from '@/types';
 
 export const usersHandler = [
   http.post<PathParams, { username: string; password: string; email: string }>(
@@ -24,6 +25,18 @@ export const usersHandler = [
     blogApi('/api/auth/login'),
     async () => {
       return HttpResponse.json({ toke: 'jwt_mocked_token' });
+    }
+  ),
+
+  http.get<PathParams, DefaultBodyType, Omit<User, 'password'>>(
+    blogApi('/api/auth/me'),
+    () => {
+      return HttpResponse.json({
+        username: 'feddev',
+        email: 'feddev@gmail.com',
+        id: 1000,
+        role: 'ADMIN',
+      });
     }
   ),
 ];

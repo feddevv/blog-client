@@ -6,10 +6,12 @@ import { useParams } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { commentSchema, type CommentType } from '@/types/zod';
+import { useUser } from '@/hooks/useAuth';
 
 export default function CommentForm() {
   const { id } = useParams();
-  const { mutate, isPending } = useCreateComment();
+  const user = useUser();
+  const { mutate, isPending } = useCreateComment(user.data);
 
   const {
     handleSubmit,
@@ -21,6 +23,7 @@ export default function CommentForm() {
   });
 
   const onSubmit: SubmitHandler<CommentType> = (data) => {
+    if (!user.data) return;
     const postId = Number(id);
     if (!Number.isFinite(postId)) return;
 
