@@ -21,3 +21,7 @@ export function formatDate(date: string | Date | number, fallback = '-') {
 
   return formatter.format(dateObj);
 }
+
+export function blogApi(path: string) {
+  return new URL(path, 'https://blog-api-65st.onrender.com').href;
+}

@@ -36,3 +36,12 @@ export interface ApiError {
   message: string;
   errors?: ApiErrorDetails[];
 }
+
+type UserRole = 'ADMIN' | 'USER' | 'EDITOR';
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}

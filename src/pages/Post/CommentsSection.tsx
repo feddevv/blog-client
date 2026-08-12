@@ -32,7 +32,7 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
   return (
     <section className="bg-muted py-16 border-t border-border">
       {isPending ? (
-        <Spinner className="m-auto" />
+        <Spinner testId="comments-spinner" className="m-auto" />
       ) : (
         <div className="max-w-200 px-4 mx-auto">
           <h2 className="flex items-center gap-2 font-bold font-heading text-[clamp(1.2rem,2vw,1.5rem)] text-foreground">

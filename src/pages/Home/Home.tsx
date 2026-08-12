@@ -68,7 +68,7 @@ export default function Home() {
 
       <section className="px-4 py-10 flex flex-col items-center gap-10 min-h-100">
         {isPending ? (
-          <Spinner className="m-auto" />
+          <Spinner className="m-auto" testId="spinner" />
         ) : isError ? (
           <FailedToLoad
             className="bg-card p-8 border border-border m-auto"

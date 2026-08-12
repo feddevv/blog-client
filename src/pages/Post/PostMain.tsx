@@ -13,7 +13,7 @@ export default function PostMain({ id }: PostMainProps) {
 
   return isPending ? (
     <div className="flex-1 flex items-center justify-center">
-      <Spinner />
+      <Spinner testId="post-spinner" />
     </div>
   ) : (
     post && (
