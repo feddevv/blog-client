@@ -4,6 +4,8 @@ import { LuMessageCircle } from 'react-icons/lu';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import FailedToLoad from '@/components/FailedToLoad';
+import { useMutationState } from '@tanstack/react-query';
+import { useUser } from '@/hooks/useAuth';
 
 interface CommentsSectionProps {
   id: number;
@@ -16,6 +18,24 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
     isError,
     refetch,
   } = useCommentsByPostId(id);
+  const { data: user } = useUser();
+
+  const mutationData = useMutationState<{
+    variables: { postId: number; content: string };
+    error: Error | null;
+  }>({
+    filters: {
+      mutationKey: ['createComment'],
+      status: 'pending',
+    },
+    select: (mutation) => ({
+      variables: mutation.state.variables as {
+        postId: number;
+        content: string;
+      },
+      error: mutation.state.error,
+    }),
+  });
 
   if (isError) {
     return (
@@ -52,6 +72,14 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
                   key={comment.id}
                 />
               ))}
+            {!mutationData[0]?.error && user && mutationData.length > 0 && (
+              <Comment
+                username={user.username}
+                createdAt={Date.now()}
+                content={mutationData[0].variables.content}
+                className="opacity-65"
+              />
+            )}
 
             <CommentForm />
           </div>
