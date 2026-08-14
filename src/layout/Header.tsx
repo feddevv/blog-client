@@ -5,7 +5,7 @@ import { LuLogOut, LuMoon, LuSun } from 'react-icons/lu';
 import { NavLink } from 'react-router';
 import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
-import { useUser } from '@/hooks/useAuth';
+import { useLogout, useUser } from '@/hooks/useAuth';
 import { useQueryClient } from '@tanstack/react-query';
 import Spinner from '@/components/Spinner';
 import AuthForm from '@/pages/Auth/AuthForm';
@@ -16,11 +16,14 @@ export default function Header() {
   const { theme, setTheme } = useTheme();
 
   const { data: user, isPending } = useUser();
+  const { mutate: logoutRequest } = useLogout();
   const queryClient = useQueryClient();
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem('token');
+
+    logoutRequest();
 
     queryClient.resetQueries({ queryKey: ['user'] });
   };

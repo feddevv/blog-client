@@ -1,4 +1,4 @@
-import { getUser, login, register } from '@/services/auth';
+import { getUser, login, logout, register } from '@/services/auth';
 import type { RegisterType, SignInType } from '@/types/zod';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -19,5 +19,11 @@ export const useUser = () => {
     queryKey: ['user'],
     queryFn: getUser,
     retry: false,
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: logout,
   });
 };
