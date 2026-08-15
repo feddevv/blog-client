@@ -17,13 +17,39 @@ blogApi.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
+interface QueueItem {
+  resolve: (token: string) => void;
+  reject: (err: unknown) => void;
+}
+
+let isRefetching = false;
+let failedQueue: QueueItem[] = [];
+
+function processQueue(err: unknown, token: string | null = null) {
+  failedQueue.forEach((item) => {
+    if (err) item.reject(err);
+    else if (token) item.resolve(token);
+  });
+
+  failedQueue = [];
+}
+
 blogApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefetching) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => blogApi(originalRequest))
+          .catch((err) => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefetching = true;
 
       try {
         const response = await axios.post<{ token: string }>(
@@ -32,12 +58,17 @@ blogApi.interceptors.response.use(
           { withCredentials: true }
         );
 
+        processQueue(null, response.data.token);
         localStorage.setItem('token', response.data.token);
 
         return blogApi(originalRequest);
       } catch (refreshError) {
+        processQueue(refreshError);
+
         localStorage.removeItem('token');
         return Promise.reject(refreshError);
+      } finally {
+        isRefetching = false;
       }
     }
 
