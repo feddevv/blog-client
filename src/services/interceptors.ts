@@ -1,9 +1,17 @@
-import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import type {
+  AxiosError,
+  AxiosInstance,
+  InternalAxiosRequestConfig,
+} from 'axios';
 import axios from 'axios';
 
 interface QueueItem {
   resolve: (token: string) => void;
   reject: (err: unknown) => void;
+}
+
+interface CustomConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
 }
 
 let isRefetching = false;
@@ -33,11 +41,12 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 
   instance.interceptors.response.use(
     (response) => response,
-    async (error) => {
-      const originalRequest = error.config;
+    async (error: AxiosError) => {
+      const originalRequest = error.config as CustomConfig | undefined;
+      if (!originalRequest) return Promise.reject(error);
 
       const isToSkip = URL_SKIP_LIST.some((url) =>
-        originalRequest.url.includes(url)
+        originalRequest.url?.includes(url)
       );
       if (
         error.response?.status !== 401 ||
