@@ -45,3 +45,9 @@ export const getUser = async (): Promise<User> => {
 
   return res.data;
 };
+
+export const logout = async (): Promise<{ message: string }> => {
+  const res = await blogApi.post<{ message: string }>('/api/auth/logout');
+
+  return res.data;
+};
