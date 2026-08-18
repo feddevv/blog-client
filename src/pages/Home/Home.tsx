@@ -2,7 +2,6 @@ import Input from '@/components/Input';
 import { LabelWrapper } from '@/components/Label';
 import { LuSearch } from 'react-icons/lu';
 import Card from '@/components/Card';
-import Button from '@/components/Button';
 import Footer from '@/pages/Home/Footer';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
@@ -11,6 +10,7 @@ import useDebounce from '@/hooks/useDebounce';
 import { Link, useSearchParams } from 'react-router';
 import { usePosts } from '@/hooks/usePosts';
 import FailedToLoad from '@/components/FailedToLoad';
+import Pagination from '@/components/Pagination';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +19,22 @@ export default function Home() {
   const [search, setSearch] = useState<string>(query);
   const debouncedSearch = useDebounce(search, 600);
 
-  const { data, isPending, isError, refetch } = usePosts(debouncedSearch);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const {
+    data: posts,
+    isPending,
+    isError,
+    refetch,
+  } = usePosts(debouncedSearch, currentPage);
+  const totalPages = posts?.totalCount
+    ? Math.ceil(posts.totalCount / posts.pageSize)
+    : 0;
+
+  const handleChangePage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    setCurrentPage(page);
+  };
 
   useEffect(() => {
     setSearchParams(
@@ -76,10 +91,10 @@ export default function Home() {
             refetch={refetch}
             title="Failed to load posts"
           />
-        ) : data && data.length ? (
+        ) : posts && posts.data.length ? (
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {data.map((card) => (
+              {posts.data.map((card) => (
                 <Link to={`/post/${card.id}`} className="flex" key={card.id}>
                   <Card
                     img={'https://placehold.co/400x300'}
@@ -95,9 +110,11 @@ export default function Home() {
               ))}
             </div>
 
-            <Button intent={'secondary'} size={'md'}>
-              Load more posts
-            </Button>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handleChangePage={handleChangePage}
+            />
           </>
         ) : (
           <NoPosts />

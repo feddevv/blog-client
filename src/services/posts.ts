@@ -2,14 +2,24 @@ import type { ApiError, Post } from '@/types';
 import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
-export const getPosts = async (search?: string): Promise<Post[]> => {
+interface GetPostsResponse {
+  data: Post[];
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+}
+export const getPosts = async (
+  search?: string,
+  page?: number
+): Promise<GetPostsResponse> => {
   const config: AxiosRequestConfig = {
     params: {
       search: search?.trim() || undefined,
+      page,
     },
   };
 
-  const res = await blogApi.get<Post[]>('/api/posts', config);
+  const res = await blogApi.get<GetPostsResponse>('/api/posts', config);
 
   return res.data;
 };

@@ -25,3 +25,8 @@ export function formatDate(date: string | Date | number, fallback = '-') {
 export function blogApi(path: string) {
   return new URL(path, 'https://blog-api-65st.onrender.com').href;
 }
+
+export function range(start: number, end: number) {
+  const length = end - start + 1;
+  return Array.from({ length }, (_, i) => start + i);
+}
