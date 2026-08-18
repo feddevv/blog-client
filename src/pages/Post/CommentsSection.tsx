@@ -73,17 +73,9 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
               ? `${comments.totalCount} Comment${comments.totalCount > 1 ? 's' : ''}`
               : 'No comments yet'}
           </h2>
+          <CommentForm />
 
           <div className="mt-4 flex flex-col gap-6">
-            {comments &&
-              comments.data.map((comment) => (
-                <Comment
-                  username={comment.user.username}
-                  createdAt={comment.createdAt}
-                  content={comment.content}
-                  key={comment.id}
-                />
-              ))}
             {!mutationData[0]?.error && user && mutationData.length > 0 && (
               <Comment
                 username={user.username}
@@ -93,7 +85,15 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
               />
             )}
 
-            <CommentForm />
+            {comments &&
+              comments.data.map((comment) => (
+                <Comment
+                  username={comment.user.username}
+                  createdAt={comment.createdAt}
+                  content={comment.content}
+                  key={comment.id}
+                />
+              ))}
 
             <div className="m-auto">
               <Pagination
