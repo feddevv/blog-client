@@ -10,7 +10,7 @@ interface GetPostsResponse {
 }
 export const getPosts = async (
   search?: string,
-  page?: number
+  page = 1
 ): Promise<GetPostsResponse> => {
   const config: AxiosRequestConfig = {
     params: {

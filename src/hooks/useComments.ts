@@ -7,7 +7,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 
-export const useCommentsByPostId = (id: number, page: number) => {
+export const useCommentsByPostId = (id: number, page?: number) => {
   return useQuery({
     queryKey: ['post', id, 'comments', { page }],
     queryFn: () => getCommentsByPostId(id, page),

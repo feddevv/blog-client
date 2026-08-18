@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getPostById, getPosts } from '@/services/posts';
 
-export function usePosts(search: string, page: number) {
+export function usePosts(search: string, page?: number) {
   return useQuery({
     queryKey: ['posts', { search, page }],
     queryFn: () => getPosts(search, page),
