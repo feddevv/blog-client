@@ -6,19 +6,31 @@ import CommentForm from './CommentForm';
 import FailedToLoad from '@/components/FailedToLoad';
 import { useMutationState } from '@tanstack/react-query';
 import { useUser } from '@/hooks/useAuth';
+import Pagination from '@/components/Pagination';
+import { useState } from 'react';
 
 interface CommentsSectionProps {
   id: number;
 }
 
 export default function CommentsSection({ id }: CommentsSectionProps) {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const {
     data: comments,
     isPending,
     isError,
     refetch,
-  } = useCommentsByPostId(id);
+  } = useCommentsByPostId(id, currentPage);
   const { data: user } = useUser();
+  const totalPages = comments?.totalCount
+    ? Math.ceil(comments.totalCount / comments.pageSize)
+    : 0;
+
+  const handleChangePage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    setCurrentPage(page);
+  };
 
   const mutationData = useMutationState<{
     variables: { postId: number; content: string };
@@ -57,14 +69,14 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
         <div className="max-w-200 px-4 mx-auto">
           <h2 className="flex items-center gap-2 font-bold font-heading text-[clamp(1.2rem,2vw,1.5rem)] text-foreground">
             <LuMessageCircle className="text-accent" />
-            {comments && comments.length
-              ? `${comments.length} Comment${comments.length > 1 ? 's' : ''}`
+            {comments
+              ? `${comments.totalCount} Comment${comments.totalCount > 1 ? 's' : ''}`
               : 'No comments yet'}
           </h2>
 
           <div className="mt-4 flex flex-col gap-6">
             {comments &&
-              comments.map((comment) => (
+              comments.data.map((comment) => (
                 <Comment
                   username={comment.user.username}
                   createdAt={comment.createdAt}
@@ -82,6 +94,14 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
             )}
 
             <CommentForm />
+
+            <div className="m-auto">
+              <Pagination
+                currentPage={currentPage}
+                handleChangePage={handleChangePage}
+                totalPages={totalPages}
+              />
+            </div>
           </div>
         </div>
       )}
