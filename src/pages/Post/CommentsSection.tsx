@@ -67,7 +67,7 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
         <Spinner testId="comments-spinner" className="m-auto" />
       ) : (
         <div className="max-w-200 px-4 mx-auto">
-          <h2 className="flex items-center gap-2 font-bold font-heading text-[clamp(1.2rem,2vw,1.5rem)] text-foreground">
+          <h2 className="flex items-center gap-2 font-bold font-heading text-[clamp(1.2rem,2vw,1.5rem)] text-foreground mb-2">
             <LuMessageCircle className="text-accent" />
             {comments
               ? `${comments.totalCount} Comment${comments.totalCount > 1 ? 's' : ''}`
