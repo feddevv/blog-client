@@ -18,7 +18,12 @@ export const postsHandlers = [
         )
       : mockPosts;
 
-    return HttpResponse.json(filtered);
+    return HttpResponse.json({
+      data: filtered,
+      totalCount: mockPosts.length,
+      pageSize: 10,
+      currentPage: 1,
+    });
   }),
 
   http.get<{ id: string }>(blogApi('/api/posts/:id'), async ({ params }) => {
