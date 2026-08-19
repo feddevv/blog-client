@@ -2,12 +2,19 @@ import { server } from '@/mocks/node';
 import Home from '@/pages/Home/Home';
 import { blogApi } from '@/utils/utils';
 import { render, screen, waitFor } from '@testing-library/react';
-import { http, HttpResponse } from 'msw';
+import {
+  delay,
+  http,
+  HttpResponse,
+  type DefaultBodyType,
+  type PathParams,
+} from 'msw';
 import { createRoutesStub } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { createWrapper } from '@/tests/testUtils';
 import { mockPosts } from '@/mocks/data/posts';
+import type { GetPostsResponse } from '@/types';
 
 describe('Home component', () => {
   const Stub = createRoutesStub([
@@ -86,18 +93,40 @@ describe('Home component', () => {
   describe('Pagination', async () => {
     it('should properly render pagination and do navigation', async () => {
       server.use(
-        http.get(blogApi('/api/posts'), ({ request }) => {
-          const url = new URL(request.url);
-          const pageParam = url.searchParams.get('page') || '1';
+        http.get<PathParams, DefaultBodyType, GetPostsResponse>(
+          blogApi('/api/posts'),
+          async ({ request }) => {
+            await delay(100);
+            const url = new URL(request.url);
+            const pageParam = url.searchParams.get('page') || '1';
 
-          if (pageParam === '2') {
+            if (pageParam === '2') {
+              return HttpResponse.json({
+                data: [
+                  {
+                    id: 1,
+                    title: 'Title 2',
+                    description: 'Description 2',
+                    content: 'Content 2',
+                    createdAt: '2026-06-18T09:00:00.000Z',
+                    updatedAt: '2026-06-18T09:00:00.000Z',
+                    userId: 42,
+                    state: 'PUBLISHED',
+                  },
+                ],
+                totalCount: 2,
+                pageSize: 1,
+                currentPage: 2,
+              });
+            }
+
             return HttpResponse.json({
               data: [
                 {
-                  id: 1,
-                  title: 'Title 2',
-                  description: 'Description 2',
-                  content: 'Content 2',
+                  id: 2,
+                  title: 'Title 1',
+                  description: 'Description 1',
+                  content: 'Content 1',
                   createdAt: '2026-06-18T09:00:00.000Z',
                   updatedAt: '2026-06-18T09:00:00.000Z',
                   userId: 42,
@@ -109,25 +138,7 @@ describe('Home component', () => {
               currentPage: 1,
             });
           }
-
-          return HttpResponse.json({
-            data: [
-              {
-                id: 2,
-                title: 'Title 1',
-                description: 'Description 1',
-                content: 'Content 1',
-                createdAt: '2026-06-18T09:00:00.000Z',
-                updatedAt: '2026-06-18T09:00:00.000Z',
-                userId: 42,
-                state: 'PUBLISHED',
-              },
-            ],
-            totalCount: 2,
-            pageSize: 1,
-            currentPage: 2,
-          });
-        })
+        )
       );
       const user = userEvent.setup();
       render(<Stub />, { wrapper: createWrapper() });
@@ -142,7 +153,7 @@ describe('Home component', () => {
       await user.click(nextPage);
       expect(screen.getAllByRole('article')).toHaveLength(1);
       expect(
-        screen.getByRole('heading', { name: /title 2/i })
+        await screen.findByRole('heading', { name: /title 2/i })
       ).toBeInTheDocument();
     });
   });

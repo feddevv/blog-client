@@ -1,13 +1,7 @@
-import type { ApiError, Post } from '@/types';
+import type { ApiError, GetPostsResponse, Post } from '@/types';
 import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
-interface GetPostsResponse {
-  data: Post[];
-  totalCount: number;
-  currentPage: number;
-  pageSize: number;
-}
 export const getPosts = async (
   search?: string,
   page = 1
