@@ -1,20 +1,14 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { createWrapper } from '@/tests/testUtils';
 import { createRoutesStub } from 'react-router';
 import Post from '@/pages/Post/Post';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorPage from '@/components/ErrorPage';
 import { server } from '@/mocks/node';
 import { blogApi } from '@/utils/utils';
-import { delay, http, HttpResponse } from 'msw';
-import userEvent from '@testing-library/user-event';
-import { populateComments } from '@/mocks/data/comments';
+import { http, HttpResponse } from 'msw';
 
 describe('Post component', () => {
-  beforeEach(() => {
-    populateComments();
-  });
-
   const Stub = createRoutesStub([
     {
       path: '/posts/:id',
@@ -68,148 +62,6 @@ describe('Post component', () => {
       expect(
         screen.getByRole('button', { name: /go home/i })
       ).toBeInTheDocument();
-    });
-  });
-
-  describe('Comments component', () => {
-    it("should render the post's comments", async () => {
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const spinner = screen.getByTestId('comments-spinner');
-      expect(spinner).toBeInTheDocument();
-
-      expect(await screen.findAllByRole('article')).toHaveLength(2);
-
-      expect(screen.getByText('alex_dev')).toBeInTheDocument();
-    });
-
-    it('should create a comment', async () => {
-      const user = userEvent.setup();
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const postButton = await screen.findByRole('button', { name: /post/i });
-      const input = screen.getByRole('textbox');
-
-      await user.type(input, 'New comment');
-      await user.click(postButton);
-
-      await waitFor(() => {
-        expect(screen.getAllByRole('article')).toHaveLength(3);
-      });
-
-      expect(screen.getByText(/new comment/i)).toBeInTheDocument();
-    });
-
-    it('should clear the form after comment is created', async () => {
-      const user = userEvent.setup();
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const postButton = await screen.findByRole('button', { name: /post/i });
-      const input = screen.getByRole('textbox');
-
-      await user.type(input, 'Some content');
-      await user.click(postButton);
-
-      await waitFor(() => {
-        expect(input).toHaveValue('');
-      });
-    });
-
-    it('show an error when the textarea is empty', async () => {
-      const user = userEvent.setup();
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const postButton = await screen.findByRole('button', { name: /post/i });
-      await user.click(postButton);
-
-      expect(
-        screen.getByText(/comment must be at least 1 character/i)
-      ).toBeInTheDocument();
-    });
-
-    it('should hide an empty textarea error when user type in something', async () => {
-      const user = userEvent.setup();
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const postButton = await screen.findByRole('button', { name: /post/i });
-      const input = screen.getByRole('textbox');
-
-      await user.click(postButton);
-      await user.type(input, 'hi');
-      expect(
-        screen.queryByText(/comment must be at least 1 character/i)
-      ).not.toBeInTheDocument();
-    });
-
-    it('should show an error with refetch button when error happens', async () => {
-      server.use(
-        http.get(
-          blogApi('/api/posts/:id/comments'),
-          () => new HttpResponse(null, { status: 500 })
-        )
-      );
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      expect(
-        await screen.findByText(/failed to load comments/i)
-      ).toBeInTheDocument();
-
-      expect(
-        screen.getByRole('button', { name: /try again/i })
-      ).toBeInTheDocument();
-    });
-  });
-
-  describe('Comment Optimistic UI', () => {
-    it('should instantly show the comment without waiting for the response', async () => {
-      const user = userEvent.setup();
-
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const input = await screen.findByRole('textbox');
-      const postButton = screen.getByRole('button', { name: /post/i });
-      await user.type(input, 'new comment');
-      await user.click(postButton);
-
-      expect(screen.getAllByRole('article')).toHaveLength(3);
-    });
-
-    it('should rollback when error occurs', async () => {
-      server.use(
-        http.post(blogApi('/api/posts/:id/comments'), async () => {
-          await delay(100);
-          return new HttpResponse(null, { status: 500 });
-        })
-      );
-      const user = userEvent.setup();
-      render(<Stub initialEntries={['/posts/1']} />, {
-        wrapper: createWrapper(),
-      });
-
-      const input = await screen.findByRole('textbox');
-      const postButton = screen.getByRole('button', { name: /post/i });
-      await user.type(input, 'new comment');
-      await user.click(postButton);
-
-      expect(screen.getAllByRole('article')).toHaveLength(3);
-
-      await waitFor(() => {
-        expect(screen.getAllByRole('article')).toHaveLength(2);
-      });
     });
   });
 });

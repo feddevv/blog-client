@@ -97,6 +97,7 @@ describe('Home component', () => {
           blogApi('/api/posts'),
           async ({ request }) => {
             await delay(100);
+
             const url = new URL(request.url);
             const pageParam = url.searchParams.get('page') || '1';
 
@@ -151,10 +152,10 @@ describe('Home component', () => {
 
       const nextPage = screen.getByRole('button', { name: /next page/i });
       await user.click(nextPage);
-      expect(screen.getAllByRole('article')).toHaveLength(1);
       expect(
         await screen.findByRole('heading', { name: /title 2/i })
       ).toBeInTheDocument();
+      expect(screen.getAllByRole('article')).toHaveLength(1);
     });
   });
 });
