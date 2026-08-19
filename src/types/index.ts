@@ -52,3 +52,10 @@ export interface GetPostsResponse {
   currentPage: number;
   pageSize: number;
 }
+
+export interface GetCommentsResponse {
+  data: Comment[];
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+}

@@ -1,19 +1,28 @@
 import { blogApi } from '@/utils/utils';
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, type DefaultBodyType } from 'msw';
 import { mockComments } from '../data/comments';
 import type { CommentType } from '@/types/zod';
+import type { GetCommentsResponse } from '@/types';
 
 export const commentsHandler = [
-  http.get<{ id: string }>(blogApi('/api/posts/:id/comments'), ({ params }) => {
-    const { id } = params;
-    const idNumber = Number(id);
+  http.get<{ id: string }, DefaultBodyType, GetCommentsResponse>(
+    blogApi('/api/posts/:id/comments'),
+    ({ params }) => {
+      const { id } = params;
+      const idNumber = Number(id);
 
-    const postComments = mockComments.filter(
-      (comment) => comment.postId === idNumber
-    );
+      const postComments = mockComments.filter(
+        (comment) => comment.postId === idNumber
+      );
 
-    return HttpResponse.json(postComments);
-  }),
+      return HttpResponse.json({
+        data: postComments,
+        totalCount: postComments.length,
+        currentPage: 1,
+        pageSize: 10,
+      });
+    }
+  ),
 
   http.post<{ id: string }, CommentType>(
     blogApi('/api/posts/:id/comments'),

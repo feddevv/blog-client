@@ -1,12 +1,5 @@
-import type { Comment } from '@/types';
+import type { Comment, GetCommentsResponse } from '@/types';
 import { blogApi } from './config';
-
-interface GetCommentsResponse {
-  data: Comment[];
-  totalCount: number;
-  currentPage: number;
-  pageSize: number;
-}
 
 export const getCommentsByPostId = async (
   id: number,
