@@ -21,7 +21,7 @@ export default function Pagination({
         intent={'secondary'}
         className="rounded-full p-1"
         onClick={() => handleChangePage(currentPage - 1)}
-        disabled={currentPage === 1}
+        disabled={totalPages <= 1 || currentPage === 1}
         aria-label="Previous page"
       >
         <LuChevronLeft className="text-2xl" />
