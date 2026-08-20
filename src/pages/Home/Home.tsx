@@ -15,17 +15,17 @@ import Pagination from '@/components/Pagination';
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search') || '';
+  const page = searchParams.get('page') || '1';
 
   const [search, setSearch] = useState<string>(query);
   const debouncedSearch = useDebounce(search, 600);
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const {
     data: posts,
     isPending,
     isError,
     refetch,
-  } = usePosts(debouncedSearch, currentPage);
+  } = usePosts(debouncedSearch, Number(page));
   const totalPages = posts?.totalCount
     ? Math.ceil(posts.totalCount / posts.pageSize)
     : 0;
@@ -33,7 +33,10 @@ export default function Home() {
   const handleChangePage = (page: number) => {
     if (page < 1 || page > totalPages) return;
 
-    setCurrentPage(page);
+    setSearchParams((prev) => {
+      prev.set('page', `${page}`);
+      return prev;
+    });
   };
 
   useEffect(() => {
@@ -43,13 +46,14 @@ export default function Home() {
           prev.set('search', debouncedSearch);
         } else prev.delete('search');
 
+        prev.set('page', '1');
+
         return prev;
       },
+
       { replace: true }
     );
   }, [debouncedSearch]);
-
-  useEffect(() => setSearch(query), [query]);
 
   return (
     <>
@@ -75,7 +79,9 @@ export default function Home() {
               placeholder="Search 5000+ posts..."
               className="font-3xl"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
             />
           </LabelWrapper>
         </form>
@@ -109,16 +115,15 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              handleChangePage={handleChangePage}
-            />
           </>
         ) : (
           <NoPosts />
         )}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={Number(page)}
+          handleChangePage={handleChangePage}
+        />
       </section>
 
       <Footer />
