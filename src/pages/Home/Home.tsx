@@ -2,7 +2,6 @@ import Input from '@/components/Input';
 import { LabelWrapper } from '@/components/Label';
 import { LuSearch } from 'react-icons/lu';
 import Card from '@/components/Card';
-import Button from '@/components/Button';
 import Footer from '@/pages/Home/Footer';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
@@ -11,15 +10,34 @@ import useDebounce from '@/hooks/useDebounce';
 import { Link, useSearchParams } from 'react-router';
 import { usePosts } from '@/hooks/usePosts';
 import FailedToLoad from '@/components/FailedToLoad';
+import Pagination from '@/components/Pagination';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('search') || '';
+  const page = searchParams.get('page') || '1';
 
   const [search, setSearch] = useState<string>(query);
   const debouncedSearch = useDebounce(search, 600);
 
-  const { data, isPending, isError, refetch } = usePosts(debouncedSearch);
+  const {
+    data: posts,
+    isPending,
+    isError,
+    refetch,
+  } = usePosts(debouncedSearch, Number(page));
+  const totalPages = posts?.totalCount
+    ? Math.ceil(posts.totalCount / posts.pageSize)
+    : 0;
+
+  const handleChangePage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    setSearchParams((prev) => {
+      prev.set('page', `${page}`);
+      return prev;
+    });
+  };
 
   useEffect(() => {
     setSearchParams(
@@ -28,13 +46,14 @@ export default function Home() {
           prev.set('search', debouncedSearch);
         } else prev.delete('search');
 
+        prev.set('page', '1');
+
         return prev;
       },
+
       { replace: true }
     );
   }, [debouncedSearch]);
-
-  useEffect(() => setSearch(query), [query]);
 
   return (
     <>
@@ -60,7 +79,9 @@ export default function Home() {
               placeholder="Search 5000+ posts..."
               className="font-3xl"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
             />
           </LabelWrapper>
         </form>
@@ -76,10 +97,10 @@ export default function Home() {
             refetch={refetch}
             title="Failed to load posts"
           />
-        ) : data && data.length ? (
+        ) : posts.data && posts.data.length ? (
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {data.map((card) => (
+              {posts.data.map((card) => (
                 <Link to={`/post/${card.id}`} className="flex" key={card.id}>
                   <Card
                     img={'https://placehold.co/400x300'}
@@ -94,14 +115,15 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-
-            <Button intent={'secondary'} size={'md'}>
-              Load more posts
-            </Button>
           </>
         ) : (
           <NoPosts />
         )}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={Number(page)}
+          handleChangePage={handleChangePage}
+        />
       </section>
 
       <Footer />

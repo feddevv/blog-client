@@ -1,11 +1,17 @@
 import { createComment, getCommentsByPostId } from '@/services/comments';
 import type { User } from '@/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
-export const useCommentsByPostId = (id: number) => {
+export const useCommentsByPostId = (id: number, page?: number) => {
   return useQuery({
-    queryKey: ['post', id, 'comments'],
-    queryFn: () => getCommentsByPostId(id),
+    queryKey: ['post', id, 'comments', { page }],
+    queryFn: () => getCommentsByPostId(id, page),
+    placeholderData: keepPreviousData,
   });
 };
 

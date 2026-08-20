@@ -45,3 +45,17 @@ export interface User {
   password: string;
   role: UserRole;
 }
+
+export interface GetPostsResponse {
+  data: Post[];
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+}
+
+export interface GetCommentsResponse {
+  data: Comment[];
+  totalCount: number;
+  currentPage: number;
+  pageSize: number;
+}

@@ -1,8 +1,18 @@
-import type { Comment } from '@/types';
+import type { Comment, GetCommentsResponse } from '@/types';
 import { blogApi } from './config';
 
-export const getCommentsByPostId = async (id: number): Promise<Comment[]> => {
-  const res = await blogApi.get<Comment[]>(`/api/posts/${id}/comments`);
+export const getCommentsByPostId = async (
+  id: number,
+  page = 1
+): Promise<GetCommentsResponse> => {
+  const res = await blogApi.get<GetCommentsResponse>(
+    `/api/posts/${id}/comments`,
+    {
+      params: {
+        page,
+      },
+    }
+  );
 
   return res.data;
 };
