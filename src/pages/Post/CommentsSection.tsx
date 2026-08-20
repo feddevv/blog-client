@@ -96,11 +96,13 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
               ))}
 
             <div className="m-auto">
-              <Pagination
-                currentPage={currentPage}
-                handleChangePage={handleChangePage}
-                totalPages={totalPages}
-              />
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  handleChangePage={handleChangePage}
+                  totalPages={totalPages}
+                />
+              )}
             </div>
           </div>
         </div>

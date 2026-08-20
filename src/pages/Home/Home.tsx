@@ -119,11 +119,13 @@ export default function Home() {
         ) : (
           <NoPosts />
         )}
-        <Pagination
-          totalPages={totalPages}
-          currentPage={Number(page)}
-          handleChangePage={handleChangePage}
-        />
+        {totalPages > 1 && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={Number(page)}
+            handleChangePage={handleChangePage}
+          />
+        )}
       </section>
 
       <Footer />
