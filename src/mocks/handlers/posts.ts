@@ -29,7 +29,7 @@ export const postsHandlers = [
 
       return HttpResponse.json({
         data: filtered,
-        totalCount: mockPosts.length,
+        totalCount: filtered.length,
         pageSize: 10,
         currentPage: 1,
       });
