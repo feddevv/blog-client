@@ -29,10 +29,12 @@ export default function Pagination({
 
       {paginationRange.map((item, index) =>
         typeof item === 'string' ? (
-          <p className="text-xl text-primary">{item}</p>
+          <p className="text-xl text-primary" key={`dots-${index}`}>
+            {item}
+          </p>
         ) : (
           <Button
-            key={index}
+            key={item}
             intent={item == currentPage ? 'primary' : 'secondary'}
             className="p-1 w-8 h-8 rounded-full"
             onClick={() => handleChangePage(item)}
