@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-describe('Pagination component', async () => {
+describe('Pagination component', () => {
   it('should render correct page numbers', () => {
     render(
       <Pagination currentPage={1} totalPages={7} handleChangePage={() => {}} />

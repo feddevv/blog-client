@@ -90,7 +90,7 @@ describe('Home component', () => {
     });
   });
 
-  describe('Pagination', async () => {
+  describe('Pagination', () => {
     it('should properly render pagination and do navigation', async () => {
       server.use(
         http.get<PathParams, DefaultBodyType, GetPostsResponse>(
