@@ -69,7 +69,7 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
         <div className="max-w-200 px-4 mx-auto">
           <h2 className="flex items-center gap-2 font-bold font-heading text-[clamp(1.2rem,2vw,1.5rem)] text-foreground mb-2">
             <LuMessageCircle className="text-accent" />
-            {comments
+            {comments.data.length
               ? `${comments.totalCount} Comment${comments.totalCount > 1 ? 's' : ''}`
               : 'No comments yet'}
           </h2>
@@ -96,11 +96,13 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
               ))}
 
             <div className="m-auto">
-              <Pagination
-                currentPage={currentPage}
-                handleChangePage={handleChangePage}
-                totalPages={totalPages}
-              />
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  handleChangePage={handleChangePage}
+                  totalPages={totalPages}
+                />
+              )}
             </div>
           </div>
         </div>
