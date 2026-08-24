@@ -9,6 +9,8 @@ export interface Post {
   updatedAt: string;
   userId: number;
   state: PostState;
+  imageUrl: string;
+  imageKey: string;
 }
 
 export interface Comment {
