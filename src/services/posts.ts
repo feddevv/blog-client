@@ -3,6 +3,7 @@ import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
 export const getPosts = async (
+  signal: AbortSignal,
   search?: string,
   page = 1
 ): Promise<GetPostsResponse> => {
@@ -11,6 +12,7 @@ export const getPosts = async (
       search: search?.trim() || undefined,
       page,
     },
+    signal,
   };
 
   const res = await blogApi.get<GetPostsResponse>('/api/posts', config);
@@ -18,9 +20,12 @@ export const getPosts = async (
   return res.data;
 };
 
-export const getPostById = async (id: number): Promise<Post> => {
+export const getPostById = async (
+  signal: AbortSignal,
+  id: number
+): Promise<Post> => {
   try {
-    const res = await blogApi.get<Post>(`/api/posts/${id}`);
+    const res = await blogApi.get<Post>(`/api/posts/${id}`, { signal });
 
     return res.data;
   } catch (err) {
