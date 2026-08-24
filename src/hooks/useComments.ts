@@ -10,7 +10,7 @@ import {
 export const useCommentsByPostId = (id: number, page?: number) => {
   return useQuery({
     queryKey: ['post', id, 'comments', { page }],
-    queryFn: () => getCommentsByPostId(id, page),
+    queryFn: ({ signal }) => getCommentsByPostId(signal, id, page),
     placeholderData: keepPreviousData,
   });
 };

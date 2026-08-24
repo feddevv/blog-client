@@ -2,6 +2,7 @@ import type { Comment, GetCommentsResponse } from '@/types';
 import { blogApi } from './config';
 
 export const getCommentsByPostId = async (
+  signal: AbortSignal,
   id: number,
   page = 1
 ): Promise<GetCommentsResponse> => {
@@ -11,6 +12,7 @@ export const getCommentsByPostId = async (
       params: {
         page,
       },
+      signal,
     }
   );
 
