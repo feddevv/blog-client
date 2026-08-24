@@ -12,6 +12,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-01-15T08:30:00.000Z',
     userId: 42,
     state: 'PUBLISHED',
+    imageKey: 'post-image-1',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 2,
@@ -24,6 +26,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-02-03T14:20:00.000Z',
     userId: 42,
     state: 'PUBLISHED',
+    imageKey: 'post-image-2',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 3,
@@ -36,6 +40,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-03-12T09:45:00.000Z',
     userId: 42,
     state: 'DRAFT',
+    imageKey: 'post-image-3',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 4,
@@ -48,6 +54,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-04-05T16:00:00.000Z',
     userId: 42,
     state: 'PUBLISHED',
+    imageKey: 'post-image-4',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 5,
@@ -59,6 +67,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-05-21T07:30:00.000Z',
     userId: 42,
     state: 'HIDDEN',
+    imageKey: 'post-image-5',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 6,
@@ -71,6 +81,8 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-06-18T10:00:00.000Z',
     userId: 42,
     state: 'PUBLISHED',
+    imageKey: 'post-image-6',
+    imageUrl: 'https://placehold.co/400x300',
   },
   {
     id: 7,
@@ -83,5 +95,7 @@ export const mockPosts: Post[] = [
     updatedAt: '2026-08-01T11:20:00.000Z',
     userId: 42,
     state: 'DRAFT',
+    imageKey: 'post-image-7',
+    imageUrl: 'https://placehold.co/400x300',
   },
 ];
