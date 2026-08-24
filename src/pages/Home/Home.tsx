@@ -103,7 +103,7 @@ export default function Home() {
               {posts.data.map((card) => (
                 <Link to={`/post/${card.id}`} className="flex" key={card.id}>
                   <Card
-                    img={'https://placehold.co/400x300'}
+                    img={card.imageUrl}
                     title={card.title}
                     description={card.description ?? 'No description'}
                     likes={100}

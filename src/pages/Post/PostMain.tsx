@@ -32,7 +32,7 @@ export default function PostMain({ id }: PostMainProps) {
         <div className="border-b border-border h-px my-8"></div>
 
         <img
-          src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80"
+          src={post.imageUrl}
           alt=""
           className="object-cover w-full h-100 mb-8"
         />
