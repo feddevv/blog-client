@@ -5,6 +5,8 @@ import Post from './pages/Post/Post';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorPage from './components/ErrorPage';
+import SignInForm from './pages/Auth/SignInForm';
+import RegisterForm from './pages/Auth/RegisterForm';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
           {
             path: '/post/:id',
             element: <Post />,
+          },
+          {
+            path: '/login',
+            element: <SignInForm />,
+          },
+          {
+            path: '/register',
+            element: <RegisterForm />,
           },
         ],
       },
