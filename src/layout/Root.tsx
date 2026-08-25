@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import Header from './Header';
+import { Toaster } from 'sonner';
 
 export default function Root() {
   return (
@@ -9,6 +10,7 @@ export default function Root() {
       <main className="mt-16 flex-1 flex flex-col">
         <Outlet />
       </main>
+      <Toaster />
     </>
   );
 }

@@ -11,6 +11,8 @@ import ErrorMessage from '@/components/ErrorMessage';
 import { useRegister } from '@/hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
 import { NavLink, useNavigate } from 'react-router';
+import { toast } from 'sonner';
+import { LuX } from 'react-icons/lu';
 
 export default function RegisterForm() {
   const {
@@ -33,7 +35,12 @@ export default function RegisterForm() {
       },
       {
         onSuccess: () => {
-          alert("You're successfully registered!");
+          toast.success("You're successfully registered!", {
+            cancel: {
+              label: <LuX />,
+              onClick: () => {},
+            },
+          });
           navigate('/login');
         },
       }
