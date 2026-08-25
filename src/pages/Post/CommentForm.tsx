@@ -2,7 +2,7 @@ import Button from '@/components/Button';
 import Label from '@/components/Label';
 import { useCreateComment } from '@/hooks/useComments';
 import { LuSend } from 'react-icons/lu';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { commentSchema, type CommentType } from '@/types/zod';
@@ -12,6 +12,7 @@ export default function CommentForm() {
   const { id } = useParams();
   const user = useUser();
   const { mutate, isPending } = useCreateComment(user.data);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -23,7 +24,7 @@ export default function CommentForm() {
   });
 
   const onSubmit: SubmitHandler<CommentType> = (data) => {
-    if (!user.data) return;
+    if (!user.data) return navigate('/login');
     const postId = Number(id);
     if (!Number.isFinite(postId)) return;
 
