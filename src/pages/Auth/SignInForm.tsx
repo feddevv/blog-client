@@ -33,7 +33,7 @@ export default function SignInForm() {
         onSuccess: (data: AuthResponse) => {
           localStorage.setItem('token', data.token);
           queryClient.invalidateQueries({ queryKey: ['user'] });
-          navigate('/');
+          navigate('/', { replace: true });
         },
       }
     );
