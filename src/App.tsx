@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ErrorPage from './components/ErrorPage';
 import SignInForm from './pages/Auth/SignInForm';
 import RegisterForm from './pages/Auth/RegisterForm';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -26,11 +27,19 @@ const router = createBrowserRouter([
           },
           {
             path: '/login',
-            element: <SignInForm />,
+            element: (
+              <ProtectedRoute guestOnly={true}>
+                <SignInForm />
+              </ProtectedRoute>
+            ),
           },
           {
             path: '/register',
-            element: <RegisterForm />,
+            element: (
+              <ProtectedRoute guestOnly={true}>
+                <RegisterForm />,
+              </ProtectedRoute>
+            ),
           },
         ],
       },
