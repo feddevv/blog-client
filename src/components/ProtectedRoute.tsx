@@ -13,9 +13,9 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { data: user } = useUser();
 
-  if (user && guestOnly) return <Navigate to={'/'} />;
+  if (user && guestOnly) return <Navigate to={'/'} replace />;
 
-  if (!user && !guestOnly) return <Navigate to={'/login'} />;
+  if (!user && !guestOnly) return <Navigate to={'/login'} replace />;
 
   return children;
 }
