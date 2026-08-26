@@ -7,15 +7,13 @@ import Hamburger from './Hamburger';
 import { useTheme } from '@/hooks/useTheme';
 import { useLogout, useUser } from '@/hooks/useAuth';
 import { useQueryClient } from '@tanstack/react-query';
-import Spinner from '@/components/Spinner';
-import AuthForm from '@/pages/Auth/AuthForm';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleOpenMenu = () => setIsOpen(!isOpen);
   const { theme, setTheme } = useTheme();
 
-  const { data: user, isPending } = useUser();
+  const { data: user } = useUser();
   const { mutate: logoutRequest } = useLogout();
   const queryClient = useQueryClient();
 
@@ -80,20 +78,12 @@ export default function Header() {
               <LuLogOut className="text-xl text-muted-foreground cursor-pointer hover:text-primary transition-colors duration-75" />
             </button>
           ) : (
-            <Button
-              command="show-modal"
-              commandfor="account-modal"
-              intent={'primary'}
-              size={'sm'}
-              className="hidden md:inline"
-              disabled={isPending}
+            <NavLink
+              to={'/login'}
+              className="hidden md:inline bg-primary text-primary-foreground hover:bg-button-hover py-1 px-[clamp(1rem,2vw,1.5rem)] text-[clamp(14px,2vw,16px)]"
             >
-              {isPending ? (
-                <Spinner className="border-secondary border-r-transparent w-6 h-6" />
-              ) : (
-                'Sign In'
-              )}
-            </Button>
+              Sign In
+            </NavLink>
           )}
         </div>
       </header>
@@ -130,25 +120,15 @@ export default function Header() {
               <LuLogOut className="text-xl text-muted-foreground cursor-pointer group-hover:text-primary transition-colors duration-200" />
             </Button>
           ) : (
-            <Button
-              command="show-modal"
-              commandfor="account-modal"
-              intent={'primary'}
-              size={'sm'}
-              className="md:hidden"
-              disabled={isPending}
+            <NavLink
+              to={'/login'}
+              className="text-center bg-primary text-primary-foreground hover:bg-button-hover py-1 px-[clamp(1rem,2vw,1.5rem)] text-[clamp(14px,2vw,16px)]"
             >
-              {isPending ? (
-                <Spinner className="border-secondary border-r-transparent w-6 h-6" />
-              ) : (
-                'Sign In'
-              )}
-            </Button>
+              Sign In
+            </NavLink>
           )}
         </div>
       </nav>
-
-      <AuthForm id="account-modal" closedby="any" />
     </>
   );
 }

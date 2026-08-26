@@ -24,7 +24,7 @@ export const usersHandler = [
   http.post<PathParams, { username: string; password: string }>(
     blogApi('/api/auth/login'),
     async () => {
-      return HttpResponse.json({ toke: 'jwt_mocked_token' });
+      return HttpResponse.json({ token: 'jwt_mocked_token' });
     }
   ),
 
