@@ -1,11 +1,12 @@
 import { IoIosArrowBack } from 'react-icons/io';
-import { LuCopy, LuHeart } from 'react-icons/lu';
+import { LuCopy } from 'react-icons/lu';
 import { NavLink, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
 import { usePostById } from '@/hooks/usePosts';
 import { useTogglePostLikes } from '@/hooks/useLikes';
+import Like from '@/components/Like';
 
 export default function Post() {
   const { id } = useParams();
@@ -27,22 +28,13 @@ export default function Post() {
             </NavLink>
           </div>
 
-          <div className="flex gap-2">
-            <Button
-              intent={'secondary'}
-              className="flex items-center gap-1"
-              onClick={() => mutate({ id: Number(id) })}
-            >
-              <LuHeart
-                className={`text-sm ${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
-                fill={post?.isLiked ? 'currentColor' : 'none'}
-              />
-              <span
-                className={`${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
-              >
-                {post?.likesCount || 0}
-              </span>
-            </Button>
+          <div className="flex gap-4">
+            <Like
+              likes={post?.likesCount}
+              isLiked={post?.isLiked}
+              onLikeClick={() => mutate({ id: Number(id) })}
+              className="text-[18px]"
+            />
 
             <Button intent={'secondary'} className="flex items-center gap-1">
               <LuCopy className="text-sm" />
