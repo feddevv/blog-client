@@ -22,6 +22,8 @@ export interface Comment {
   updatedAt: string;
   userId: number;
   postId: number;
+  likesCount: number;
+  isLiked: boolean;
   user: {
     username: string;
   };

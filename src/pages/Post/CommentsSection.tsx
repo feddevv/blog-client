@@ -8,6 +8,7 @@ import { useMutationState } from '@tanstack/react-query';
 import { useUser } from '@/hooks/useAuth';
 import Pagination from '@/components/Pagination';
 import { useState } from 'react';
+import { useToggleCommentLikes } from '@/hooks/useLikes';
 
 interface CommentsSectionProps {
   id: number;
@@ -49,6 +50,8 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
     }),
   });
 
+  const { mutate } = useToggleCommentLikes({ postId: id });
+
   if (isError) {
     return (
       <section className="bg-muted py-16 border-t border-border flex items-center justify-center">
@@ -82,6 +85,9 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
                 createdAt={Date.now()}
                 content={mutationData[0].variables.content}
                 className="opacity-65"
+                likes={0}
+                isLiked={false}
+                onLikeClick={() => {}}
               />
             )}
 
@@ -92,6 +98,9 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
                   createdAt={comment.createdAt}
                   content={comment.content}
                   key={comment.id}
+                  likes={comment.likesCount}
+                  isLiked={comment.isLiked}
+                  onLikeClick={() => mutate({ id: comment.id })}
                 />
               ))}
 
