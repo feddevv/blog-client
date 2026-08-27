@@ -4,9 +4,11 @@ import { NavLink, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
+import { usePostById } from '@/hooks/usePosts';
 
 export default function Post() {
   const { id } = useParams();
+  const { data: post, isPending } = usePostById(Number(id));
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function Post() {
           <div className="flex gap-2">
             <Button intent={'secondary'} className="flex items-center gap-1">
               <LuHeart className="text-sm" />
-              312
+              {post?.likesCount || 0}
             </Button>
 
             <Button intent={'secondary'} className="flex items-center gap-1">
@@ -37,7 +39,7 @@ export default function Post() {
         </div>
       </div>
 
-      <PostMain id={Number(id)} />
+      <PostMain post={post} isPending={isPending} />
 
       <CommentsSection id={Number(id)} />
     </>

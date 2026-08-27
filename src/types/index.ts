@@ -11,6 +11,8 @@ export interface Post {
   state: PostState;
   imageUrl: string;
   imageKey: string;
+  likesCount: number;
+  isLiked: boolean;
 }
 
 export interface Comment {

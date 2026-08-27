@@ -100,13 +100,13 @@ export default function Home() {
         ) : posts.data && posts.data.length ? (
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {posts.data.map((card) => (
-                <Link to={`/post/${card.id}`} className="flex" key={card.id}>
+              {posts.data.map((post) => (
+                <Link to={`/post/${post.id}`} className="flex" key={post.id}>
                   <Card
-                    img={card.imageUrl}
-                    title={card.title}
-                    description={card.description ?? 'No description'}
-                    likes={100}
+                    img={post.imageUrl}
+                    title={post.title}
+                    description={post.description ?? 'No description'}
+                    likes={post.likesCount}
                     onLikeClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
