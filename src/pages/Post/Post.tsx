@@ -35,6 +35,7 @@ export default function Post() {
             >
               <LuHeart
                 className={`text-sm ${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+                fill={post?.isLiked ? 'currentColor' : 'none'}
               />
               <span
                 className={`${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}

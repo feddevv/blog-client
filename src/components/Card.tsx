@@ -46,6 +46,7 @@ export default function Card({
         >
           <LuHeart
             className={`text-sm group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+            fill={isLiked ? 'currentColor' : 'none'}
           />
           <p
             className={`text-sm group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
