@@ -6,6 +6,7 @@ export interface CardProps {
   title: string;
   description: string;
   likes: number;
+  isLiked: boolean;
   onLikeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -14,6 +15,7 @@ export default function Card({
   title,
   description,
   likes,
+  isLiked,
   onLikeClick,
 }: CardProps) {
   return (
@@ -42,8 +44,12 @@ export default function Card({
           className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes"
           onClick={onLikeClick}
         >
-          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive" />
-          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive">
+          <LuHeart
+            className={`text-sm group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+          />
+          <p
+            className={`text-sm group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+          >
             {likes}
           </p>
         </button>

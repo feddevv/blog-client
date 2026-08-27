@@ -5,10 +5,12 @@ import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
 import { usePostById } from '@/hooks/usePosts';
+import { useTogglePostLikes } from '@/hooks/useLikes';
 
 export default function Post() {
   const { id } = useParams();
   const { data: post, isPending } = usePostById(Number(id));
+  const { mutate } = useTogglePostLikes();
 
   return (
     <>
@@ -26,9 +28,19 @@ export default function Post() {
           </div>
 
           <div className="flex gap-2">
-            <Button intent={'secondary'} className="flex items-center gap-1">
-              <LuHeart className="text-sm" />
-              {post?.likesCount || 0}
+            <Button
+              intent={'secondary'}
+              className="flex items-center gap-1"
+              onClick={() => mutate({ id: Number(id) })}
+            >
+              <LuHeart
+                className={`text-sm ${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+              />
+              <span
+                className={`${post?.isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
+              >
+                {post?.likesCount || 0}
+              </span>
             </Button>
 
             <Button intent={'secondary'} className="flex items-center gap-1">
