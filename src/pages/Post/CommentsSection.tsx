@@ -9,7 +9,7 @@ import { useUser } from '@/hooks/useAuth';
 import Pagination from '@/components/Pagination';
 import { useState } from 'react';
 import { useToggleCommentLikes } from '@/hooks/useLikes';
-import { useNavigate } from 'react-router';
+import useAuthGuard from '@/hooks/useAuthGuard';
 
 interface CommentsSectionProps {
   id: number;
@@ -52,13 +52,10 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
   });
 
   const { mutate } = useToggleCommentLikes({ postId: id });
-  const navigate = useNavigate();
-  const handleOnLikeClick = (id: number) => {
-    if (!user) {
-      return navigate('/login');
-    }
+  const execute = useAuthGuard();
+  const handleOnLikeClick = execute((id: number) => {
     mutate({ id });
-  };
+  });
 
   if (isError) {
     return (

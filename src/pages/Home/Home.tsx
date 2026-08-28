@@ -5,14 +5,14 @@ import Card from '@/components/Card';
 import Footer from '@/pages/Home/Footer';
 import Spinner from '@/components/Spinner';
 import NoPosts from './NoPosts';
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { Link, useNavigate, useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { usePosts } from '@/hooks/usePosts';
 import FailedToLoad from '@/components/FailedToLoad';
 import Pagination from '@/components/Pagination';
 import { useTogglePostLikes } from '@/hooks/useLikes';
-import { useUser } from '@/hooks/useAuth';
+import useAuthGuard from '@/hooks/useAuthGuard';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,15 +59,8 @@ export default function Home() {
     );
   }, [debouncedSearch]);
 
-  const { data: user } = useUser();
-  const navigate = useNavigate();
-  const onLikeClick = (e: MouseEvent<HTMLButtonElement>, id: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!user) return navigate('/login');
-
-    mutate({ id });
-  };
+  const execute = useAuthGuard();
+  const handleOnLikeClick = execute((id: number) => mutate({ id }));
 
   return (
     <>
@@ -122,7 +115,10 @@ export default function Home() {
                     description={post.description ?? 'No description'}
                     likes={post.likesCount}
                     isLiked={post.isLiked}
-                    onLikeClick={(e) => onLikeClick(e, post.id)}
+                    onLikeClick={(e) => {
+                      e.preventDefault();
+                      handleOnLikeClick(post.id);
+                    }}
                   />
                 </Link>
               ))}
