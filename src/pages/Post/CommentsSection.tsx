@@ -9,6 +9,7 @@ import { useUser } from '@/hooks/useAuth';
 import Pagination from '@/components/Pagination';
 import { useState } from 'react';
 import { useToggleCommentLikes } from '@/hooks/useLikes';
+import { useNavigate } from 'react-router';
 
 interface CommentsSectionProps {
   id: number;
@@ -51,6 +52,13 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
   });
 
   const { mutate } = useToggleCommentLikes({ postId: id });
+  const navigate = useNavigate();
+  const handleOnLikeClick = (id: number) => {
+    if (!user) {
+      return navigate('/login');
+    }
+    mutate({ id });
+  };
 
   if (isError) {
     return (
@@ -100,7 +108,7 @@ export default function CommentsSection({ id }: CommentsSectionProps) {
                   key={comment.id}
                   likes={comment.likesCount}
                   isLiked={comment.isLiked}
-                  onLikeClick={() => mutate({ id: comment.id })}
+                  onLikeClick={() => handleOnLikeClick(comment.id)}
                 />
               ))}
 

@@ -1,17 +1,26 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { LuCopy } from 'react-icons/lu';
-import { NavLink, useParams } from 'react-router';
+import { NavLink, useNavigate, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
 import { usePostById } from '@/hooks/usePosts';
 import { useTogglePostLikes } from '@/hooks/useLikes';
 import Like from '@/components/Like';
+import { useUser } from '@/hooks/useAuth';
 
 export default function Post() {
   const { id } = useParams();
   const { data: post, isPending } = usePostById(Number(id));
   const { mutate } = useTogglePostLikes();
+
+  const { data: user } = useUser();
+  const navigate = useNavigate();
+  const onLikeClick = () => {
+    if (!user) return navigate('/login');
+
+    mutate({ id: Number(id) });
+  };
 
   return (
     <>
@@ -32,7 +41,7 @@ export default function Post() {
             <Like
               likes={post?.likesCount}
               isLiked={post?.isLiked}
-              onLikeClick={() => mutate({ id: Number(id) })}
+              onLikeClick={onLikeClick}
               className="text-[18px]"
             />
 
