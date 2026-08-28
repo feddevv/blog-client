@@ -14,6 +14,8 @@ export const mockPosts: Post[] = [
     state: 'PUBLISHED',
     imageKey: 'post-image-1',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: true,
+    likesCount: 133,
   },
   {
     id: 2,
@@ -28,6 +30,8 @@ export const mockPosts: Post[] = [
     state: 'PUBLISHED',
     imageKey: 'post-image-2',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: false,
+    likesCount: 20,
   },
   {
     id: 3,
@@ -42,6 +46,8 @@ export const mockPosts: Post[] = [
     state: 'DRAFT',
     imageKey: 'post-image-3',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: true,
+    likesCount: 55,
   },
   {
     id: 4,
@@ -56,6 +62,8 @@ export const mockPosts: Post[] = [
     state: 'PUBLISHED',
     imageKey: 'post-image-4',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: true,
+    likesCount: 31,
   },
   {
     id: 5,
@@ -69,6 +77,8 @@ export const mockPosts: Post[] = [
     state: 'HIDDEN',
     imageKey: 'post-image-5',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: false,
+    likesCount: 100,
   },
   {
     id: 6,
@@ -83,6 +93,8 @@ export const mockPosts: Post[] = [
     state: 'PUBLISHED',
     imageKey: 'post-image-6',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: false,
+    likesCount: 544,
   },
   {
     id: 7,
@@ -97,5 +109,7 @@ export const mockPosts: Post[] = [
     state: 'DRAFT',
     imageKey: 'post-image-7',
     imageUrl: 'https://placehold.co/400x300',
+    isLiked: false,
+    likesCount: 0,
   },
 ];
