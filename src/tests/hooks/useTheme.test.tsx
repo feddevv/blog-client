@@ -2,7 +2,7 @@ import { ThemeProvider } from '@/context/Theme/ThemeProvider';
 import { useTheme } from '@/hooks/useTheme';
 import { renderHook } from '@testing-library/react';
 import { act } from 'react';
-import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import { beforeEach, expect, it, vi } from 'vitest';
 import { describe } from 'vitest';
 
 const setupMatchMediaMock = (isMatches: boolean) => {

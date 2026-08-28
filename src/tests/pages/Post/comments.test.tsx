@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { createWrapper } from '@/tests/testUtils';
 import { populateComments } from '@/mocks/data/comments';
 import { createRoutesStub } from 'react-router';
@@ -27,6 +27,10 @@ describe('Comments section component', () => {
       path: '/posts/:id',
       Component: Post,
       ErrorBoundary: ErrorPage,
+    },
+    {
+      path: '/login',
+      Component: () => <h1>Login Page</h1>,
     },
   ]);
 
@@ -240,6 +244,112 @@ describe('Comments section component', () => {
       await user.click(nextPage);
       expect(await screen.findByText(/comment 2/i)).toBeInTheDocument();
       expect(screen.getAllByRole('article')).toHaveLength(1);
+    });
+  });
+
+  describe('Likes', () => {
+    it('should render like count for comments', async () => {
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const comments = await screen.findAllByRole('article');
+      expect(comments).toHaveLength(2);
+
+      const firstCommentLikeButton = within(comments[0]).getByRole('button', {
+        name: /like/i,
+      });
+      const secondCommentLikeButton = within(comments[1]).getByRole('button', {
+        name: /like/i,
+      });
+
+      expect(firstCommentLikeButton).toHaveTextContent('10');
+      expect(secondCommentLikeButton).toHaveTextContent('23');
+    });
+
+    it('should allow authenticated user to like an unliked comment', async () => {
+      const user = userEvent.setup();
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const comments = await screen.findAllByRole('article');
+      const secondComment = comments[1];
+      const likeButton = within(secondComment).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('23');
+
+      await user.click(likeButton);
+
+      await waitFor(() => {
+        expect(likeButton).toHaveTextContent('24');
+      });
+    });
+
+    it('should allow authenticated user to unlike an already liked comment', async () => {
+      const user = userEvent.setup();
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const comments = await screen.findAllByRole('article');
+      const firstComment = comments[0];
+      const likeButton = within(firstComment).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('10');
+
+      await user.click(likeButton);
+
+      await waitFor(() => {
+        expect(likeButton).toHaveTextContent('9');
+      });
+    });
+
+    it('should redirect unauthenticated user to login page when clicking comment like button', async () => {
+      server.use(
+        http.get(blogApi('/api/auth/me'), () => {
+          return new HttpResponse(null, { status: 401 });
+        })
+      );
+      const user = userEvent.setup();
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const comments = await screen.findAllByRole('article');
+      const likeButton = within(comments[0]).getByRole('button', {
+        name: /like/i,
+      });
+
+      await user.click(likeButton);
+
+      expect(
+        await screen.findByRole('heading', { name: /login page/i })
+      ).toBeInTheDocument();
+    });
+
+    it('should not change comment like count when server returns an error', async () => {
+      server.use(
+        http.post(blogApi('/api/comments/:id/likes'), () => {
+          return new HttpResponse(null, { status: 500 });
+        })
+      );
+      const user = userEvent.setup();
+      render(<Stub initialEntries={['/posts/1']} />, {
+        wrapper: createWrapper(),
+      });
+
+      const comments = await screen.findAllByRole('article');
+      const likeButton = within(comments[1]).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('23');
+
+      await user.click(likeButton);
+
+      expect(likeButton).toHaveTextContent('23');
     });
   });
 });

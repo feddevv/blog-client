@@ -9,6 +9,7 @@ describe('Card component', () => {
     description:
       'Essential tips and best practices for writing clean, maintainable code.',
     likes: 142,
+    isLiked: false,
   };
 
   it('should render basic card', () => {
@@ -18,6 +19,7 @@ describe('Card component', () => {
         title={card.title}
         description={card.description}
         likes={card.likes}
+        isLiked={card.isLiked}
       />
     );
 
