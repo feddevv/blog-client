@@ -17,7 +17,8 @@ export default function Like({
 }: LikeProps) {
   return (
     <button
-      aria-label="Like"
+      aria-label={isLiked ? 'Unlike' : 'Like'}
+      aria-pressed={isLiked}
       className={cn(
         'flex items-center gap-1 cursor-pointer group/likes',
         className
@@ -28,11 +29,11 @@ export default function Like({
         className={`group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
         fill={isLiked ? 'currentColor' : 'none'}
       />
-      <p
+      <span
         className={`group-hover/likes:text-destructive ${isLiked ? 'text-destructive' : 'text-muted-foreground'}`}
       >
         {likes || 0}
-      </p>
+      </span>
     </button>
   );
 }
