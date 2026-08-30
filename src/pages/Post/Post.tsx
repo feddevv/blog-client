@@ -1,12 +1,21 @@
 import { IoIosArrowBack } from 'react-icons/io';
-import { LuCopy, LuHeart } from 'react-icons/lu';
+import { LuCopy } from 'react-icons/lu';
 import { NavLink, useParams } from 'react-router';
 import Button from '@/components/Button';
 import PostMain from './PostMain';
 import CommentsSection from './CommentsSection';
+import { usePostById } from '@/hooks/usePosts';
+import { useTogglePostLikes } from '@/hooks/useLikes';
+import Like from '@/components/Like';
+import useAuthGuard from '@/hooks/useAuthGuard';
 
 export default function Post() {
   const { id } = useParams();
+  const { data: post, isPending } = usePostById(Number(id));
+  const { mutate } = useTogglePostLikes();
+
+  const execute = useAuthGuard();
+  const handleOnLikeClick = execute(() => mutate({ id: Number(id) }));
 
   return (
     <>
@@ -23,11 +32,13 @@ export default function Post() {
             </NavLink>
           </div>
 
-          <div className="flex gap-2">
-            <Button intent={'secondary'} className="flex items-center gap-1">
-              <LuHeart className="text-sm" />
-              312
-            </Button>
+          <div className="flex gap-4">
+            <Like
+              likes={post?.likesCount}
+              isLiked={post?.isLiked}
+              onLikeClick={handleOnLikeClick}
+              className="text-[18px]"
+            />
 
             <Button intent={'secondary'} className="flex items-center gap-1">
               <LuCopy className="text-sm" />
@@ -37,7 +48,7 @@ export default function Post() {
         </div>
       </div>
 
-      <PostMain id={Number(id)} />
+      <PostMain post={post} isPending={isPending} />
 
       <CommentsSection id={Number(id)} />
     </>

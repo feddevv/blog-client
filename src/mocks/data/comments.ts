@@ -15,6 +15,8 @@ export const populateComments = () => {
       user: {
         username: 'alex_dev',
       },
+      isLiked: true,
+      likesCount: 10,
     },
     {
       id: 2,
@@ -27,6 +29,8 @@ export const populateComments = () => {
       user: {
         username: 'kate_coder',
       },
+      isLiked: false,
+      likesCount: 23,
     },
     {
       id: 3,
@@ -39,6 +43,8 @@ export const populateComments = () => {
       user: {
         username: 'marco_ts',
       },
+      isLiked: false,
+      likesCount: 3,
     },
     {
       id: 4,
@@ -51,6 +57,8 @@ export const populateComments = () => {
       user: {
         username: 'alex_dev',
       },
+      isLiked: true,
+      likesCount: 4,
     },
     {
       id: 5,
@@ -63,6 +71,8 @@ export const populateComments = () => {
       user: {
         username: 'sarah_ui',
       },
+      isLiked: true,
+      likesCount: 50,
     },
   ];
 };

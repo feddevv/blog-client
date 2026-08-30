@@ -1,7 +1,7 @@
 import { server } from '@/mocks/node';
 import Home from '@/pages/Home/Home';
 import { blogApi } from '@/utils/utils';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import {
   delay,
   http,
@@ -21,6 +21,14 @@ describe('Home component', () => {
     {
       path: '/',
       Component: Home,
+    },
+    {
+      path: '/login',
+      Component: () => <h1>Login Page</h1>,
+    },
+    {
+      path: '/post/:id',
+      Component: () => <h1>Post Detail Page</h1>,
     },
   ]);
 
@@ -115,6 +123,8 @@ describe('Home component', () => {
                     state: 'PUBLISHED',
                     imageKey: 'post-image-1',
                     imageUrl: 'https://placehold.co/400x300',
+                    isLiked: false,
+                    likesCount: 0,
                   },
                 ],
                 totalCount: 2,
@@ -136,6 +146,8 @@ describe('Home component', () => {
                   state: 'PUBLISHED',
                   imageKey: 'post-image-2',
                   imageUrl: 'https://placehold.co/400x300',
+                  isLiked: false,
+                  likesCount: 0,
                 },
               ],
               totalCount: 2,
@@ -160,6 +172,118 @@ describe('Home component', () => {
         await screen.findByRole('heading', { name: /title 2/i })
       ).toBeInTheDocument();
       expect(screen.getAllByRole('article')).toHaveLength(1);
+    });
+  });
+
+  describe('Likes', () => {
+    it('should render like count for posts', async () => {
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      expect(posts).toHaveLength(mockPosts.length);
+
+      const firstPostLikeButton = within(posts[0]).getByRole('button', {
+        name: /like/i,
+      });
+      expect(firstPostLikeButton).toHaveTextContent(
+        `${mockPosts[0].likesCount}`
+      );
+    });
+
+    it('should allow authenticated user to like an unliked post', async () => {
+      const user = userEvent.setup();
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      const secondPostArticle = posts[1];
+      const likeButton = within(secondPostArticle).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('20');
+
+      await user.click(likeButton);
+
+      await waitFor(() => {
+        expect(likeButton).toHaveTextContent('21');
+      });
+    });
+
+    it('should allow authenticated user to unlike an already liked post', async () => {
+      const user = userEvent.setup();
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      const firstPostArticle = posts[0];
+      const likeButton = within(firstPostArticle).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('133');
+
+      await user.click(likeButton);
+
+      await waitFor(() => {
+        expect(likeButton).toHaveTextContent('132');
+      });
+    });
+
+    it('should prevent post card link navigation when clicking like button', async () => {
+      const user = userEvent.setup();
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      const likeButton = within(posts[0]).getByRole('button', {
+        name: /like/i,
+      });
+
+      await user.click(likeButton);
+
+      expect(
+        screen.queryByRole('heading', { name: /post detail page/i })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole('heading', { name: /writing worth your attention/i })
+      ).toBeInTheDocument();
+    });
+
+    it('should redirect unauthenticated user to login page when clicking like button', async () => {
+      server.use(
+        http.get(blogApi('/api/auth/me'), () => {
+          return new HttpResponse(null, { status: 401 });
+        })
+      );
+      const user = userEvent.setup();
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      const likeButton = within(posts[0]).getByRole('button', {
+        name: /like/i,
+      });
+
+      await user.click(likeButton);
+
+      expect(
+        await screen.findByRole('heading', { name: /login page/i })
+      ).toBeInTheDocument();
+    });
+
+    it('should not change like count when server returns an error', async () => {
+      server.use(
+        http.post(blogApi('/api/posts/:id/likes'), () => {
+          return new HttpResponse(null, { status: 500 });
+        })
+      );
+      const user = userEvent.setup();
+      render(<Stub />, { wrapper: createWrapper() });
+
+      const posts = await screen.findAllByRole('article');
+      const likeButton = within(posts[1]).getByRole('button', {
+        name: /like/i,
+      });
+      expect(likeButton).toHaveTextContent('20');
+
+      await user.click(likeButton);
+
+      expect(likeButton).toHaveTextContent('20');
     });
   });
 });

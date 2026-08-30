@@ -1,11 +1,12 @@
 import type { MouseEvent } from 'react';
-import { LuHeart } from 'react-icons/lu';
+import Like from './Like';
 
 export interface CardProps {
   img: string;
   title: string;
   description: string;
   likes: number;
+  isLiked: boolean;
   onLikeClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -14,6 +15,7 @@ export default function Card({
   title,
   description,
   likes,
+  isLiked,
   onLikeClick,
 }: CardProps) {
   return (
@@ -37,16 +39,12 @@ export default function Card({
 
         <div className="h-px w-ull bg-muted my-4 self-stretch"></div>
 
-        <button
-          aria-label="Like"
-          className="ml-auto self-start flex items-center gap-1 cursor-pointer group/likes"
-          onClick={onLikeClick}
-        >
-          <LuHeart className="text-sm text-muted-foreground group-hover/likes:text-destructive" />
-          <p className="text-sm text-muted-foreground group-hover/likes:text-destructive">
-            {likes}
-          </p>
-        </button>
+        <Like
+          isLiked={isLiked}
+          likes={likes}
+          onLikeClick={onLikeClick}
+          className="ml-auto text-sm"
+        />
       </div>
     </article>
   );

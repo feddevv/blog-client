@@ -39,6 +39,8 @@ export const commentsHandler = [
         user: {
           username: 'feddev',
         },
+        isLiked: false,
+        likesCount: 0,
       });
 
       return new HttpResponse(null, { status: 201 });

@@ -11,6 +11,8 @@ import { Link, useSearchParams } from 'react-router';
 import { usePosts } from '@/hooks/usePosts';
 import FailedToLoad from '@/components/FailedToLoad';
 import Pagination from '@/components/Pagination';
+import { useTogglePostLikes } from '@/hooks/useLikes';
+import useAuthGuard from '@/hooks/useAuthGuard';
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,6 +31,8 @@ export default function Home() {
   const totalPages = posts?.totalCount
     ? Math.ceil(posts.totalCount / posts.pageSize)
     : 0;
+
+  const { mutate } = useTogglePostLikes();
 
   const handleChangePage = (page: number) => {
     if (page < 1 || page > totalPages) return;
@@ -54,6 +58,9 @@ export default function Home() {
       { replace: true }
     );
   }, [debouncedSearch]);
+
+  const execute = useAuthGuard();
+  const handleOnLikeClick = execute((id: number) => mutate({ id }));
 
   return (
     <>
@@ -100,16 +107,17 @@ export default function Home() {
         ) : posts.data && posts.data.length ? (
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {posts.data.map((card) => (
-                <Link to={`/post/${card.id}`} className="flex" key={card.id}>
+              {posts.data.map((post) => (
+                <Link to={`/post/${post.id}`} className="flex" key={post.id}>
                   <Card
-                    img={card.imageUrl}
-                    title={card.title}
-                    description={card.description ?? 'No description'}
-                    likes={100}
+                    img={post.imageUrl}
+                    title={post.title}
+                    description={post.description ?? 'No description'}
+                    likes={post.likesCount}
+                    isLiked={post.isLiked}
                     onLikeClick={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
+                      handleOnLikeClick(post.id);
                     }}
                   />
                 </Link>

@@ -1,16 +1,15 @@
 import Spinner from '@/components/Spinner';
-import { usePostById } from '@/hooks/usePosts';
+import type { Post } from '@/types';
 import { formatDate } from '@/utils/utils';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 interface PostMainProps {
-  id: number;
+  post?: Post;
+  isPending: boolean;
 }
 
-export default function PostMain({ id }: PostMainProps) {
-  const { data: post, isPending } = usePostById(id);
-
+export default function PostMain({ isPending, post }: PostMainProps) {
   return isPending ? (
     <div className="flex-1 flex items-center justify-center">
       <Spinner testId="post-spinner" />

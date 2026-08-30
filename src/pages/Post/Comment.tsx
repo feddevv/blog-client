@@ -1,3 +1,4 @@
+import Like from '@/components/Like';
 import type { Comment } from '@/types';
 import { cn, formatDate } from '@/utils/utils';
 
@@ -5,6 +6,9 @@ interface CommentProps {
   username: string;
   createdAt: string | number | Date;
   content: string;
+  likes: number;
+  isLiked: boolean;
+  onLikeClick: () => void;
   className?: string;
 }
 
@@ -12,7 +16,10 @@ export default function Comment({
   username,
   createdAt,
   content,
+  likes,
+  isLiked,
   className,
+  onLikeClick,
 }: CommentProps) {
   return (
     <article className={cn(className)}>
@@ -26,6 +33,12 @@ export default function Comment({
       </div>
 
       <p className="text-muted-foreground text-[15px] mt-2">{content}</p>
+      <Like
+        className="mt-2 text-sm"
+        likes={likes}
+        isLiked={isLiked}
+        onLikeClick={onLikeClick}
+      />
     </article>
   );
 }

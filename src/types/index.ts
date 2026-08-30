@@ -11,6 +11,8 @@ export interface Post {
   state: PostState;
   imageUrl: string;
   imageKey: string;
+  likesCount: number;
+  isLiked: boolean;
 }
 
 export interface Comment {
@@ -20,6 +22,8 @@ export interface Comment {
   updatedAt: string;
   userId: number;
   postId: number;
+  likesCount: number;
+  isLiked: boolean;
   user: {
     username: string;
   };
