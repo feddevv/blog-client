@@ -5,13 +5,16 @@ export default function useAuthGuard() {
   const { data: user } = useUser();
   const navigate = useNavigate();
 
-  function execute<T extends (...args: Parameters<T>) => ReturnType<T>>(
-    action: T
+  function execute<TArgs extends unknown[], TReturn>(
+    action: (...args: TArgs) => TReturn
   ) {
-    return (...args: Parameters<T>) => {
-      if (!user) return navigate('/login');
+    return (...args: TArgs): TReturn | void => {
+      if (!user) {
+        navigate('/login');
+        return;
+      }
 
-      action(...args);
+      return action(...args);
     };
   }
 
