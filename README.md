@@ -68,4 +68,4 @@ Before getting started, make sure you have the following installed:
 
 For in-depth guides and architectural details, refer to the project documentation:
 
-- [Architecture](/src/docs/architecture.md)
+- [Architecture](docs/architecture.md)
