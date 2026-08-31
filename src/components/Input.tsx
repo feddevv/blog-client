@@ -1,6 +1,6 @@
 import { cn } from '@/utils/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { type InputHTMLAttributes } from 'react';
+import type React from 'react';
 
 const inputVariants = cva(
   'flex w-full text-sm text-primary font-normal outline-none focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-sm rounded-xs',
@@ -19,7 +19,7 @@ const inputVariants = cva(
 );
 
 type InputProps = VariantProps<typeof inputVariants> &
-  InputHTMLAttributes<HTMLInputElement>;
+  React.ComponentPropsWithoutRef<'input'>;
 
 export default function Input({ className, intent, ...props }: InputProps) {
   return (
