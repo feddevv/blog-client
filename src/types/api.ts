@@ -31,3 +31,8 @@ export interface RegisterResponse {
 export interface LogoutResponse {
   message: string;
 }
+
+// LIKES
+export interface ToggleLikeRequest {
+  id: number;
+}
