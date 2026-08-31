@@ -1,7 +1,7 @@
 import { blogApi } from '@/utils/utils';
 import { http, HttpResponse, type DefaultBodyType } from 'msw';
 import { mockComments } from '../data/comments';
-import type { CommentType } from '@/types/zod';
+import type { CreateCommentRequest } from '@/types/zod';
 import type { Comment, PaginatedResponse } from '@/types';
 
 export const commentsHandler = [
@@ -24,7 +24,7 @@ export const commentsHandler = [
     }
   ),
 
-  http.post<{ id: string }, CommentType>(
+  http.post<{ id: string }, Pick<CreateCommentRequest, 'content'>>(
     blogApi('/api/posts/:id/comments'),
     async ({ request }) => {
       const body = await request.json();
