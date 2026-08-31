@@ -1,12 +1,15 @@
-import type { RegisterType, SignInType } from '@/types/zod';
+import type { RegisterRequest, SignInRequest } from '@/types/zod';
 import { blogApi } from './config';
 import { isAxiosError } from 'axios';
-import type { ApiError, User } from '@/types';
+import type {
+  ApiError,
+  LoginResponse,
+  LogoutResponse,
+  RegisterResponse,
+  User,
+} from '@/types';
 
-interface LoginResponse {
-  token: string;
-}
-export const login = async (data: SignInType): Promise<LoginResponse> => {
+export const login = async (data: SignInRequest): Promise<LoginResponse> => {
   try {
     const res = await blogApi.post<LoginResponse>('/api/auth/login', data);
 
@@ -19,11 +22,8 @@ export const login = async (data: SignInType): Promise<LoginResponse> => {
   }
 };
 
-interface RegisterResponse {
-  message: string;
-}
 export const register = async (
-  data: RegisterType
+  data: RegisterRequest
 ): Promise<RegisterResponse> => {
   try {
     const res = await blogApi.post<RegisterResponse>(
@@ -46,8 +46,8 @@ export const getUser = async (): Promise<User> => {
   return res.data;
 };
 
-export const logout = async (): Promise<{ message: string }> => {
-  const res = await blogApi.post<{ message: string }>('/api/auth/logout');
+export const logout = async (): Promise<LogoutResponse> => {
+  const res = await blogApi.post<LogoutResponse>('/api/auth/logout');
 
   return res.data;
 };

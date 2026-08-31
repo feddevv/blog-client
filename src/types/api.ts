@@ -18,3 +18,16 @@ export interface ApiError {
   message: string;
   errors?: ApiErrorDetails[];
 }
+
+// AUTH
+export interface LoginResponse {
+  token: string;
+}
+
+export interface RegisterResponse {
+  message: string;
+}
+
+export interface LogoutResponse {
+  message: string;
+}
