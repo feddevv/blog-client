@@ -1,12 +1,13 @@
 import z from 'zod';
 
-export const commentSchema = z.object({
+export const createCommentSchema = z.object({
   content: z
     .string()
     .min(1, 'Comment must be at least 1 character')
     .max(400, 'Comment must not exceed 400 characters'),
 });
-export type CommentType = z.infer<typeof commentSchema>;
+export type CreateCommentFormValues = z.infer<typeof createCommentSchema>;
+export type CreateCommentRequest = CreateCommentFormValues & { postId: number };
 
 // AUTH SCHEMAS
 export const signInSchema = z.object({

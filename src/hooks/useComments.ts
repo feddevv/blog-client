@@ -1,5 +1,6 @@
 import { createComment, getCommentsByPostId } from '@/services/comments';
 import type { User } from '@/types';
+import type { CreateCommentRequest } from '@/types/zod';
 import {
   keepPreviousData,
   useMutation,
@@ -15,17 +16,11 @@ export const useCommentsByPostId = (id: number, page?: number) => {
   });
 };
 
-export const useCreateComment = (user: User | undefined) => {
+export const useCreateComment = (user?: User) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      content,
-      postId,
-    }: {
-      content: string;
-      postId: number;
-    }) => {
+    mutationFn: async ({ content, postId }: CreateCommentRequest) => {
       if (!user) return;
 
       return createComment({ content, postId });

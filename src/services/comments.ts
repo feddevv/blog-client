@@ -1,5 +1,6 @@
 import type { Comment, PaginatedResponse } from '@/types';
 import { blogApi } from './config';
+import type { CreateCommentRequest } from '@/types/zod';
 
 export const getCommentsByPostId = async (
   signal: AbortSignal,
@@ -22,10 +23,7 @@ export const getCommentsByPostId = async (
 export const createComment = async ({
   postId,
   content,
-}: {
-  postId: number;
-  content: string;
-}): Promise<Comment> => {
+}: CreateCommentRequest): Promise<Comment> => {
   const res = await blogApi.post<Comment>(`/api/posts/${postId}/comments`, {
     content,
   });
