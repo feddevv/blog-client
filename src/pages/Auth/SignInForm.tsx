@@ -3,7 +3,7 @@ import Input from '@/components/Input';
 import { GoLock } from 'react-icons/go';
 import Button from '@/components/Button';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { signInSchema, type SignInType } from '@/types/zod';
+import { signInSchema, type SignInRequest } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '@/components/ErrorMessage';
 import { useLogin } from '@/hooks/useAuth';
@@ -18,7 +18,7 @@ export default function SignInForm() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignInType>({
+  } = useForm<SignInRequest>({
     resolver: zodResolver(signInSchema),
   });
 
@@ -26,7 +26,7 @@ export default function SignInForm() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<SignInType> = (data) => {
+  const onSubmit: SubmitHandler<SignInRequest> = (data) => {
     mutate(
       { username: data.username, password: data.password },
       {
