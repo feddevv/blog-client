@@ -5,7 +5,7 @@ import { LuSend } from 'react-icons/lu';
 import { useNavigate, useParams } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { commentSchema, type CommentType } from '@/types/zod';
+import { createCommentSchema, type CreateCommentFormValues } from '@/types/zod';
 import { useUser } from '@/hooks/useAuth';
 
 export default function CommentForm() {
@@ -19,11 +19,11 @@ export default function CommentForm() {
     register,
     formState: { errors },
     reset,
-  } = useForm<CommentType>({
-    resolver: zodResolver(commentSchema),
+  } = useForm<CreateCommentFormValues>({
+    resolver: zodResolver(createCommentSchema),
   });
 
-  const onSubmit: SubmitHandler<CommentType> = (data) => {
+  const onSubmit: SubmitHandler<CreateCommentFormValues> = (data) => {
     if (!user.data) return navigate('/login');
     const postId = Number(id);
     if (!Number.isFinite(postId)) return;
