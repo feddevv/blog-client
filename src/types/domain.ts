@@ -9,7 +9,8 @@ export interface Post {
   updatedAt: string;
   userId: number;
   state: PostState;
-  imageUrl: string;
+  coverImageUrl: string;
+  thumbnailUrl: string;
   imageKey: string;
   likesCount: number;
   isLiked: boolean;

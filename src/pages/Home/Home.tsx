@@ -110,7 +110,7 @@ export default function Home() {
               {posts.data.map((post) => (
                 <Link to={`/post/${post.id}`} className="flex" key={post.id}>
                   <Card
-                    img={post.imageUrl}
+                    img={post.thumbnailUrl}
                     title={post.title}
                     description={post.description ?? 'No description'}
                     likes={post.likesCount}
