@@ -5,7 +5,7 @@ import { GoLock } from 'react-icons/go';
 import Button from '@/components/Button';
 import { FiGithub, FiUser } from 'react-icons/fi';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { registerSchema, type RegisterType } from '@/types/zod';
+import { registerSchema, type RegisterRequest } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ErrorMessage from '@/components/ErrorMessage';
 import { useRegister } from '@/hooks/useAuth';
@@ -19,14 +19,14 @@ export default function RegisterForm() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<RegisterType>({
+  } = useForm<RegisterRequest>({
     resolver: zodResolver(registerSchema),
   });
 
   const { mutate, isPending, error: apiError, isError } = useRegister();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<RegisterType> = (data) => {
+  const onSubmit: SubmitHandler<RegisterRequest> = (data) => {
     mutate(
       {
         email: data.email,

@@ -1,12 +1,11 @@
 import { cn } from '@/utils/utils';
 
-export default function Spinner({
-  className,
-  testId,
-}: {
+interface SpinnerProps {
   className?: string;
   testId: string;
-}) {
+}
+
+export default function Spinner({ className, testId }: SpinnerProps) {
   return (
     <div
       className={cn(

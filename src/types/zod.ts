@@ -1,14 +1,16 @@
-import z, { object, string } from 'zod';
+import z from 'zod';
 
-export const commentSchema = object({
-  content: string()
+export const createCommentSchema = z.object({
+  content: z
+    .string()
     .min(1, 'Comment must be at least 1 character')
     .max(400, 'Comment must not exceed 400 characters'),
 });
-export type CommentType = z.infer<typeof commentSchema>;
+export type CreateCommentFormValues = z.infer<typeof createCommentSchema>;
+export type CreateCommentRequest = CreateCommentFormValues & { postId: number };
 
 // AUTH SCHEMAS
-export const signInSchema = object({
+export const signInSchema = z.object({
   username: z
     .string({
       error: (issue) =>
@@ -30,7 +32,7 @@ export const signInSchema = object({
     .min(8, 'Password must be at least 8 characters')
     .max(120, 'Password must not exceed 120 characters'),
 });
-export type SignInType = z.infer<typeof signInSchema>;
+export type SignInRequest = z.infer<typeof signInSchema>;
 
 export const registerSchema = signInSchema.extend({
   email: z
@@ -44,4 +46,4 @@ export const registerSchema = signInSchema.extend({
     .max(255, 'Email must not exceed 255 characters')
     .toLowerCase(),
 });
-export type RegisterType = z.infer<typeof registerSchema>;
+export type RegisterRequest = z.infer<typeof registerSchema>;

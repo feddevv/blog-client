@@ -1,4 +1,4 @@
-import type { ApiError, GetPostsResponse, Post } from '@/types';
+import type { ApiError, PaginatedResponse, Post } from '@/types';
 import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
@@ -6,7 +6,7 @@ export const getPosts = async (
   signal: AbortSignal,
   search?: string,
   page = 1
-): Promise<GetPostsResponse> => {
+): Promise<PaginatedResponse<Post>> => {
   const config: AxiosRequestConfig = {
     params: {
       search: search?.trim() || undefined,
@@ -15,7 +15,7 @@ export const getPosts = async (
     signal,
   };
 
-  const res = await blogApi.get<GetPostsResponse>('/api/posts', config);
+  const res = await blogApi.get<PaginatedResponse<Post>>('/api/posts', config);
 
   return res.data;
 };

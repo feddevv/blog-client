@@ -3,17 +3,19 @@ import Button from './Button';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { cn } from '@/utils/utils';
 
+interface FailedToLoadProps {
+  isPending: boolean;
+  refetch: UseQueryResult['refetch'];
+  className?: string;
+  title: string;
+}
+
 export default function FailedToLoad({
   isPending,
   refetch,
   className,
   title,
-}: {
-  isPending: boolean;
-  refetch: UseQueryResult['refetch'];
-  className?: string;
-  title: string;
-}) {
+}: FailedToLoadProps) {
   return (
     <div className={cn('flex flex-col items-center', className)}>
       <LuCircleAlert className="text-4xl text-destructive" />

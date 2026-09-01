@@ -1,12 +1,13 @@
-import type { Comment, GetCommentsResponse } from '@/types';
+import type { Comment, PaginatedResponse } from '@/types';
 import { blogApi } from './config';
+import type { CreateCommentRequest } from '@/types/zod';
 
 export const getCommentsByPostId = async (
   signal: AbortSignal,
   id: number,
   page = 1
-): Promise<GetCommentsResponse> => {
-  const res = await blogApi.get<GetCommentsResponse>(
+): Promise<PaginatedResponse<Comment>> => {
+  const res = await blogApi.get<PaginatedResponse<Comment>>(
     `/api/posts/${id}/comments`,
     {
       params: {
@@ -22,10 +23,7 @@ export const getCommentsByPostId = async (
 export const createComment = async ({
   postId,
   content,
-}: {
-  postId: number;
-  content: string;
-}): Promise<Comment> => {
+}: CreateCommentRequest): Promise<Comment> => {
   const res = await blogApi.post<Comment>(`/api/posts/${postId}/comments`, {
     content,
   });

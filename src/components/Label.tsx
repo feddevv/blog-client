@@ -1,6 +1,6 @@
 import { cn } from '@/utils/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { type LabelHTMLAttributes } from 'react';
+import type React from 'react';
 
 const labelVariants = cva('font-paragraph font-medium', {
   variants: {
@@ -21,8 +21,7 @@ const labelVariants = cva('font-paragraph font-medium', {
   },
 });
 
-type BaseProps = LabelHTMLAttributes<HTMLLabelElement>;
-
+type BaseProps = React.ComponentPropsWithoutRef<'label'>;
 type LabelProps = VariantProps<typeof labelVariants> & BaseProps;
 
 export default function Label({

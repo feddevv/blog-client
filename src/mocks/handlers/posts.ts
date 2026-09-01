@@ -7,10 +7,10 @@ import {
   type PathParams,
 } from 'msw';
 import { mockPosts } from '../data/posts';
-import type { GetPostsResponse, Post } from '@/types';
+import type { PaginatedResponse, Post } from '@/types';
 
 export const postsHandlers = [
-  http.get<PathParams, DefaultBodyType, GetPostsResponse>(
+  http.get<PathParams, DefaultBodyType, PaginatedResponse<Post>>(
     blogApi('/api/posts'),
     async ({ request }) => {
       await delay(100);
