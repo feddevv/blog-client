@@ -123,6 +123,7 @@ export default function Header() {
             <NavLink
               to={'/login'}
               className="text-center bg-primary text-primary-foreground hover:bg-button-hover py-1 px-[clamp(1rem,2vw,1.5rem)] text-[clamp(14px,2vw,16px)]"
+              tabIndex={!isOpen ? -1 : 0}
             >
               Sign In
             </NavLink>
