@@ -38,6 +38,7 @@ export default function Pagination({
             intent={item == currentPage ? 'primary' : 'secondary'}
             className="p-1 w-8 h-8 rounded-full"
             onClick={() => handleChangePage(item)}
+            aria-label={`Page ${item}`}
           >
             {item}
           </Button>
