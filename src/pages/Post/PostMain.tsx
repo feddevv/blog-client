@@ -31,7 +31,7 @@ export default function PostMain({ isPending, post }: PostMainProps) {
         <div className="border-b border-border h-px my-8"></div>
 
         <img
-          src={post.imageUrl}
+          src={post.coverImageUrl}
           alt=""
           className="object-cover w-full h-100 mb-8"
         />
