@@ -43,7 +43,7 @@ export default function Card({
           isLiked={isLiked}
           likes={likes}
           onLikeClick={onLikeClick}
-          className="ml-auto text-sm"
+          className="ml-auto text-[18px]"
         />
       </div>
     </article>
