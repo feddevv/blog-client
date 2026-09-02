@@ -37,7 +37,20 @@ export default function PostMain({ isPending, post }: PostMainProps) {
         />
 
         <div className="max-w-200 mx-auto prose dark:prose-invert">
-          <Markdown remarkPlugins={[remarkGfm]}>{post.content ?? ''}</Markdown>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              table: ({ node, ...props }) => {
+                return (
+                  <div className="w-full overflow-x-auto">
+                    <table {...props} />
+                  </div>
+                );
+              },
+            }}
+          >
+            {post.content ?? ''}
+          </Markdown>
         </div>
       </section>
     )
