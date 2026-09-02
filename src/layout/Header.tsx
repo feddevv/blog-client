@@ -36,7 +36,10 @@ export default function Header() {
           <h1 className="font-bold text-xl text-primary">The Codex</h1>
         </div>
 
-        <nav className="hidden md:flex md:gap-4 md:text-muted-foreground">
+        <nav
+          className="hidden md:flex md:gap-4 md:text-muted-foreground"
+          aria-label="Main menu"
+        >
           <NavLink
             to={'/'}
             className={(state) =>
@@ -92,6 +95,7 @@ export default function Header() {
         className={`md:hidden bg-background h-0 overflow-hidden transition-all duration-200 fixed z-100 top-16 left-0 right-0 border-b border-b-border ${isOpen ? 'h-auto' : ''}`}
         aria-hidden={!isOpen}
         id="menu-content"
+        aria-label="Main menu"
       >
         <div className="flex flex-col p-4 gap-4">
           <NavLink

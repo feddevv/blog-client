@@ -16,7 +16,11 @@ export default function Pagination({
   const paginationRange = usePagination({ totalPages, currentPage });
 
   return (
-    <div className="flex items-center gap-1.5" role="navigation">
+    <div
+      className="flex items-center gap-1.5"
+      role="navigation"
+      aria-label="Pagination"
+    >
       <Button
         intent={'secondary'}
         className="rounded-full p-1"
