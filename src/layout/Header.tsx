@@ -18,12 +18,12 @@ export default function Header() {
   const queryClient = useQueryClient();
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
-  const logout = async () => {
+  const logout = () => {
     localStorage.removeItem('token');
 
     logoutRequest();
 
-    queryClient.resetQueries({ queryKey: ['user'] });
+    queryClient.resetQueries();
   };
 
   return (
