@@ -9,6 +9,7 @@ import SignInForm from './pages/Auth/SignInForm';
 import RegisterForm from './pages/Auth/RegisterForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
+import Admin from './pages/Admin';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
             path: '/admin',
             element: (
               <AdminRoute>
-                <h2>Admin</h2>
+                <Admin />
               </AdminRoute>
             ),
           },
