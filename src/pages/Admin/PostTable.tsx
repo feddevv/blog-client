@@ -1,9 +1,10 @@
+import type { Post } from '@/types';
 import PostTableRow from './PostTableRow';
 import type { AdminPostItem } from './types';
 import { LuFileQuestion } from 'react-icons/lu';
 
 interface PostTableProps {
-  posts: AdminPostItem[];
+  posts: Post[];
   onUpdate?: (post: AdminPostItem) => void;
   onDelete?: (post: AdminPostItem) => void;
 }

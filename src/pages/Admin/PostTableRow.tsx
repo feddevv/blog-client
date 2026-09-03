@@ -2,9 +2,10 @@ import Button from '@/components/Button';
 import StatusBadge from './StatusBadge';
 import { LuCalendar, LuPencil, LuTrash2, LuFileText } from 'react-icons/lu';
 import type { AdminPostItem } from './types';
+import type { Post } from '@/types';
 
 interface PostTableRowProps {
-  post: AdminPostItem;
+  post: Post;
   onUpdate?: (post: AdminPostItem) => void;
   onDelete?: (post: AdminPostItem) => void;
 }
