@@ -6,13 +6,16 @@ import Pagination from '@/components/Pagination';
 import { usePosts } from '@/hooks/usePosts';
 import { useState } from 'react';
 import type { StatusFilter } from './types';
+import useDebounce from '@/hooks/useDebounce';
 
 export default function Admin() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsState, setPostsState] = useState<StatusFilter>('ALL');
+  const [search, setSearch] = useState<string>('');
+  const debouncedSearch = useDebounce(search, 400);
 
   const { data: posts, isPending } = usePosts(
-    '',
+    debouncedSearch,
     currentPage,
     postsState === 'ALL' ? undefined : postsState
   );
@@ -32,8 +35,8 @@ export default function Admin() {
         />
 
         <AdminToolbar
-          searchTerm={''}
-          onSearchChange={() => {}}
+          searchTerm={search}
+          onSearchChange={setSearch}
           selectedFilter={postsState}
           onFilterChange={setPostsState}
         />
