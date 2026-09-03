@@ -3,6 +3,8 @@ import AdminToolbar from './AdminToolbar';
 import PostTable from './PostTable';
 import Pagination from '@/components/Pagination';
 import type { AdminPostItem } from './types';
+import { usePosts } from '@/hooks/usePosts';
+import { useState } from 'react';
 
 const DEFAULT_POSTS: AdminPostItem[] = [
   {
@@ -74,6 +76,10 @@ const DEFAULT_POSTS: AdminPostItem[] = [
 ];
 
 export default function Admin() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data: posts } = usePosts('', currentPage);
+  const totalPages = posts ? Math.ceil(posts.totalCount / posts.pageSize) : 1;
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <AdminHeader
@@ -108,9 +114,9 @@ export default function Admin() {
         </p>
 
         <Pagination
-          totalPages={3}
-          currentPage={1}
-          handleChangePage={() => {}}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleChangePage={setCurrentPage}
         />
       </div>
     </div>
