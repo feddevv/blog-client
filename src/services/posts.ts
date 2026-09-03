@@ -1,16 +1,18 @@
-import type { ApiError, PaginatedResponse, Post } from '@/types';
+import type { ApiError, PaginatedResponse, Post, PostState } from '@/types';
 import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
 export const getPosts = async (
   signal: AbortSignal,
   search?: string,
-  page = 1
+  page = 1,
+  state?: PostState
 ): Promise<PaginatedResponse<Post>> => {
   const config: AxiosRequestConfig = {
     params: {
       search: search?.trim() || undefined,
       page,
+      state,
     },
     signal,
   };

@@ -5,11 +5,17 @@ import PostTable from './PostTable';
 import Pagination from '@/components/Pagination';
 import { usePosts } from '@/hooks/usePosts';
 import { useState } from 'react';
+import type { StatusFilter } from './types';
 
 export default function Admin() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [postsState, setPostsState] = useState<StatusFilter>('ALL');
 
-  const { data: posts, isPending } = usePosts('', currentPage);
+  const { data: posts, isPending } = usePosts(
+    '',
+    currentPage,
+    postsState === 'ALL' ? undefined : postsState
+  );
 
   return isPending ? (
     <Spinner testId="admin-spinner" className="m-auto" />
@@ -19,7 +25,7 @@ export default function Admin() {
         <AdminHeader
           totalCount={posts.data.length}
           publishedCount={
-            posts?.data.filter((p) => p.state === 'PUBLISHED').length
+            posts.data.filter((p) => p.state === 'PUBLISHED').length
           }
           draftCount={posts.data.filter((p) => p.state === 'DRAFT').length}
           hiddenCount={posts.data.filter((p) => p.state === 'HIDDEN').length}
@@ -28,8 +34,8 @@ export default function Admin() {
         <AdminToolbar
           searchTerm={''}
           onSearchChange={() => {}}
-          selectedFilter={'ALL'}
-          onFilterChange={() => {}}
+          selectedFilter={postsState}
+          onFilterChange={setPostsState}
         />
 
         <PostTable posts={posts.data || []} />

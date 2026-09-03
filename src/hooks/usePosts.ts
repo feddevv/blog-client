@@ -1,10 +1,11 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getPostById, getPosts } from '@/services/posts';
+import type { PostState } from '@/types';
 
-export function usePosts(search: string, page?: number) {
+export function usePosts(search: string, page?: number, state?: PostState) {
   return useQuery({
-    queryKey: ['posts', { search, page }],
-    queryFn: ({ signal }) => getPosts(signal, search, page),
+    queryKey: ['posts', { search, page, state }],
+    queryFn: ({ signal }) => getPosts(signal, search, page, state),
     placeholderData: keepPreviousData,
   });
 }
