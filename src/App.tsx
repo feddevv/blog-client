@@ -8,6 +8,7 @@ import ErrorPage from './components/ErrorPage';
 import SignInForm from './pages/Auth/SignInForm';
 import RegisterForm from './pages/Auth/RegisterForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,14 @@ const router = createBrowserRouter([
               <ProtectedRoute guestOnly={true}>
                 <RegisterForm />,
               </ProtectedRoute>
+            ),
+          },
+          {
+            path: '/admin',
+            element: (
+              <AdminRoute>
+                <h2>Admin</h2>
+              </AdminRoute>
             ),
           },
         ],
