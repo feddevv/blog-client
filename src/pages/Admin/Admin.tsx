@@ -4,23 +4,27 @@ import AdminToolbar from './AdminToolbar';
 import PostTable from './PostTable';
 import Pagination from '@/components/Pagination';
 import { usePosts } from '@/hooks/usePosts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { StatusFilter } from './types';
 import useDebounce from '@/hooks/useDebounce';
 import { useSearchParams } from 'react-router';
 
 export default function Admin() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [postsState, setPostsState] = useState<StatusFilter>('ALL');
-  const [search, setSearch] = useState<string>('');
-  const debouncedSearch = useDebounce(search, 400);
+
+  const query = searchParams.get('search') || '';
   const page = searchParams.get('page') || 1;
+  const state = (searchParams.get('state') as StatusFilter) || 'ALL';
+
+  const [search, setSearch] = useState<string>(query);
+  const debouncedSearch = useDebounce(search, 400);
 
   const { data: posts, isPending } = usePosts(
     debouncedSearch,
     Number(page),
-    postsState === 'ALL' ? undefined : postsState
+    state === 'ALL' ? undefined : state
   );
+
   const totalPages = posts?.totalCount
     ? Math.ceil(posts.totalCount / posts.pageSize)
     : 0;
@@ -34,6 +38,25 @@ export default function Admin() {
       return prev;
     });
   };
+  const handleChangeState = (filter: StatusFilter) => {
+    setSearchParams((prev) => {
+      prev.set('state', filter);
+      return prev;
+    });
+  };
+
+  useEffect(() => setSearch(query), [query]);
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        if (debouncedSearch.trim()) prev.set('search', debouncedSearch);
+        else prev.delete('search');
+
+        return prev;
+      },
+      { replace: true }
+    );
+  }, [debouncedSearch]);
 
   return isPending ? (
     <Spinner testId="admin-spinner" className="m-auto" />
@@ -52,8 +75,8 @@ export default function Admin() {
         <AdminToolbar
           searchTerm={search}
           onSearchChange={setSearch}
-          selectedFilter={postsState}
-          onFilterChange={setPostsState}
+          selectedFilter={state}
+          onFilterChange={handleChangeState}
         />
 
         <PostTable posts={posts.data || []} />
