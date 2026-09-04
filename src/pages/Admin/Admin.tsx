@@ -7,18 +7,33 @@ import { usePosts } from '@/hooks/usePosts';
 import { useState } from 'react';
 import type { StatusFilter } from './types';
 import useDebounce from '@/hooks/useDebounce';
+import { useSearchParams } from 'react-router';
 
 export default function Admin() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [postsState, setPostsState] = useState<StatusFilter>('ALL');
   const [search, setSearch] = useState<string>('');
   const debouncedSearch = useDebounce(search, 400);
+  const page = searchParams.get('page') || 1;
 
   const { data: posts, isPending } = usePosts(
     debouncedSearch,
-    currentPage,
+    Number(page),
     postsState === 'ALL' ? undefined : postsState
   );
+  const totalPages = posts?.totalCount
+    ? Math.ceil(posts.totalCount / posts.pageSize)
+    : 0;
+
+  const handleChangePage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+
+    setSearchParams((prev) => {
+      prev.set('page', `${page}`);
+
+      return prev;
+    });
+  };
 
   return isPending ? (
     <Spinner testId="admin-spinner" className="m-auto" />
@@ -58,8 +73,8 @@ export default function Admin() {
 
           <Pagination
             totalPages={Math.ceil(posts.totalCount / posts.pageSize)}
-            currentPage={currentPage}
-            handleChangePage={setCurrentPage}
+            currentPage={Number(page)}
+            handleChangePage={handleChangePage}
           />
         </div>
       </div>
