@@ -94,11 +94,13 @@ export default function Admin() {
             posts
           </p>
 
-          <Pagination
-            totalPages={Math.ceil(posts.totalCount / posts.pageSize)}
-            currentPage={Number(page)}
-            handleChangePage={handleChangePage}
-          />
+          {totalPages > 1 && (
+            <Pagination
+              totalPages={Math.ceil(posts.totalCount / posts.pageSize)}
+              currentPage={Number(page)}
+              handleChangePage={handleChangePage}
+            />
+          )}
         </div>
       </div>
     )
