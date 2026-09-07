@@ -23,19 +23,16 @@ export default function PostTable({
         >
           <thead>
             <tr className="border-b border-border bg-secondary/50 font-paragraph text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              <th scope="col" className="py-3.5 px-4 w-1/2 min-w-[280px]">
+              <th scope="col" className="py-3.5 px-4 w-1/2 min-w-70">
                 Title
               </th>
-              <th scope="col" className="py-3.5 px-4 w-1/6 min-w-[140px]">
+              <th scope="col" className="py-3.5 px-4 w-1/6 min-w-35">
                 Status
               </th>
-              <th scope="col" className="py-3.5 px-4 w-1/6 min-w-[140px]">
+              <th scope="col" className="py-3.5 px-4 w-1/6 min-w-35">
                 Date
               </th>
-              <th
-                scope="col"
-                className="py-3.5 px-4 w-1/6 min-w-[160px] text-right"
-              >
+              <th scope="col" className="py-3.5 px-4 w-1/6 min-w-40 text-right">
                 Actions
               </th>
             </tr>
