@@ -40,10 +40,17 @@ export const register = async (
   }
 };
 
-export const getUser = async (): Promise<User> => {
-  const res = await blogApi.get<User>('/api/auth/me');
+export const getUser = async (): Promise<User | null> => {
+  try {
+    const res = await blogApi.get<User>('/api/auth/me');
+    return res.data;
+  } catch (err) {
+    if (isAxiosError(err) && err.status === 401) {
+      return null;
+    }
 
-  return res.data;
+    throw err;
+  }
 };
 
 export const logout = async (): Promise<LogoutResponse> => {
