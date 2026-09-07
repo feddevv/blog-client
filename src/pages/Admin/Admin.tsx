@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import type { AdminPostItem, StatusFilter } from './types';
 import useDebounce from '@/hooks/useDebounce';
 import { useSearchParams } from 'react-router';
+import { toast } from 'sonner';
 
 export default function Admin() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,7 +49,11 @@ export default function Admin() {
   };
   const handleDeletePost = (post: AdminPostItem) => {
     if (window.confirm('Are you sure?')) {
-      deletePost(post.id);
+      deletePost(post.id, {
+        onSuccess: () => {
+          toast.success('Post was successfully deleted');
+        },
+      });
     }
   };
 
