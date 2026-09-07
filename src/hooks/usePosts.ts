@@ -1,4 +1,9 @@
-import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { deletePostById, getPostById, getPosts } from '@/services/posts';
 import type { PostState } from '@/types';
 
@@ -20,7 +25,13 @@ export function usePostById(id: number) {
 }
 
 export function useDeletePostById() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => deletePostById(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['posts'],
+      });
+    },
   });
 }
