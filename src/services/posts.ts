@@ -1,4 +1,10 @@
-import type { ApiError, PaginatedResponse, Post, PostState } from '@/types';
+import type {
+  ApiError,
+  DeletePostResponse,
+  PaginatedResponse,
+  Post,
+  PostState,
+} from '@/types';
 import { blogApi } from './config';
 import { isAxiosError, type AxiosRequestConfig } from 'axios';
 
@@ -37,4 +43,10 @@ export const getPostById = async (
 
     throw err;
   }
+};
+
+export const deletePostById = async (id: number) => {
+  const res = await blogApi.delete<DeletePostResponse>(`/api/posts/${id}`);
+
+  return res.data;
 };

@@ -36,3 +36,8 @@ export interface LogoutResponse {
 export interface ToggleLikeRequest {
   id: number;
 }
+
+// POSTS
+export interface DeletePostResponse {
+  message: string;
+}

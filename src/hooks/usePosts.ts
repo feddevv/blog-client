@@ -1,5 +1,5 @@
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { getPostById, getPosts } from '@/services/posts';
+import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
+import { deletePostById, getPostById, getPosts } from '@/services/posts';
 import type { PostState } from '@/types';
 
 export function usePosts(search: string, page?: number, state?: PostState) {
@@ -16,5 +16,11 @@ export function usePostById(id: number) {
     queryFn: ({ signal }) => getPostById(signal, id),
     throwOnError: true,
     retry: false,
+  });
+}
+
+export function useDeletePostById() {
+  return useMutation({
+    mutationFn: (id: number) => deletePostById(id),
   });
 }
