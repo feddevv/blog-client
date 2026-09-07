@@ -2,7 +2,7 @@ import { cn } from '@/utils/utils';
 
 interface SpinnerProps {
   className?: string;
-  testId: string;
+  testId?: string;
 }
 
 export default function Spinner({ className, testId }: SpinnerProps) {
