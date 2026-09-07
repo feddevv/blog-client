@@ -14,6 +14,7 @@ export default function PostTable({
   onUpdate,
   onDelete,
 }: PostTableProps) {
+
   return (
     <div className="border border-border bg-card overflow-hidden rounded-xs shadow-xs">
       <div className="overflow-x-auto">

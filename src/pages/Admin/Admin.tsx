@@ -3,9 +3,9 @@ import AdminHeader from './AdminHeader';
 import AdminToolbar from './AdminToolbar';
 import PostTable from './PostTable';
 import Pagination from '@/components/Pagination';
-import { usePosts } from '@/hooks/usePosts';
+import { useDeletePostById, usePosts } from '@/hooks/usePosts';
 import { useEffect, useState } from 'react';
-import type { StatusFilter } from './types';
+import type { AdminPostItem, StatusFilter } from './types';
 import useDebounce from '@/hooks/useDebounce';
 import { useSearchParams } from 'react-router';
 
@@ -28,6 +28,8 @@ export default function Admin() {
   const totalPages = posts?.totalCount
     ? Math.ceil(posts.totalCount / posts.pageSize)
     : 0;
+
+  const { mutate: deletePost } = useDeletePostById();
 
   const handleChangePage = (page: number) => {
     if (page < 1 || page > totalPages) return;
@@ -79,7 +81,10 @@ export default function Admin() {
           onFilterChange={handleChangeState}
         />
 
-        <PostTable posts={posts.data || []} />
+        <PostTable
+          posts={posts.data || []}
+          onDelete={(post: AdminPostItem) => deletePost(post.id)}
+        />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-border">
           <p className="text-xs font-paragraph text-muted-foreground">
