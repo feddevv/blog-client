@@ -46,6 +46,11 @@ export default function Admin() {
       return prev;
     });
   };
+  const handleDeletePost = (post: AdminPostItem) => {
+    if (window.confirm('Are you sure?')) {
+      deletePost(post.id);
+    }
+  };
 
   useEffect(() => setSearch(query), [query]);
   useEffect(() => {
@@ -81,10 +86,7 @@ export default function Admin() {
           onFilterChange={handleChangeState}
         />
 
-        <PostTable
-          posts={posts.data || []}
-          onDelete={(post: AdminPostItem) => deletePost(post.id)}
-        />
+        <PostTable posts={posts.data || []} onDelete={handleDeletePost} />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-border">
           <p className="text-xs font-paragraph text-muted-foreground">
