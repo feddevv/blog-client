@@ -1,3 +1,5 @@
+import type { PostState } from './domain';
+
 export interface PaginatedResponse<T> {
   data: T[];
   totalCount: number;
@@ -40,4 +42,12 @@ export interface ToggleLikeRequest {
 // POSTS
 export interface DeletePostResponse {
   message: string;
+}
+
+export interface CreatePostRequest {
+  title: string;
+  description: string;
+  content: string;
+  state: PostState;
+  postImage: File;
 }
