@@ -1,0 +1,123 @@
+import Label from '@/components/Label';
+import Textarea from '@/components/Textarea';
+import {
+  LuFileText,
+  LuBold,
+  LuItalic,
+  LuHeading,
+  LuQuote,
+  LuCode,
+  LuList,
+  LuListOrdered,
+  LuLink,
+  LuImage,
+  LuSparkles,
+  LuEye,
+  LuFilePenLine,
+} from 'react-icons/lu';
+
+export default function ContentEditorField() {
+  const toolbarButtons = [
+    { icon: LuBold, label: 'Bold', shortcut: '**text**' },
+    { icon: LuItalic, label: 'Italic', shortcut: '*text*' },
+    { icon: LuHeading, label: 'Heading', shortcut: '# Heading' },
+    { icon: LuQuote, label: 'Quote', shortcut: '> Quote' },
+    { icon: LuCode, label: 'Code', shortcut: '`code`' },
+    { icon: LuList, label: 'Bullet List', shortcut: '- Item' },
+    { icon: LuListOrdered, label: 'Numbered List', shortcut: '1. Item' },
+    { icon: LuLink, label: 'Link', shortcut: '[title](url)' },
+    { icon: LuImage, label: 'Image', shortcut: '![alt](url)' },
+  ];
+
+  return (
+    <div
+      className={`bg-card border border-border rounded-xs overflow-hidden flex flex-col`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-border bg-secondary/30">
+        <div className="flex items-center gap-2">
+          <Label
+            htmlFor="post-content"
+            intent="primary"
+            size="sm"
+            className="uppercase tracking-wider font-semibold text-xs flex items-center gap-1.5"
+          >
+            <LuFileText className="text-accent text-sm" />
+            Article Content <span className="text-accent">*</span>
+          </Label>
+        </div>
+
+        <div
+          className="flex items-center bg-secondary p-1 border border-border rounded-xs"
+          role="tablist"
+          aria-label="Editor view modes"
+        >
+          <button
+            type="button"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium bg-card text-foreground shadow-xs rounded-xs cursor-pointer"
+            role="tab"
+            aria-selected="true"
+          >
+            <LuFilePenLine className="text-xs text-accent" />
+            <span>Write</span>
+          </button>
+          <button
+            type="button"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium text-muted-foreground hover:text-foreground rounded-xs cursor-pointer transition-colors"
+            role="tab"
+            aria-selected="false"
+          >
+            <LuEye className="text-xs" />
+            <span>Preview</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Formatting Toolbar */}
+      <div
+        className="flex flex-wrap items-center gap-1 p-2 border-b border-border bg-card"
+        role="toolbar"
+        aria-label="Markdown formatting toolbar"
+      >
+        {toolbarButtons.map((btn, index) => {
+          const Icon = btn.icon;
+          return (
+            <button
+              key={index}
+              type="button"
+              title={`${btn.label} (${btn.shortcut})`}
+              aria-label={btn.label}
+              className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xs transition-colors cursor-pointer text-sm"
+            >
+              <Icon />
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Content Textarea */}
+      <div className="relative">
+        <Textarea
+          id="post-content"
+          name="content"
+          rows={18}
+          placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
+          className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
+        />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-secondary/30 border-t border-border text-xs font-paragraph text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <LuSparkles className="text-accent text-xs" />
+          <span>Markdown & GitHub Flavored Markdown (GFM) supported</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span>0 words</span>
+          <span>·</span>
+          <span>0 lines</span>
+          <span>·</span>
+          <span>~0 min read</span>
+        </div>
+      </div>
+    </div>
+  );
+}

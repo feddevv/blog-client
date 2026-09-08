@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import { NavLink } from 'react-router';
 import Input from '@/components/Input';
 import { LabelWrapper } from '@/components/Label';
 import { LuPlus, LuSearch, LuFilter } from 'react-icons/lu';
@@ -71,16 +71,14 @@ export default function AdminToolbar({
       </div>
 
       <div className="flex items-center justify-end">
-        <Button
-          intent="primary"
-          size="sm"
+        <NavLink
+          to={'/create-post'}
           onClick={onCreatePost}
-          className="flex items-center gap-2 font-medium shadow-xs w-full sm:w-auto"
-          aria-label="Create post"
+          className="flex items-center gap-2 font-medium shadow-xs w-full sm:w-auto bg-primary text-primary-foreground py-1 px-4 hover:bg-button-hover active:scale-98 transition-all duration-200"
         >
           <LuPlus className="text-base" />
           <span>Create post</span>
-        </Button>
+        </NavLink>
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import RegisterForm from './pages/Auth/RegisterForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import Admin from './pages/Admin';
+import CreatePost from './pages/CreatePost';
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
             element: (
               <AdminRoute>
                 <Admin />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: '/create-post',
+            element: (
+              <AdminRoute>
+                <CreatePost />
               </AdminRoute>
             ),
           },
