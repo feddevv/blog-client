@@ -55,7 +55,7 @@ export default function ImageUploadField({
           type="file"
           id="post-image-file"
           accept="image/png,image/jpeg,image/webp,image/gif"
-          {...register('image')}
+          {...register('postImage')}
         />
       </div>
 

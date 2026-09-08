@@ -66,7 +66,7 @@ export const createPostSchema = z.object({
 
   state: z.enum(['PUBLISHED', 'HIDDEN', 'DRAFT']),
 
-  image: z
+  postImage: z
     .instanceof(FileList)
     .refine((images) => images.length > 0, 'Image is required')
     .refine(

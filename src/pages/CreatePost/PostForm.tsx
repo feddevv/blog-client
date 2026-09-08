@@ -33,7 +33,7 @@ export default function PostForm() {
         <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
           <PublishCard />
           <StateField register={register} error={errors.state} />
-          <ImageUploadField register={register} error={errors.image} />
+          <ImageUploadField register={register} error={errors.postImage} />
         </div>
       </div>
     </form>
