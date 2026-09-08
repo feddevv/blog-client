@@ -15,6 +15,7 @@ export default function PostForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<CreatePostFormValues>({
     resolver: zodResolver(createPostSchema),
   });
@@ -32,6 +33,7 @@ export default function PostForm() {
     mutate(formData, {
       onSuccess: () => {
         toast.success('Post successfully created');
+        reset();
       },
     });
   };
