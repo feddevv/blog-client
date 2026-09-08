@@ -7,6 +7,7 @@ import PublishCard from './PublishCard';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { createPostSchema, type CreatePostFormValues } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreatePost } from '@/hooks/usePosts';
 
 export default function PostForm() {
   const {
@@ -17,8 +18,17 @@ export default function PostForm() {
     resolver: zodResolver(createPostSchema),
   });
 
+  const { mutate } = useCreatePost();
+
   const onSubmit: SubmitHandler<CreatePostFormValues> = (data) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('content', data.content);
+    formData.append('state', data.state);
+    formData.append('postImage', data.postImage[0]);
+
+    mutate(formData);
   };
 
   return (

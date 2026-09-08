@@ -4,8 +4,13 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { deletePostById, getPostById, getPosts } from '@/services/posts';
-import type { PostState } from '@/types';
+import {
+  createPost,
+  deletePostById,
+  getPostById,
+  getPosts,
+} from '@/services/posts';
+import type { CreatePostRequest, PostState } from '@/types';
 
 export function usePosts(search: string, page?: number, state?: PostState) {
   return useQuery({
@@ -32,6 +37,14 @@ export function useDeletePostById() {
       queryClient.invalidateQueries({
         queryKey: ['posts'],
       });
+    },
+  });
+}
+
+export function useCreatePost() {
+  return useMutation({
+    mutationFn: (data: FormData) => {
+      return createPost(data);
     },
   });
 }

@@ -1,5 +1,6 @@
 import type {
   ApiError,
+  CreatePostRequest,
   DeletePostResponse,
   PaginatedResponse,
   Post,
@@ -47,6 +48,12 @@ export const getPostById = async (
 
 export const deletePostById = async (id: number) => {
   const res = await blogApi.delete<DeletePostResponse>(`/api/posts/${id}`);
+
+  return res.data;
+};
+
+export const createPost = async (data: FormData): Promise<Post> => {
+  const res = await blogApi.post<Post>(`/api/posts`, data);
 
   return res.data;
 };
