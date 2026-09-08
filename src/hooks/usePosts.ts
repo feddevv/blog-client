@@ -42,9 +42,15 @@ export function useDeletePostById() {
 }
 
 export function useCreatePost() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (data: FormData) => {
       return createPost(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['posts'],
+      });
     },
   });
 }
