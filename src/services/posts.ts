@@ -1,6 +1,5 @@
 import type {
   ApiError,
-  CreatePostRequest,
   DeletePostResponse,
   PaginatedResponse,
   Post,

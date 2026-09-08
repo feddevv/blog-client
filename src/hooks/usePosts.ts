@@ -10,7 +10,7 @@ import {
   getPostById,
   getPosts,
 } from '@/services/posts';
-import type { CreatePostRequest, PostState } from '@/types';
+import type { PostState } from '@/types';
 
 export function usePosts(search: string, page?: number, state?: PostState) {
   return useQuery({
