@@ -1,8 +1,18 @@
 import Label from '@/components/Label';
 import Textarea from '@/components/Textarea';
 import { LuAlignLeft } from 'react-icons/lu';
+import type { FieldProps } from './types';
+import type { FieldError } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
 
-export default function DescriptionField() {
+interface DescriptionFieldProps extends FieldProps {
+  error?: FieldError;
+}
+
+export default function DescriptionField({
+  register,
+  error,
+}: DescriptionFieldProps) {
   return (
     <div className={`flex flex-col gap-2`}>
       <div className="flex items-center justify-between">
@@ -22,11 +32,12 @@ export default function DescriptionField() {
 
       <Textarea
         id="post-description"
-        name="description"
         rows={3}
         placeholder="Provide a compelling summary that will entice readers to read the full article..."
         className="font-paragraph"
+        {...register('description')}
       />
+      {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
 
       <p className="text-xs text-muted-foreground">
         This excerpt appears in post cards, search result listings, and social

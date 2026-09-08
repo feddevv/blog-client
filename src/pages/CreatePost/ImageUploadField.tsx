@@ -2,15 +2,25 @@ import Label from '@/components/Label';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { LuImage, LuUpload, LuLink, LuInfo } from 'react-icons/lu';
+import type { FieldProps } from './types';
+import type { FieldError } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
 
-export default function ImageUploadField() {
+interface ImageUploadFieldProps extends FieldProps {
+  error?: FieldError;
+}
+
+export default function ImageUploadField({
+  register,
+  error,
+}: ImageUploadFieldProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
     >
       <div className="flex items-center justify-between">
         <Label
-          htmlFor="post-image-url"
+          htmlFor="post-image-file"
           intent="primary"
           size="sm"
           className="uppercase tracking-wider font-semibold text-xs flex items-center gap-1.5"
@@ -44,9 +54,8 @@ export default function ImageUploadField() {
         <input
           type="file"
           id="post-image-file"
-          name="imageFile"
           accept="image/png,image/jpeg,image/webp,image/gif"
-          className="sr-only"
+          {...register('image')}
         />
       </div>
 
@@ -77,6 +86,8 @@ export default function ImageUploadField() {
           Supports PNG, JPG, WebP up to 5MB. Recommended dimensions: 1200×675px.
         </p>
       </div>
+
+      {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
     </div>
   );
 }

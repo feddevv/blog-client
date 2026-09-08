@@ -47,3 +47,36 @@ export const registerSchema = signInSchema.extend({
     .toLowerCase(),
 });
 export type RegisterRequest = z.infer<typeof registerSchema>;
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+export const createPostSchema = z.object({
+  title: z
+    .string('Not a string')
+    .trim()
+    .min(5, 'Title must be at least 5 characters')
+    .max(255, 'Title most not exceed 255 characters'),
+
+  description: z
+    .string('Not a string')
+    .trim()
+    .max(300, 'Description should not exceed 300 characters'),
+
+  content: z.string().trim().min(1, 'Content should be at least 1 character'),
+
+  state: z.enum(['PUBLISHED', 'HIDDEN', 'DRAFT']),
+
+  image: z
+    .instanceof(FileList)
+    .refine((images) => images.length > 0, 'Image is required')
+    .refine(
+      (images) => images[0] && ACCEPTED_IMAGE_TYPES.includes(images[0].type),
+      'Only JPEG, PNG and WEBP are supported'
+    )
+    .refine(
+      (images) => images[0] && images[0].size <= MAX_FILE_SIZE,
+      'Image must not exceed 5MB'
+    ),
+});
+
+export type CreatePostFormValues = z.infer<typeof createPostSchema>;

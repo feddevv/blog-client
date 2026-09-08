@@ -1,8 +1,15 @@
 import Label from '@/components/Label';
 import Input from '@/components/Input';
 import { LuType } from 'react-icons/lu';
+import type { FieldProps } from './types';
+import type { FieldError } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
 
-export default function TitleField() {
+interface TitleFieldProps extends FieldProps {
+  error?: FieldError;
+}
+
+export default function TitleField({ register, error }: TitleFieldProps) {
   return (
     <div className={`flex flex-col gap-2`}>
       <div className="flex items-center justify-between">
@@ -22,11 +29,12 @@ export default function TitleField() {
 
       <Input
         id="post-title"
-        name="title"
         type="text"
         placeholder="e.g., The Architecture of High-Scale Web Applications"
         className="text-base sm:text-lg font-heading font-medium p-3 placeholder:font-paragraph placeholder:text-sm"
+        {...register('title')}
       />
+      {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
 
       <p className="text-xs text-muted-foreground">
         A clear, engaging headline that captures the essence of your story.

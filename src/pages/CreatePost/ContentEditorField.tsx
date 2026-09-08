@@ -15,8 +15,18 @@ import {
   LuEye,
   LuFilePenLine,
 } from 'react-icons/lu';
+import type { FieldProps } from './types';
+import type { FieldError } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
 
-export default function ContentEditorField() {
+interface ContentEditorFieldProps extends FieldProps {
+  error?: FieldError;
+}
+
+export default function ContentEditorField({
+  register,
+  error,
+}: ContentEditorFieldProps) {
   const toolbarButtons = [
     { icon: LuBold, label: 'Bold', shortcut: '**text**' },
     { icon: LuItalic, label: 'Italic', shortcut: '*text*' },
@@ -45,6 +55,7 @@ export default function ContentEditorField() {
             Article Content <span className="text-accent">*</span>
           </Label>
         </div>
+        {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
 
         <div
           className="flex items-center bg-secondary p-1 border border-border rounded-xs"
@@ -98,10 +109,10 @@ export default function ContentEditorField() {
       <div className="relative">
         <Textarea
           id="post-content"
-          name="content"
           rows={18}
           placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
           className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
+          {...register('content')}
         />
       </div>
 

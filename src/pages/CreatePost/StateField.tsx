@@ -1,8 +1,15 @@
 import Label from '@/components/Label';
 import Select from '@/components/Select';
 import { LuGlobe, LuEyeOff, LuChevronDown } from 'react-icons/lu';
+import type { FieldProps } from './types';
+import type { FieldError } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
 
-export default function StateField() {
+interface StateFieldProps extends FieldProps {
+  error?: FieldError;
+}
+
+export default function StateField({ register, error }: StateFieldProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -25,9 +32,9 @@ export default function StateField() {
       <div className="relative">
         <Select
           id="post-state"
-          name="state"
           defaultValue="PUBLISHED"
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
+          {...register('state')}
         >
           <option value="PUBLISHED">Published</option>
           <option value="HIDDEN">Hidden</option>
@@ -58,6 +65,7 @@ export default function StateField() {
           </div>
         </div>
       </div>
+      {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
     </div>
   );
 }
