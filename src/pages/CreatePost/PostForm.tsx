@@ -8,6 +8,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { createPostSchema, type CreatePostFormValues } from '@/types/zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreatePost } from '@/hooks/usePosts';
+import { toast } from 'sonner';
 
 export default function PostForm() {
   const {
@@ -18,7 +19,7 @@ export default function PostForm() {
     resolver: zodResolver(createPostSchema),
   });
 
-  const { mutate } = useCreatePost();
+  const { mutate, isPending } = useCreatePost();
 
   const onSubmit: SubmitHandler<CreatePostFormValues> = (data) => {
     const formData = new FormData();
@@ -28,7 +29,11 @@ export default function PostForm() {
     formData.append('state', data.state);
     formData.append('postImage', data.postImage[0]);
 
-    mutate(formData);
+    mutate(formData, {
+      onSuccess: () => {
+        toast.success('Post successfully created');
+      },
+    });
   };
 
   return (
@@ -41,7 +46,7 @@ export default function PostForm() {
         </div>
 
         <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
-          <PublishCard />
+          <PublishCard isPending={isPending} />
           <StateField register={register} error={errors.state} />
           <ImageUploadField register={register} error={errors.postImage} />
         </div>

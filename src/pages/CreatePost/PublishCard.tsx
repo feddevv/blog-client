@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
 import {
   LuSend,
   LuSave,
@@ -7,7 +8,11 @@ import {
   LuFilePenLine,
 } from 'react-icons/lu';
 
-export default function PublishCard() {
+interface PublishCardProps {
+  isPending: boolean;
+}
+
+export default function PublishCard({ isPending }: PublishCardProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -29,9 +34,16 @@ export default function PublishCard() {
           intent="primary"
           size="md"
           className="w-full flex items-center justify-center gap-2 font-medium shadow-xs"
+          disabled={isPending}
         >
-          <LuSend className="text-base" />
-          <span>Publish</span>
+          {isPending ? (
+            <Spinner className="border-primary-foreground border-l-transparent w-6 h-6" />
+          ) : (
+            <>
+              <LuSend className="text-base" />
+              <span>Publish</span>
+            </>
+          )}
         </Button>
 
         <Button
