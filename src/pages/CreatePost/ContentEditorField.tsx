@@ -134,7 +134,9 @@ export default function ContentEditorField({
           <span>Markdown & GitHub Flavored Markdown (GFM) supported</span>
         </div>
         <div className="flex items-center gap-4">
-          <span>0 words</span>
+          <span>
+            {content.trim() ? content.trim().split(/\s+/).length : 0} words
+          </span>
           <span>·</span>
           <span>0 lines</span>
           <span>·</span>
