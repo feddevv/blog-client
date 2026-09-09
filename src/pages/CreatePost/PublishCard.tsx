@@ -101,19 +101,17 @@ function ListCheckItem({
   error?: FieldError;
   validText: string;
 }) {
-  if (error) {
-    return (
-      <li className="flex items-center gap-1.5">
-        <LuCircleX className="text-xs text-destructive shrink-0" />
-        <span>{error.message}</span>
-      </li>
-    );
-  }
-
-  return (
-    <li className="flex items-center gap-1.5">
+  const item = error ? (
+    <>
+      <LuCircleX className="text-xs text-destructive shrink-0" />
+      <span>{error.message}</span>
+    </>
+  ) : (
+    <>
       <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
       <span>{validText}</span>
-    </li>
+    </>
   );
+
+  return <li className="flex items-center gap-1.5">{item}</li>;
 }
