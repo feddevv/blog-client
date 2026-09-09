@@ -30,3 +30,11 @@ export function range(start: number, end: number) {
   const length = end - start + 1;
   return Array.from({ length }, (_, i) => start + i);
 }
+
+export function calculateReadingTime(wordsAmount: number) {
+  if (wordsAmount < 0) return 0;
+
+  const AVERAGE_WPM = 250;
+
+  return Math.ceil(wordsAmount / AVERAGE_WPM);
+}
