@@ -138,7 +138,10 @@ export default function ContentEditorField({
             {content.trim() ? content.trim().split(/\s+/).length : 0} words
           </span>
           <span>·</span>
-          <span>0 lines</span>
+          <span>
+            {content.trim() ? content.trim().split(/\r\n|\r|\n/).length : 0}{' '}
+            lines
+          </span>
           <span>·</span>
           <span>~0 min read</span>
         </div>
