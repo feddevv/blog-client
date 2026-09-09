@@ -17,6 +17,8 @@ import {
 } from 'react-icons/lu';
 import type { FieldProps } from './types';
 import { useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface ContentEditorFieldProps extends FieldProps {}
 
@@ -35,6 +37,7 @@ export default function ContentEditorField({
     { icon: LuImage, label: 'Image', shortcut: '![alt](url)' },
   ];
   const [tab, setTab] = useState<'write' | 'preview'>('write');
+  const [content, setContent] = useState('');
 
   return (
     <div
@@ -109,13 +112,20 @@ export default function ContentEditorField({
 
       {/* Content Textarea */}
       <div className="relative">
-        <Textarea
-          id="post-content"
-          rows={18}
-          placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
-          className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
-          {...register('content')}
-        />
+        {tab === 'write' ? (
+          <Textarea
+            id="post-content"
+            rows={18}
+            placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
+            className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
+            {...register('content')}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        ) : (
+          <div className="bg-card font-paragraph sm:text-base p-4 prose max-h-96 max-w-full w-full overflow-y-auto">
+            <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-secondary/30 border-t border-border text-xs font-paragraph text-muted-foreground">
