@@ -16,6 +16,7 @@ import {
   LuFilePenLine,
 } from 'react-icons/lu';
 import type { FieldProps } from './types';
+import { useState } from 'react';
 
 interface ContentEditorFieldProps extends FieldProps {}
 
@@ -33,6 +34,7 @@ export default function ContentEditorField({
     { icon: LuLink, label: 'Link', shortcut: '[title](url)' },
     { icon: LuImage, label: 'Image', shortcut: '![alt](url)' },
   ];
+  const [tab, setTab] = useState<'write' | 'preview'>('write');
 
   return (
     <div
@@ -58,20 +60,26 @@ export default function ContentEditorField({
         >
           <button
             type="button"
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium bg-card text-foreground shadow-xs rounded-xs cursor-pointer"
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium ${tab === 'write' ? 'bg-card text-foreground shadow-xs' : 'text-muted-foreground hover:text-foreground rounded-xs'} rounded-xs cursor-pointer`}
             role="tab"
-            aria-selected="true"
+            aria-selected={tab === 'write'}
+            onClick={() => setTab('write')}
           >
-            <LuFilePenLine className="text-xs text-accent" />
+            <LuFilePenLine
+              className={`text-xs ${tab === 'write' ? 'text-accent' : ''}`}
+            />
             <span>Write</span>
           </button>
           <button
             type="button"
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium text-muted-foreground hover:text-foreground rounded-xs cursor-pointer transition-colors"
+            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-paragraph font-medium ${tab === 'preview' ? 'bg-card text-foreground shadow-xs' : 'text-muted-foreground hover:text-foreground rounded-xs'} rounded-xs cursor-pointer`}
             role="tab"
-            aria-selected="false"
+            aria-selected={tab === 'preview'}
+            onClick={() => setTab('preview')}
           >
-            <LuEye className="text-xs" />
+            <LuEye
+              className={`text-xs ${tab === 'preview' ? 'text-accent' : ''}`}
+            />
             <span>Preview</span>
           </button>
         </div>
