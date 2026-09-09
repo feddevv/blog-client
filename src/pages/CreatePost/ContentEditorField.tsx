@@ -16,16 +16,11 @@ import {
   LuFilePenLine,
 } from 'react-icons/lu';
 import type { FieldProps } from './types';
-import type { FieldError } from 'react-hook-form';
-import ErrorMessage from '@/components/ErrorMessage';
 
-interface ContentEditorFieldProps extends FieldProps {
-  error?: FieldError;
-}
+interface ContentEditorFieldProps extends FieldProps {}
 
 export default function ContentEditorField({
   register,
-  error,
 }: ContentEditorFieldProps) {
   const toolbarButtons = [
     { icon: LuBold, label: 'Bold', shortcut: '**text**' },
@@ -55,7 +50,6 @@ export default function ContentEditorField({
             Article Content <span className="text-accent">*</span>
           </Label>
         </div>
-        {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
 
         <div
           className="flex items-center bg-secondary p-1 border border-border rounded-xs"

@@ -42,15 +42,15 @@ export default function PostForm() {
     <form className={`w-full`} onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2 flex flex-col gap-6">
-          <TitleField register={register} error={errors.title} />
-          <DescriptionField register={register} error={errors.description} />
-          <ContentEditorField register={register} error={errors.content} />
+          <TitleField register={register} />
+          <DescriptionField register={register} />
+          <ContentEditorField register={register} />
         </div>
 
         <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
-          <PublishCard isPending={isPending} />
-          <StateField register={register} error={errors.state} />
-          <ImageUploadField register={register} error={errors.postImage} />
+          <PublishCard errors={errors} isPending={isPending} />
+          <StateField register={register} />
+          <ImageUploadField register={register} />
         </div>
       </div>
     </form>

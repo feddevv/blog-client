@@ -1,18 +1,22 @@
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
+import type { CreatePostFormValues } from '@/types/zod';
+import type { FieldError, FieldErrors } from 'react-hook-form';
 import {
   LuSend,
   LuSave,
   LuClock,
   LuCircleCheck,
   LuFilePenLine,
+  LuCircleX,
 } from 'react-icons/lu';
 
 interface PublishCardProps {
   isPending: boolean;
+  errors: FieldErrors<CreatePostFormValues>;
 }
 
-export default function PublishCard({ isPending }: PublishCardProps) {
+export default function PublishCard({ isPending, errors }: PublishCardProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -62,22 +66,19 @@ export default function PublishCard({ isPending }: PublishCardProps) {
           Checklist
         </span>
         <ul className="space-y-1.5 text-xs font-paragraph text-muted-foreground">
-          <li className="flex items-center gap-2">
-            <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Title provided</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Cover image selected</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Short excerpt written</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>Article content filled</span>
-          </li>
+          <ListCheckItem error={errors.title} validText="Title provided" />
+          <ListCheckItem
+            error={errors.postImage}
+            validText="Cover image selected"
+          />
+          <ListCheckItem
+            error={errors.description}
+            validText="Short excerpt written"
+          />
+          <ListCheckItem
+            error={errors.content}
+            validText="Article content filled"
+          />
         </ul>
       </div>
 
@@ -90,5 +91,29 @@ export default function PublishCard({ isPending }: PublishCardProps) {
         <span>Ready to save</span>
       </div>
     </div>
+  );
+}
+
+function ListCheckItem({
+  error,
+  validText,
+}: {
+  error?: FieldError;
+  validText: string;
+}) {
+  if (error) {
+    return (
+      <li className="flex items-center gap-1.5">
+        <LuCircleX className="text-xs text-destructive shrink-0" />
+        <span>{error.message}</span>
+      </li>
+    );
+  }
+
+  return (
+    <li className="flex items-center gap-1.5">
+      <LuCircleCheck className="text-xs text-emerald-600 dark:text-emerald-400 shrink-0" />
+      <span>{validText}</span>
+    </li>
   );
 }

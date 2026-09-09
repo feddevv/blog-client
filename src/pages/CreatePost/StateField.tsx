@@ -2,14 +2,10 @@ import Label from '@/components/Label';
 import Select from '@/components/Select';
 import { LuGlobe, LuEyeOff, LuChevronDown } from 'react-icons/lu';
 import type { FieldProps } from './types';
-import type { FieldError } from 'react-hook-form';
-import ErrorMessage from '@/components/ErrorMessage';
 
-interface StateFieldProps extends FieldProps {
-  error?: FieldError;
-}
+interface StateFieldProps extends FieldProps {}
 
-export default function StateField({ register, error }: StateFieldProps) {
+export default function StateField({ register }: StateFieldProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -65,7 +61,6 @@ export default function StateField({ register, error }: StateFieldProps) {
           </div>
         </div>
       </div>
-      {error && <ErrorMessage size={'sm'}>{error.message}</ErrorMessage>}
     </div>
   );
 }
