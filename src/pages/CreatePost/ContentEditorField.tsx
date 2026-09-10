@@ -19,7 +19,7 @@ import type { FieldProps } from './types';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { wordsAmountFor } from '@/utils/utils';
+import { linesAmountFor, wordsAmountFor } from '@/utils/utils';
 
 interface ContentEditorFieldProps extends FieldProps {}
 
@@ -137,10 +137,7 @@ export default function ContentEditorField({
         <div className="flex items-center gap-4">
           <span>{wordsAmountFor(content)} words</span>
           <span>·</span>
-          <span>
-            {content.trim() ? content.trim().split(/\r\n|\r|\n/).length : 0}{' '}
-            lines
-          </span>
+          <span>{linesAmountFor(content)} lines</span>
           <span>·</span>
           <span>~0 min read</span>
         </div>

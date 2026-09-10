@@ -42,3 +42,7 @@ export function calculateReadingTime(wordsAmount: number) {
 export function wordsAmountFor(str: string) {
   return str.trim() ? str.trim().split(/\s+/).length : 0;
 }
+
+export function linesAmountFor(str: string) {
+  return str.trim() ? str.trim().split(/\r\n|\r|\n/).length : 0;
+}
