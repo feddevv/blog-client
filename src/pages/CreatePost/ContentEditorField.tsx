@@ -19,7 +19,11 @@ import type { FieldProps } from './types';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { linesAmountFor, wordsAmountFor } from '@/utils/utils';
+import {
+  calculateReadingTime,
+  linesAmountFor,
+  wordsAmountFor,
+} from '@/utils/utils';
 
 interface ContentEditorFieldProps extends FieldProps {}
 
@@ -139,7 +143,7 @@ export default function ContentEditorField({
           <span>·</span>
           <span>{linesAmountFor(content)} lines</span>
           <span>·</span>
-          <span>~0 min read</span>
+          <span>~{calculateReadingTime(wordsAmountFor(content))} min read</span>
         </div>
       </div>
     </div>
