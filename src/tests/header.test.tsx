@@ -2,40 +2,56 @@ import Header from '@/layout/Header';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRoutesStub, Outlet } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { createWrapper } from './testUtils';
+import { ThemeProvider } from '@/context/Theme/ThemeProvider';
 
 describe('Header component', () => {
-  const RouterStub = createRoutesStub([
-    {
-      path: '/',
-      Component: () => {
-        return (
-          <>
-            <Header />
-            <main>
-              <Outlet />
-            </main>
-          </>
-        );
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn().mockImplementation(() => ({
+      matches: false,
+    })),
+  });
+
+  const App = () => {
+    const RouterStub = createRoutesStub([
+      {
+        path: '/',
+        Component: () => {
+          return (
+            <>
+              <Header />
+              <main>
+                <Outlet />
+              </main>
+            </>
+          );
+        },
+        children: [
+          {
+            index: true,
+            Component: () => <h2>Home page</h2>,
+          },
+          {
+            path: '/about',
+            Component: () => <h2>About page</h2>,
+          },
+        ],
       },
-      children: [
-        {
-          index: true,
-          Component: () => <h2>Home page</h2>,
-        },
-        {
-          path: '/about',
-          Component: () => <h2>About page</h2>,
-        },
-      ],
-    },
-  ]);
+    ]);
+
+    return (
+      <ThemeProvider>
+        <RouterStub />
+      </ThemeProvider>
+    );
+  };
 
   it('should redirect to another page when click the link', async () => {
     const user = userEvent.setup();
 
-    render(<RouterStub initialEntries={['/']} />, { wrapper: createWrapper() });
+    render(<App />, { wrapper: createWrapper() });
 
     const aboutLink = screen.getByRole('link', { name: /about/i });
     await user.click(aboutLink);
@@ -48,7 +64,7 @@ describe('Header component', () => {
   it('should open mobile menu when click on hamburger button', async () => {
     const user = userEvent.setup();
 
-    render(<RouterStub />, { wrapper: createWrapper() });
+    render(<App />, { wrapper: createWrapper() });
     const hamburger = screen.getByRole('button', { name: 'Menu' });
 
     expect(hamburger).toHaveAttribute('aria-expanded', 'false');
