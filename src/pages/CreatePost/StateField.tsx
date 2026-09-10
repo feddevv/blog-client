@@ -2,10 +2,12 @@ import Label from '@/components/Label';
 import Select from '@/components/Select';
 import { LuGlobe, LuEyeOff, LuChevronDown } from 'react-icons/lu';
 import type { FieldProps } from './types';
+import { useState } from 'react';
 
 interface StateFieldProps extends FieldProps {}
 
 export default function StateField({ register }: StateFieldProps) {
+  const [state, setState] = useState('PUBLISHED');
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -31,6 +33,7 @@ export default function StateField({ register }: StateFieldProps) {
           defaultValue="PUBLISHED"
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
           {...register('state')}
+          onChange={(e) => setState(e.target.value)}
         >
           <option value="PUBLISHED">Published</option>
           <option value="HIDDEN">Hidden</option>
@@ -39,8 +42,14 @@ export default function StateField({ register }: StateFieldProps) {
       </div>
 
       <div className="grid grid-cols-1 gap-2 pt-1">
-        <div className="flex items-start gap-2.5 p-2.5 rounded-xs border border-emerald-500/20 bg-emerald-500/5 text-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 mt-1 shrink-0 animate-pulse" />
+        <div
+          className={`flex items-start gap-2.5 p-2.5 rounded-xs border ${state === 'PUBLISHED' ? 'border-emerald-500/20 bg-emerald-500/5' : 'border-border bg-secondary/30'} text-xs`}
+        >
+          {state === 'PUBLISHED' ? (
+            <span className="w-2 h-2 rounded-full bg-emerald-500 mt-1 shrink-0 animate-pulse" />
+          ) : (
+            <LuEyeOff className="text-muted-foreground text-xs mt-1 shrink-0" />
+          )}
           <div>
             <span className="font-medium text-foreground">Published</span>
             <p className="text-muted-foreground text-[11px] mt-0.5 leading-normal">
@@ -50,8 +59,14 @@ export default function StateField({ register }: StateFieldProps) {
           </div>
         </div>
 
-        <div className="flex items-start gap-2.5 p-2.5 rounded-xs border border-border bg-secondary/30 text-xs">
-          <LuEyeOff className="text-muted-foreground text-xs mt-1 shrink-0" />
+        <div
+          className={`flex items-start gap-2.5 p-2.5 rounded-xs border ${state === 'HIDDEN' ? 'border-emerald-500/20 bg-emerald-500/5' : 'border-border bg-secondary/30'} text-xs`}
+        >
+          {state === 'HIDDEN' ? (
+            <span className="w-2 h-2 rounded-full bg-emerald-500 mt-1 shrink-0 animate-pulse" />
+          ) : (
+            <LuEyeOff className="text-muted-foreground text-xs mt-1 shrink-0" />
+          )}
           <div>
             <span className="font-medium text-foreground">Hidden</span>
             <p className="text-muted-foreground text-[11px] mt-0.5 leading-normal">
