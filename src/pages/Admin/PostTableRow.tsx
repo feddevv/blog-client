@@ -26,9 +26,17 @@ export default function PostTableRow({
       {/* Column 1: Title */}
       <td className="py-4 px-4 align-middle">
         <div className="flex items-start gap-3.5">
-          <div className="w-12 h-12 rounded-xs border border-border bg-secondary hidden sm:items-center sm:justify-center sm:shrink-0 sm:flex text-muted-foreground">
-            <LuFileText className="text-xl" />
-          </div>
+          {post.thumbnailUrl ? (
+            <img
+              src={post.thumbnailUrl}
+              alt=""
+              className="w-16 h-16 object-cover rounded-xs border border-border shrink-0 bg-muted hidden sm:block"
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-xs border border-border bg-secondary hidden sm:items-center sm:justify-center sm:shrink-0 sm:flex text-muted-foreground">
+              <LuFileText className="text-xl" />
+            </div>
+          )}
           <div className="flex flex-col min-w-0 max-w-md">
             <span className="font-heading font-semibold text-base text-foreground group-hover:text-accent transition-colors duration-150 line-clamp-1">
               {post.title}
