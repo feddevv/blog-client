@@ -14,9 +14,14 @@ import {
 interface PublishCardProps {
   isPending: boolean;
   errors: FieldErrors<CreatePostFormValues>;
+  handleSaveDraft?: () => void;
 }
 
-export default function PublishCard({ isPending, errors }: PublishCardProps) {
+export default function PublishCard({
+  isPending,
+  errors,
+  handleSaveDraft,
+}: PublishCardProps) {
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -55,6 +60,7 @@ export default function PublishCard({ isPending, errors }: PublishCardProps) {
           intent="secondary"
           size="md"
           className="w-full flex items-center justify-center gap-2 font-medium"
+          onClick={handleSaveDraft}
         >
           <LuSave className="text-base" />
           <span>Save draft</span>

@@ -16,6 +16,7 @@ export default function PostForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    getValues,
   } = useForm<CreatePostFormValues>({
     resolver: zodResolver(createPostSchema),
   });
@@ -38,6 +39,24 @@ export default function PostForm() {
     });
   };
 
+  const handleSaveDraft = () => {
+    const data = getValues();
+
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('content', data.content);
+    formData.append('state', 'DRAFT');
+    formData.append('postImage', data.postImage[0]);
+
+    mutate(formData, {
+      onSuccess: () => {
+        toast.success('Post was saved as a draft');
+        reset();
+      },
+    });
+  };
+
   return (
     <form className={`w-full`} onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -48,7 +67,11 @@ export default function PostForm() {
         </div>
 
         <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
-          <PublishCard errors={errors} isPending={isPending} />
+          <PublishCard
+            handleSaveDraft={handleSaveDraft}
+            errors={errors}
+            isPending={isPending}
+          />
           <StateField register={register} />
           <ImageUploadField register={register} />
         </div>
