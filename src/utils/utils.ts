@@ -38,3 +38,7 @@ export function calculateReadingTime(wordsAmount: number) {
 
   return Math.ceil(wordsAmount / AVERAGE_WPM);
 }
+
+export function wordsAmountFor(str: string) {
+  return str.trim() ? str.trim().split(/\s+/).length : 0;
+}

@@ -19,6 +19,7 @@ import type { FieldProps } from './types';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { wordsAmountFor } from '@/utils/utils';
 
 interface ContentEditorFieldProps extends FieldProps {}
 
@@ -134,9 +135,7 @@ export default function ContentEditorField({
           <span>Markdown & GitHub Flavored Markdown (GFM) supported</span>
         </div>
         <div className="flex items-center gap-4">
-          <span>
-            {content.trim() ? content.trim().split(/\s+/).length : 0} words
-          </span>
+          <span>{wordsAmountFor(content)} words</span>
           <span>·</span>
           <span>
             {content.trim() ? content.trim().split(/\r\n|\r|\n/).length : 0}{' '}
