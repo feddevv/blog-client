@@ -82,7 +82,7 @@ export default function ImageUploadField({
         <LuImage className="text-accent text-sm" />
         Cover Image <span className="text-accent">*</span>
       </span>
-      <Label className="border-2 border-dashed border-border hover:border-accent/60 bg-secondary/40 hover:bg-secondary/70 transition-all duration-200 p-6 flex flex-col items-center justify-center text-center cursor-pointer rounded-xs group">
+      <div className="border-2 border-dashed border-border hover:border-accent/60 bg-secondary/40 hover:bg-secondary/70 transition-all duration-200 p-6 flex flex-col items-center justify-center text-center cursor-pointer rounded-xs group">
         <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground group-hover:text-accent group-hover:scale-110 transition-all duration-200 mb-3 shadow-xs">
           <LuUpload className="text-xl" />
         </div>
@@ -107,7 +107,7 @@ export default function ImageUploadField({
           className="hidden"
           {...register('postImage')}
         />
-      </Label>
+      </div>
     </Label>
   );
 }
