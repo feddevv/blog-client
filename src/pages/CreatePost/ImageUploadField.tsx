@@ -2,7 +2,7 @@ import Label from '@/components/Label';
 import Button from '@/components/Button';
 import { LuImage, LuUpload } from 'react-icons/lu';
 import type { FieldProps } from './types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type DragEventHandler } from 'react';
 import type { UseFormSetValue } from 'react-hook-form';
 import type { CreatePostFormValues } from '@/types/zod';
 
@@ -38,6 +38,16 @@ export default function ImageUploadField({
       }
     }
   };
+  const handleOnDrop: DragEventHandler = (e) => {
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      setValue('postImage', files, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    }
+  };
 
   useEffect(() => {
     window.addEventListener('drop', preventWindowDrop);
@@ -67,16 +77,7 @@ export default function ImageUploadField({
           } else e.dataTransfer.dropEffect = 'none';
         }
       }}
-      onDrop={(e) => {
-        const files = e.dataTransfer.files;
-        if (files && files.length > 0) {
-          setValue('postImage', files, {
-            shouldValidate: true,
-            shouldDirty: true,
-            shouldTouch: true,
-          });
-        }
-      }}
+      onDrop={handleOnDrop}
     >
       <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider">
         <LuImage className="text-accent text-sm" />
