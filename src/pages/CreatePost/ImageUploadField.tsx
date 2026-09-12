@@ -49,6 +49,7 @@ export default function ImageUploadField({
         shouldTouch: true,
       });
     }
+    setIsDragged(false);
   };
   const handleDragOver: DragEventHandler = (e) => {
     const fileItems = [...e.dataTransfer.items].filter(
