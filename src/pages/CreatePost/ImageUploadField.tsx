@@ -48,6 +48,19 @@ export default function ImageUploadField({
       });
     }
   };
+  const handleDragOver: DragEventHandler = (e) => {
+    const fileItems = [...e.dataTransfer.items].filter(
+      (item) => item.kind === 'file'
+    );
+
+    if (fileItems.length > 0) {
+      e.preventDefault();
+
+      if (fileItems.some((item) => item.type.startsWith('image/'))) {
+        e.dataTransfer.dropEffect = 'copy';
+      } else e.dataTransfer.dropEffect = 'none';
+    }
+  };
 
   useEffect(() => {
     window.addEventListener('drop', preventWindowDrop);
@@ -64,19 +77,7 @@ export default function ImageUploadField({
       ref={dropZone}
       htmlFor="post-image-file"
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
-      onDragOver={(e) => {
-        const fileItems = [...e.dataTransfer.items].filter(
-          (item) => item.kind === 'file'
-        );
-
-        if (fileItems.length > 0) {
-          e.preventDefault();
-
-          if (fileItems.some((item) => item.type.startsWith('image/'))) {
-            e.dataTransfer.dropEffect = 'copy';
-          } else e.dataTransfer.dropEffect = 'none';
-        }
-      }}
+      onDragOver={handleDragOver}
       onDrop={handleOnDrop}
     >
       <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider">
