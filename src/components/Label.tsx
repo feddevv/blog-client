@@ -21,7 +21,7 @@ const labelVariants = cva('font-paragraph font-medium', {
   },
 });
 
-type BaseProps = React.ComponentPropsWithoutRef<'label'>;
+type BaseProps = React.ComponentPropsWithRef<'label'>;
 type LabelProps = VariantProps<typeof labelVariants> & BaseProps;
 
 export default function Label({

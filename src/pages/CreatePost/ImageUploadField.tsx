@@ -2,11 +2,12 @@ import Label from '@/components/Label';
 import Button from '@/components/Button';
 import { LuImage, LuUpload } from 'react-icons/lu';
 import type { FieldProps } from './types';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ImageUploadFieldProps extends FieldProps {}
 
 export default function ImageUploadField({ register }: ImageUploadFieldProps) {
+  const dropZone = useRef<HTMLLabelElement>(null);
   const preventDrop = (e: DragEvent) => {
     if (
       e.dataTransfer &&
@@ -24,6 +25,7 @@ export default function ImageUploadField({ register }: ImageUploadFieldProps) {
 
   return (
     <Label
+      ref={dropZone}
       htmlFor="post-image-file"
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
     >
