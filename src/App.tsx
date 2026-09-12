@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import Admin from './pages/Admin';
 import CreatePost from './pages/CreatePost';
+import { useEffect } from 'react';
 
 const router = createBrowserRouter([
   {
