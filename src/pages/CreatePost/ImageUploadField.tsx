@@ -16,11 +16,29 @@ export default function ImageUploadField({ register }: ImageUploadFieldProps) {
       e.preventDefault();
     }
   };
+  const preventWindowDragOver = (e: DragEvent) => {
+    if (e.dataTransfer) {
+      const fileItems = [...e.dataTransfer.items].filter(
+        (item) => item.kind === 'file'
+      );
+
+      if (fileItems.length > 0) {
+        e.preventDefault();
+        if (dropZone && !dropZone.current?.contains(e.target as Node)) {
+          e.dataTransfer.dropEffect = 'none';
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     window.addEventListener('drop', preventWindowDrop);
+    window.addEventListener('dragover', preventWindowDragOver);
 
-    return () => window.removeEventListener('drop', preventWindowDrop);
+    return () => {
+      window.removeEventListener('drop', preventWindowDrop);
+      window.removeEventListener('dragover', preventWindowDragOver);
+    };
   });
 
   return (
