@@ -17,6 +17,7 @@ export default function PostForm() {
     formState: { errors },
     reset,
     getValues,
+    setValue,
   } = useForm<CreatePostFormValues>({
     resolver: zodResolver(createPostSchema),
   });
@@ -73,7 +74,7 @@ export default function PostForm() {
             isPending={isPending}
           />
           <StateField register={register} />
-          <ImageUploadField register={register} />
+          <ImageUploadField setValue={setValue} register={register} />
         </div>
       </div>
     </form>

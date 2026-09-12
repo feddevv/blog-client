@@ -3,11 +3,19 @@ import Button from '@/components/Button';
 import { LuImage, LuUpload } from 'react-icons/lu';
 import type { FieldProps } from './types';
 import { useEffect, useRef } from 'react';
+import type { UseFormSetValue } from 'react-hook-form';
+import type { CreatePostFormValues } from '@/types/zod';
 
-interface ImageUploadFieldProps extends FieldProps {}
+interface ImageUploadFieldProps extends FieldProps {
+  setValue: UseFormSetValue<CreatePostFormValues>;
+}
 
-export default function ImageUploadField({ register }: ImageUploadFieldProps) {
+export default function ImageUploadField({
+  register,
+  setValue,
+}: ImageUploadFieldProps) {
   const dropZone = useRef<HTMLLabelElement>(null);
+
   const preventWindowDrop = (e: DragEvent) => {
     if (
       e.dataTransfer &&
@@ -57,6 +65,16 @@ export default function ImageUploadField({ register }: ImageUploadFieldProps) {
           if (fileItems.some((item) => item.type.startsWith('image/'))) {
             e.dataTransfer.dropEffect = 'copy';
           } else e.dataTransfer.dropEffect = 'none';
+        }
+      }}
+      onDrop={(e) => {
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+          setValue('postImage', files, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true,
+          });
         }
       }}
     >
