@@ -8,7 +8,7 @@ interface ImageUploadFieldProps extends FieldProps {}
 
 export default function ImageUploadField({ register }: ImageUploadFieldProps) {
   const dropZone = useRef<HTMLLabelElement>(null);
-  const preventDrop = (e: DragEvent) => {
+  const preventWindowDrop = (e: DragEvent) => {
     if (
       e.dataTransfer &&
       [...e.dataTransfer.items].some((item) => item.kind === 'file')
@@ -18,9 +18,9 @@ export default function ImageUploadField({ register }: ImageUploadFieldProps) {
   };
 
   useEffect(() => {
-    window.addEventListener('drop', preventDrop);
+    window.addEventListener('drop', preventWindowDrop);
 
-    return () => window.removeEventListener('drop', preventDrop);
+    return () => window.removeEventListener('drop', preventWindowDrop);
   });
 
   return (
