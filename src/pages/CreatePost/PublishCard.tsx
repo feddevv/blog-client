@@ -61,9 +61,16 @@ export default function PublishCard({
           size="md"
           className="w-full flex items-center justify-center gap-2 font-medium"
           onClick={handleSaveDraft}
+          disabled={isPending}
         >
-          <LuSave className="text-base" />
-          <span>Save draft</span>
+          {isPending ? (
+            <Spinner className="w-6 h-6" />
+          ) : (
+            <>
+              <LuSave className="text-base" />
+              <span>Save draft</span>
+            </>
+          )}
         </Button>
       </div>
 
