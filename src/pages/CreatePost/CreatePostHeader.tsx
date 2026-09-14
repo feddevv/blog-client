@@ -1,7 +1,5 @@
-import Button from '@/components/Button';
 import { NavLink } from 'react-router';
 import { IoIosArrowBack } from 'react-icons/io';
-import { LuSend, LuSave } from 'react-icons/lu';
 
 interface CreatePostHeaderProps {
   className?: string;
@@ -32,28 +30,6 @@ export default function CreatePostHeader({ className }: CreatePostHeaderProps) {
             Craft, format, and publish stories with markdown styling, cover
             imagery, and visibility controls.
           </p>
-        </div>
-
-        <div className="flex items-center gap-3 shrink-0">
-          <Button
-            type="button"
-            intent="secondary"
-            size="sm"
-            className="flex items-center gap-2 font-medium"
-          >
-            <LuSave className="text-sm" />
-            <span>Save draft</span>
-          </Button>
-
-          <Button
-            type="button"
-            intent="primary"
-            size="sm"
-            className="flex items-center gap-2 font-medium shadow-xs"
-          >
-            <LuSend className="text-sm" />
-            <span>Publish</span>
-          </Button>
         </div>
       </div>
     </header>
