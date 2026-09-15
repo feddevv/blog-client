@@ -4,7 +4,7 @@ import { setupInterceptors } from './interceptors';
 
 export const blogApi: AxiosInstance = axios.create({
   baseURL: 'https://blog-api-65st.onrender.com',
-  timeout: 5000,
+  timeout: 30000,
   withCredentials: true,
 });
 
