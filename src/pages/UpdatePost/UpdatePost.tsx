@@ -11,33 +11,12 @@ export default function UpdatePost() {
   const { mutate, isPending: isPendingUpdatePost } = useUpdatePostById();
   const navigate = useNavigate();
 
-  const onSubmit = (data: PostFormValues) => {
+  const onSubmit = (data: PostFormValues, isDraft = false) => {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('description', data.description);
     formData.append('content', data.content);
-    formData.append('state', data.state);
-    formData.append('postImage', data.postImage[0]);
-
-    mutate(
-      { id: Number(id), data: formData },
-      {
-        onSuccess: () => {
-          navigate(`/posts/${id}`);
-        },
-        onError: () => {
-          toast.error('Failed to update. Try again');
-        },
-      }
-    );
-  };
-
-  const handleSaveDraft = (data: PostFormValues) => {
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('description', data.description);
-    formData.append('content', data.content);
-    formData.append('state', 'DRAFT');
+    formData.append('state', isDraft ? 'DRAFT' : data.state);
     formData.append('postImage', data.postImage[0]);
 
     mutate(
@@ -57,7 +36,6 @@ export default function UpdatePost() {
     <Spinner className="m-auto" />
   ) : (
     <PostForm
-      handleSaveDraft={handleSaveDraft}
       isPending={isPendingUpdatePost}
       onSubmit={onSubmit}
       initialValues={{

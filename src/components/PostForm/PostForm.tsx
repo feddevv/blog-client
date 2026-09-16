@@ -17,15 +17,13 @@ interface InitialValues {
 }
 
 interface PostFormProps {
-  onSubmit: (data: PostFormValues) => void;
-  handleSaveDraft: (data: PostFormValues) => void;
+  onSubmit: (data: PostFormValues, isDraft?: boolean) => void;
   isPending: boolean;
   initialValues?: InitialValues;
 }
 
 export default function PostForm({
   onSubmit,
-  handleSaveDraft,
   isPending,
   initialValues,
 }: PostFormProps) {
@@ -63,7 +61,7 @@ export default function PostForm({
 
           <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
             <PublishCard
-              handleSaveDraft={() => handleSaveDraft(getValues())}
+              handleSaveDraft={() => onSubmit(getValues(), true)}
               errors={errors}
               isPending={isPending}
             />
