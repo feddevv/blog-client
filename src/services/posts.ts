@@ -56,3 +56,12 @@ export const createPost = async (data: FormData): Promise<Post> => {
 
   return res.data;
 };
+
+export const updatePostById = async (
+  id: number,
+  data: FormData
+): Promise<Post> => {
+  const res = await blogApi.put<Post>(`/api/posts/${id}`, data);
+
+  return res.data;
+};
