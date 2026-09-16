@@ -9,6 +9,7 @@ import {
   deletePostById,
   getPostById,
   getPosts,
+  updatePostById,
 } from '@/services/posts';
 import type { PostState } from '@/types';
 
@@ -51,6 +52,14 @@ export function useCreatePost() {
       queryClient.invalidateQueries({
         queryKey: ['posts'],
       });
+    },
+  });
+}
+
+export function useUpdatePostById() {
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: FormData }) => {
+      return updatePostById(id, data);
     },
   });
 }
