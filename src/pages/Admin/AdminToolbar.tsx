@@ -72,7 +72,7 @@ export default function AdminToolbar({
 
       <div className="flex items-center justify-end">
         <NavLink
-          to={'/create-post'}
+          to={'/posts/create'}
           onClick={onCreatePost}
           className="flex items-center gap-2 font-medium shadow-xs w-full sm:w-auto bg-primary text-primary-foreground py-1 px-4 hover:bg-button-hover active:scale-98 transition-all duration-200"
         >

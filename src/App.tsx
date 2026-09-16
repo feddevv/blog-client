@@ -53,7 +53,7 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: '/create-post',
+            path: '/posts/create',
             element: (
               <AdminRoute>
                 <PostForm />
