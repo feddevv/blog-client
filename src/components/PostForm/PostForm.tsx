@@ -8,17 +8,19 @@ import StateField from './StateField';
 import ImageUploadField from './ImageUploadField';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+interface InitialValues {
+  title?: string;
+  description?: string;
+  content?: string;
+  state?: 'PUBLISHED' | 'HIDDEN';
+  postImage?: FileList | null;
+}
+
 interface PostFormProps {
   onSubmit: (data: PostFormValues) => void;
   handleSaveDraft: (data: PostFormValues) => void;
   isPending: boolean;
-  initialValues?: {
-    title?: string;
-    description?: string;
-    content?: string;
-    state?: 'PUBLISHED' | 'HIDDEN';
-    postImage?: FileList | null;
-  };
+  initialValues?: InitialValues;
 }
 
 export default function PostForm({
