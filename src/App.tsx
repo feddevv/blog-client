@@ -60,6 +60,14 @@ const router = createBrowserRouter([
               </AdminRoute>
             ),
           },
+          {
+            path: '/posts/:id/update',
+            element: (
+              <AdminRoute>
+                <PostForm />
+              </AdminRoute>
+            ),
+          },
         ],
       },
     ],
