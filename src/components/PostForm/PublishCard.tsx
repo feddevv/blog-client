@@ -7,7 +7,6 @@ import {
   LuSave,
   LuClock,
   LuCircleCheck,
-  LuFilePenLine,
   LuCircleX,
 } from 'react-icons/lu';
 
@@ -26,14 +25,10 @@ export default function PublishCard({
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
     >
-      <div className="flex items-center justify-between pb-3 border-b border-border">
+      <div className="pb-3 border-b border-border">
         <h3 className="font-heading font-semibold text-base text-foreground">
           Publish Actions
         </h3>
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-paragraph uppercase tracking-wider rounded-xs border bg-amber-500/10 text-amber-700 border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300">
-          <LuFilePenLine className="text-[11px]" />
-          Draft
-        </span>
       </div>
 
       {/* Action Buttons */}
