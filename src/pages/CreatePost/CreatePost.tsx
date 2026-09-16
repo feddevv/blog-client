@@ -1,10 +1,12 @@
 import PostForm from '@/components/PostForm';
 import { useCreatePost } from '@/hooks/usePosts';
 import { type PostFormValues } from '@/types/zod';
+import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 export default function CreatePost() {
   const { mutate, isPending } = useCreatePost();
+  const navigate = useNavigate();
 
   const onSubmit = (data: PostFormValues) => {
     const formData = new FormData();
@@ -15,8 +17,11 @@ export default function CreatePost() {
     formData.append('postImage', data.postImage[0]);
 
     mutate(formData, {
-      onSuccess: () => {
-        toast.success('Post successfully created');
+      onSuccess: (data) => {
+        navigate(`/posts/${data.id}`);
+      },
+      onError: () => {
+        toast.error('Failed to update. Try again');
       },
     });
   };
@@ -30,8 +35,11 @@ export default function CreatePost() {
     formData.append('postImage', data.postImage[0]);
 
     mutate(formData, {
-      onSuccess: () => {
-        toast.success('Post was saved as a draft');
+      onSuccess: (data) => {
+        navigate(`/posts/${data.id}`);
+      },
+      onError: () => {
+        toast.error('Failed to update. Try again');
       },
     });
   };
