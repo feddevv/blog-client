@@ -1,12 +1,12 @@
 import PostForm from '@/components/PostForm';
 import { useCreatePost } from '@/hooks/usePosts';
-import { type CreatePostFormValues } from '@/types/zod';
+import { type PostFormValues } from '@/types/zod';
 import { toast } from 'sonner';
 
 export default function CreatePost() {
   const { mutate, isPending } = useCreatePost();
 
-  const onSubmit = (data: CreatePostFormValues) => {
+  const onSubmit = (data: PostFormValues) => {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('description', data.description);
@@ -21,7 +21,7 @@ export default function CreatePost() {
     });
   };
 
-  const handleSaveDraft = (data: CreatePostFormValues) => {
+  const handleSaveDraft = (data: PostFormValues) => {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('description', data.description);

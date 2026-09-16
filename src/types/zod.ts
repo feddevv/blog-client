@@ -50,7 +50,7 @@ export type RegisterRequest = z.infer<typeof registerSchema>;
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-export const createPostSchema = z.object({
+export const postSchema = z.object({
   title: z
     .string('Not a string')
     .trim()
@@ -80,4 +80,4 @@ export const createPostSchema = z.object({
     ),
 });
 
-export type CreatePostFormValues = z.infer<typeof createPostSchema>;
+export type PostFormValues = z.infer<typeof postSchema>;

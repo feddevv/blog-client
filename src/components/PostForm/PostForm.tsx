@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { createPostSchema, type CreatePostFormValues } from '@/types/zod';
+import { postSchema, type PostFormValues } from '@/types/zod';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
 import ContentEditorField from './ContentEditorField';
@@ -9,8 +9,8 @@ import ImageUploadField from './ImageUploadField';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface PostFormProps {
-  onSubmit: (data: any) => void;
-  handleSaveDraft: (data: CreatePostFormValues) => void;
+  onSubmit: (data: PostFormValues) => void;
+  handleSaveDraft: (data: PostFormValues) => void;
   isPending: boolean;
 }
 
@@ -25,10 +25,10 @@ export default function PostForm({
     formState: { errors },
     getValues,
     setValue,
-  } = useForm<CreatePostFormValues>({
-    resolver: zodResolver(createPostSchema),
+  } = useForm<PostFormValues>({
+    resolver: zodResolver(postSchema),
   });
-  const handleFormSubmit: SubmitHandler<CreatePostFormValues> = (data) => {
+  const handleFormSubmit: SubmitHandler<PostFormValues> = (data) => {
     onSubmit(data);
   };
 
