@@ -3,9 +3,14 @@ import Textarea from '@/components/Textarea';
 import { LuAlignLeft } from 'react-icons/lu';
 import type { FieldProps } from './types';
 
-interface DescriptionFieldProps extends FieldProps {}
+interface DescriptionFieldProps extends FieldProps {
+  initialValue?: string;
+}
 
-export default function DescriptionField({ register }: DescriptionFieldProps) {
+export default function DescriptionField({
+  register,
+  initialValue,
+}: DescriptionFieldProps) {
   return (
     <div className={`flex flex-col gap-2`}>
       <div className="flex items-center justify-between">
@@ -28,6 +33,7 @@ export default function DescriptionField({ register }: DescriptionFieldProps) {
         rows={3}
         placeholder="Provide a compelling summary that will entice readers to read the full article..."
         className="font-paragraph"
+        defaultValue={initialValue}
         {...register('description')}
       />
 

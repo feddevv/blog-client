@@ -7,10 +7,18 @@ export default function UpdatePost() {
   const { data: post, isPending } = usePostById(Number(id));
 
   return (
-    <PostForm
-      handleSaveDraft={() => {}}
-      isPending={isPending}
-      onSubmit={() => {}}
-    />
+    !isPending && (
+      <PostForm
+        handleSaveDraft={() => {}}
+        isPending={isPending}
+        onSubmit={() => {}}
+        initialValues={{
+          title: post?.title,
+          content: post?.content,
+          description: post?.description,
+          state: post?.state === 'DRAFT' ? 'PUBLISHED' : post?.state,
+        }}
+      />
+    )
   );
 }

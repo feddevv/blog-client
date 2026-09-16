@@ -12,12 +12,26 @@ interface PostFormProps {
   onSubmit: (data: PostFormValues) => void;
   handleSaveDraft: (data: PostFormValues) => void;
   isPending: boolean;
+  initialValues?: {
+    title?: string;
+    description?: string;
+    content?: string;
+    state?: 'PUBLISHED' | 'HIDDEN';
+    postImage?: FileList | null;
+  };
 }
 
 export default function PostForm({
   onSubmit,
   handleSaveDraft,
   isPending,
+  initialValues = {
+    title: '',
+    description: '',
+    content: '',
+    state: 'PUBLISHED',
+    postImage: null,
+  },
 }: PostFormProps) {
   const {
     register,
@@ -37,9 +51,18 @@ export default function PostForm({
       <form className={`w-full`} onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 flex flex-col gap-6">
-            <TitleField register={register} />
-            <DescriptionField register={register} />
-            <ContentEditorField register={register} />
+            <TitleField
+              register={register}
+              initialValue={initialValues.title}
+            />
+            <DescriptionField
+              register={register}
+              initialValue={initialValues.description}
+            />
+            <ContentEditorField
+              register={register}
+              initialValue={initialValues.content}
+            />
           </div>
 
           <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
@@ -48,7 +71,10 @@ export default function PostForm({
               errors={errors}
               isPending={isPending}
             />
-            <StateField register={register} />
+            <StateField
+              register={register}
+              initialValue={initialValues.state}
+            />
             <ImageUploadField setValue={setValue} register={register} />
           </div>
         </div>

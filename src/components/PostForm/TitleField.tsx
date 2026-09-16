@@ -3,9 +3,14 @@ import Input from '@/components/Input';
 import { LuType } from 'react-icons/lu';
 import type { FieldProps } from './types';
 
-interface TitleFieldProps extends FieldProps {}
+interface TitleFieldProps extends FieldProps {
+  initialValue?: string;
+}
 
-export default function TitleField({ register }: TitleFieldProps) {
+export default function TitleField({
+  register,
+  initialValue,
+}: TitleFieldProps) {
   return (
     <div className={`flex flex-col gap-2`}>
       <div className="flex items-center justify-between">
@@ -28,6 +33,7 @@ export default function TitleField({ register }: TitleFieldProps) {
         type="text"
         placeholder="e.g., The Architecture of High-Scale Web Applications"
         className="text-base sm:text-lg font-heading font-medium p-3 placeholder:font-paragraph placeholder:text-sm"
+        defaultValue={initialValue}
         {...register('title')}
       />
 

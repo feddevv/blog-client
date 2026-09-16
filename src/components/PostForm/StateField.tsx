@@ -4,10 +4,15 @@ import { LuGlobe, LuEyeOff, LuChevronDown } from 'react-icons/lu';
 import type { FieldProps } from './types';
 import { useState } from 'react';
 
-interface StateFieldProps extends FieldProps {}
+interface StateFieldProps extends FieldProps {
+  initialValue?: string;
+}
 
-export default function StateField({ register }: StateFieldProps) {
-  const [state, setState] = useState('PUBLISHED');
+export default function StateField({
+  register,
+  initialValue,
+}: StateFieldProps) {
+  const [state, setState] = useState(initialValue || 'PUBLISHED');
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -30,7 +35,7 @@ export default function StateField({ register }: StateFieldProps) {
       <div className="relative">
         <Select
           id="post-state"
-          defaultValue="PUBLISHED"
+          defaultValue={initialValue}
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
           {...register('state')}
           onChange={(e) => setState(e.target.value)}
