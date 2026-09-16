@@ -10,7 +10,7 @@ import RegisterForm from './pages/Auth/RegisterForm';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import Admin from './pages/Admin';
-import PostForm from './pages/PostForm';
+import CreatePost from './pages/CreatePost/CreatePost';
 
 const router = createBrowserRouter([
   {
@@ -56,18 +56,18 @@ const router = createBrowserRouter([
             path: '/posts/create',
             element: (
               <AdminRoute>
-                <PostForm />
+                <CreatePost />
               </AdminRoute>
             ),
           },
-          {
-            path: '/posts/:id/update',
-            element: (
-              <AdminRoute>
-                <PostForm />
-              </AdminRoute>
-            ),
-          },
+          // {
+          //   path: '/posts/:id/update',
+          //   element: (
+          //     <AdminRoute>
+          //       <PostForm />
+          //     </AdminRoute>
+          //   ),
+          // },
         ],
       },
     ],

@@ -1,7 +1,5 @@
 export { default } from './PostForm';
 export { default as CreatePost } from './PostForm';
-export { default as CreatePostHeader } from './CreatePostHeader';
-export { default as PostForm } from './Form';
 export { default as TitleField } from './TitleField';
 export { default as DescriptionField } from './DescriptionField';
 export { default as ImageUploadField } from './ImageUploadField';
