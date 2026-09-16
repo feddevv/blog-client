@@ -22,7 +22,7 @@ export default function UpdatePost() {
       { id: Number(id), data: formData },
       {
         onSuccess: () => {
-          navigate(`/post/${id}`);
+          navigate(`/posts/${id}`);
         },
       }
     );
@@ -40,7 +40,7 @@ export default function UpdatePost() {
       { id: Number(id), data: formData },
       {
         onSuccess: () => {
-          navigate(`/post/${id}`);
+          navigate(`/posts/${id}`);
         },
       }
     );

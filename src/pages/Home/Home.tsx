@@ -108,7 +108,7 @@ export default function Home() {
           <>
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {posts.data.map((post) => (
-                <Link to={`/post/${post.id}`} className="flex" key={post.id}>
+                <Link to={`/posts/${post.id}`} className="flex" key={post.id}>
                   <Card
                     img={post.thumbnailUrl}
                     title={post.title}
