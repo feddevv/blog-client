@@ -2,12 +2,13 @@ import PostForm from '@/components/PostForm';
 import Spinner from '@/components/Spinner';
 import { usePostById, useUpdatePostById } from '@/hooks/usePosts';
 import type { PostFormValues } from '@/types/zod';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 export default function UpdatePost() {
   const { id } = useParams();
   const { data: post, isPending: isPendingFetchPost } = usePostById(Number(id));
   const { mutate, isPending: isPendingUpdatePost } = useUpdatePostById();
+  const navigate = useNavigate();
 
   const onSubmit = (data: PostFormValues) => {
     const formData = new FormData();
@@ -17,7 +18,14 @@ export default function UpdatePost() {
     formData.append('state', data.state);
     formData.append('postImage', data.postImage[0]);
 
-    mutate({ id: Number(id), data: formData });
+    mutate(
+      { id: Number(id), data: formData },
+      {
+        onSuccess: () => {
+          navigate(`/post/${id}`);
+        },
+      }
+    );
   };
 
   const handleSaveDraft = (data: PostFormValues) => {
@@ -28,7 +36,14 @@ export default function UpdatePost() {
     formData.append('state', 'DRAFT');
     formData.append('postImage', data.postImage[0]);
 
-    mutate({ id: Number(id), data: formData });
+    mutate(
+      { id: Number(id), data: formData },
+      {
+        onSuccess: () => {
+          navigate(`/post/${id}`);
+        },
+      }
+    );
   };
 
   return isPendingFetchPost ? (
