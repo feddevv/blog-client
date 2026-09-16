@@ -5,14 +5,16 @@ import type { FieldProps } from './types';
 import { useState } from 'react';
 
 interface StateFieldProps extends FieldProps {
-  initialValue?: string;
+  initialValue?: 'PUBLISHED' | 'HIDDEN';
 }
 
 export default function StateField({
   register,
   initialValue,
 }: StateFieldProps) {
-  const [state, setState] = useState(initialValue || 'PUBLISHED');
+  const [state, setState] = useState<'PUBLISHED' | 'HIDDEN'>(
+    initialValue || 'PUBLISHED'
+  );
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -38,7 +40,7 @@ export default function StateField({
           defaultValue={initialValue}
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
           {...register('state')}
-          onChange={(e) => setState(e.target.value)}
+          onChange={(e) => setState(e.target.value as 'PUBLISHED' | 'HIDDEN')}
         >
           <option value="PUBLISHED">Published</option>
           <option value="HIDDEN">Hidden</option>
