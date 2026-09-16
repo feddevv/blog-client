@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreatePost } from '@/hooks/usePosts';
 import { toast } from 'sonner';
 
-export default function PostForm() {
+export default function Form() {
   const {
     register,
     handleSubmit,
