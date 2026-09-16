@@ -27,13 +27,7 @@ export default function PostForm({
   onSubmit,
   handleSaveDraft,
   isPending,
-  initialValues = {
-    title: '',
-    description: '',
-    content: '',
-    state: 'PUBLISHED',
-    postImage: null,
-  },
+  initialValues,
 }: PostFormProps) {
   const {
     register,
@@ -55,15 +49,15 @@ export default function PostForm({
           <div className="lg:col-span-2 flex flex-col gap-6">
             <TitleField
               register={register}
-              initialValue={initialValues.title}
+              initialValue={initialValues?.title}
             />
             <DescriptionField
               register={register}
-              initialValue={initialValues.description}
+              initialValue={initialValues?.description}
             />
             <ContentEditorField
               register={register}
-              initialValue={initialValues.content}
+              initialValue={initialValues?.content}
             />
           </div>
 
@@ -75,7 +69,7 @@ export default function PostForm({
             />
             <StateField
               register={register}
-              initialValue={initialValues.state}
+              initialValue={initialValues?.state}
             />
             <ImageUploadField setValue={setValue} register={register} />
           </div>
