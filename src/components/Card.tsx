@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react';
 import Like from './Like';
 
 export interface CardProps {
-  img: string;
+  img?: string;
   title: string;
   description: string;
   likes: number;
