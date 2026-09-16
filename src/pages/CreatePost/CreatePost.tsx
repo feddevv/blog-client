@@ -1,13 +1,12 @@
 import PostForm from '@/components/PostForm';
 import { useCreatePost } from '@/hooks/usePosts';
 import { type CreatePostFormValues } from '@/types/zod';
-import { type SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export default function CreatePost() {
   const { mutate, isPending } = useCreatePost();
 
-  const onSubmit: SubmitHandler<CreatePostFormValues> = (data) => {
+  const onSubmit = (data: CreatePostFormValues) => {
     const formData = new FormData();
     formData.append('title', data.title);
     formData.append('description', data.description);

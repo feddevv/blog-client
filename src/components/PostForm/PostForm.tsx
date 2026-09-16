@@ -9,7 +9,7 @@ import ImageUploadField from './ImageUploadField';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface PostFormProps {
-  onSubmit: SubmitHandler<any>;
+  onSubmit: (data: any) => void;
   handleSaveDraft: (data: CreatePostFormValues) => void;
   isPending: boolean;
 }
@@ -23,15 +23,18 @@ export default function PostForm({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     getValues,
     setValue,
   } = useForm<CreatePostFormValues>({
     resolver: zodResolver(createPostSchema),
   });
+  const handleFormSubmit: SubmitHandler<CreatePostFormValues> = (data) => {
+    onSubmit(data);
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-1">
-      <form className={`w-full`} onSubmit={handleSubmit(onSubmit)}>
+      <form className={`w-full`} onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 flex flex-col gap-6">
             <TitleField register={register} />
