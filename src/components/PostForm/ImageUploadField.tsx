@@ -4,10 +4,10 @@ import { LuImage, LuUpload } from 'react-icons/lu';
 import type { FieldProps } from './types';
 import { useEffect, useRef, useState, type DragEventHandler } from 'react';
 import type { UseFormSetValue } from 'react-hook-form';
-import type { CreatePostFormValues } from '@/types/zod';
+import type { PostFormValues } from '@/types/zod';
 
 interface ImageUploadFieldProps extends FieldProps {
-  setValue: UseFormSetValue<CreatePostFormValues>;
+  setValue: UseFormSetValue<PostFormValues>;
 }
 
 export default function ImageUploadField({
