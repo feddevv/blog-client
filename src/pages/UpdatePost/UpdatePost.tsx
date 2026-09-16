@@ -3,6 +3,7 @@ import Spinner from '@/components/Spinner';
 import { usePostById, useUpdatePostById } from '@/hooks/usePosts';
 import type { PostFormValues } from '@/types/zod';
 import { useNavigate, useParams } from 'react-router';
+import { toast } from 'sonner';
 
 export default function UpdatePost() {
   const { id } = useParams();
@@ -24,6 +25,9 @@ export default function UpdatePost() {
         onSuccess: () => {
           navigate(`/posts/${id}`);
         },
+        onError: () => {
+          toast.error('Failed to update. Try again');
+        },
       }
     );
   };
@@ -41,6 +45,9 @@ export default function UpdatePost() {
       {
         onSuccess: () => {
           navigate(`/posts/${id}`);
+        },
+        onError: () => {
+          toast.error('Failed to update. Try again');
         },
       }
     );
