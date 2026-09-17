@@ -69,7 +69,7 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 
       try {
         const response = await axios.post<{ token: string }>(
-          'https://blog-api-65st.onrender.com/api/auth/refresh',
+          'http://localhost:3000/api/auth/refresh',
           {},
           { withCredentials: true }
         );

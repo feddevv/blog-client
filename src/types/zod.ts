@@ -66,18 +66,40 @@ export const postSchema = z.object({
   content: z.string().trim().min(1, 'Content should be at least 1 character'),
 
   state: z.enum(['PUBLISHED', 'HIDDEN', 'DRAFT']),
+});
 
+export const createPostSchema = postSchema.extend({
   postImage: z
-    .instanceof(FileList)
-    .refine((images) => images.length > 0, 'Image is required')
+    .custom<FileList>()
+    .refine((files) => files && files.length > 0, 'Image is required')
     .refine(
-      (images) => images[0] && ACCEPTED_IMAGE_TYPES.includes(images[0].type),
-      'Only JPEG, PNG and WEBP are supported'
+      (files) => !files || files.length === 0 || files[0].size <= MAX_FILE_SIZE,
+      'Image must not exceed 5MB'
     )
     .refine(
-      (images) => images[0] && images[0].size <= MAX_FILE_SIZE,
-      'Image must not exceed 5MB'
+      (files) =>
+        !files ||
+        files.length === 0 ||
+        ACCEPTED_IMAGE_TYPES.includes(files[0].type)
     ),
 });
 
+export const updatePostSchema = postSchema.extend({
+  postImage: z
+    .custom<FileList>()
+    .optional()
+    .refine(
+      (files) => !files || files.length === 0 || files[0].size <= MAX_FILE_SIZE,
+      'Image must not exceed 5MB'
+    )
+    .refine(
+      (files) =>
+        !files ||
+        files.length === 0 ||
+        ACCEPTED_IMAGE_TYPES.includes(files[0].type)
+    ),
+});
+
+export type CreatePostForm = z.infer<typeof createPostSchema>;
+export type UpdatePostForm = z.infer<typeof updatePostSchema>;
 export type PostFormValues = z.infer<typeof postSchema>;

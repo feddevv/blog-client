@@ -1,5 +1,9 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { postSchema, type PostFormValues } from '@/types/zod';
+import {
+  createPostSchema,
+  updatePostSchema,
+  type UpdatePostForm,
+} from '@/types/zod';
 import TitleField from './TitleField';
 import DescriptionField from './DescriptionField';
 import ContentEditorField from './ContentEditorField';
@@ -17,15 +21,17 @@ interface InitialValues {
 }
 
 interface PostFormProps {
-  onSubmit: (data: PostFormValues, isDraft?: boolean) => void;
+  onSubmit: (data: UpdatePostForm, isDraft?: boolean) => void;
   isPending: boolean;
   initialValues?: InitialValues;
+  isEdit?: boolean;
 }
 
 export default function PostForm({
   onSubmit,
   isPending,
   initialValues,
+  isEdit = false,
 }: PostFormProps) {
   const {
     register,
@@ -33,8 +39,8 @@ export default function PostForm({
     formState: { errors },
     getValues,
     setValue,
-  } = useForm<PostFormValues>({
-    resolver: zodResolver(postSchema),
+  } = useForm<UpdatePostForm>({
+    resolver: zodResolver(isEdit ? updatePostSchema : createPostSchema),
     defaultValues: {
       title: initialValues?.title,
       content: initialValues?.content,
@@ -42,7 +48,7 @@ export default function PostForm({
       state: initialValues?.state,
     },
   });
-  const handleFormSubmit: SubmitHandler<PostFormValues> = (data) => {
+  const handleFormSubmit: SubmitHandler<UpdatePostForm> = (data) => {
     onSubmit(data);
   };
 
