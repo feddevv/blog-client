@@ -3,6 +3,7 @@ import StatusBadge from './StatusBadge';
 import { LuCalendar, LuPencil, LuTrash2, LuFileText } from 'react-icons/lu';
 import type { AdminPostItem } from './types';
 import type { Post } from '@/types';
+import { NavLink } from 'react-router';
 
 interface PostTableRowProps {
   post: Post;
@@ -71,17 +72,15 @@ export default function PostTableRow({
       {/* Column 4: Two buttons: Update, Delete */}
       <td className="py-4 px-4 align-middle whitespace-nowrap text-right">
         <div className="flex items-center justify-end gap-2">
-          <Button
-            intent="secondary"
-            size="xs"
+          <NavLink
+            to={`/posts/${post.id}/update`}
+            className="flex items-center gap-1.5 font-medium shadow-xs w-full sm:w-auto bg-primary text-primary-foreground py-1 px-4 hover:bg-button-hover active:scale-98 transition-all duration-200 rounded-xs"
             onClick={() => onUpdate?.(post)}
-            className="flex items-center gap-1.5 hover:border-foreground"
             aria-label={`Update post: ${post.title}`}
           >
             <LuPencil className="text-xs" />
             <span>Update</span>
-          </Button>
-
+          </NavLink>
           <Button
             intent="secondary"
             size="xs"
