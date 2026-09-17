@@ -46,6 +46,7 @@ export default function UpdatePost() {
         content: post?.content,
         description: post?.description,
         state: post?.state === 'DRAFT' ? 'PUBLISHED' : post?.state,
+        postImage: post?.coverImageUrl,
       }}
     />
   );

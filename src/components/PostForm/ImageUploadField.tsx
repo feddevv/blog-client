@@ -8,14 +8,16 @@ import type { UpdatePostForm } from '@/types/zod';
 
 interface ImageUploadFieldProps extends FieldProps {
   setValue: UseFormSetValue<UpdatePostForm>;
+  initialValue?: string;
 }
 
 export default function ImageUploadField({
   register,
   setValue,
+  initialValue,
 }: ImageUploadFieldProps) {
   const [isDragged, setIsDragged] = useState<boolean>(false);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(initialValue || null);
   const { onChange, ...restRegister } = register('postImage');
 
   const dropZone = useRef<HTMLLabelElement>(null);

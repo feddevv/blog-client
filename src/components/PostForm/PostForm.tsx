@@ -17,7 +17,7 @@ interface InitialValues {
   description?: string;
   content?: string;
   state?: 'PUBLISHED' | 'HIDDEN';
-  postImage?: FileList | null;
+  postImage?: string;
 }
 
 interface PostFormProps {
@@ -72,7 +72,11 @@ export default function PostForm({
               register={register}
               initialValue={initialValues?.state}
             />
-            <ImageUploadField setValue={setValue} register={register} />
+            <ImageUploadField
+              setValue={setValue}
+              register={register}
+              initialValue={initialValues?.postImage}
+            />
           </div>
         </div>
       </form>
