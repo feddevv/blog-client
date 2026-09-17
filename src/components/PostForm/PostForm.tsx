@@ -35,6 +35,12 @@ export default function PostForm({
     setValue,
   } = useForm<PostFormValues>({
     resolver: zodResolver(postSchema),
+    defaultValues: {
+      title: initialValues?.title,
+      content: initialValues?.content,
+      description: initialValues?.description,
+      state: initialValues?.state,
+    },
   });
   const handleFormSubmit: SubmitHandler<PostFormValues> = (data) => {
     onSubmit(data);
@@ -45,18 +51,9 @@ export default function PostForm({
       <form className={`w-full`} onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 flex flex-col gap-6">
-            <TitleField
-              register={register}
-              initialValue={initialValues?.title}
-            />
-            <DescriptionField
-              register={register}
-              initialValue={initialValues?.description}
-            />
-            <ContentEditorField
-              register={register}
-              initialValue={initialValues?.content}
-            />
+            <TitleField register={register} />
+            <DescriptionField register={register} />
+            <ContentEditorField register={register} />
           </div>
 
           <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">

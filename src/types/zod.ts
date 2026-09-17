@@ -55,7 +55,7 @@ export const postSchema = z.object({
     .string('Not a string')
     .trim()
     .min(5, 'Title must be at least 5 characters')
-    .max(255, 'Title most not exceed 255 characters'),
+    .max(255, 'Title must not exceed 255 characters'),
 
   description: z
     .string('Not a string')

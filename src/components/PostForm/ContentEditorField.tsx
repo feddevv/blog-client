@@ -25,13 +25,10 @@ import {
   wordsAmountFor,
 } from '@/utils/utils';
 
-interface ContentEditorFieldProps extends FieldProps {
-  initialValue?: string;
-}
+interface ContentEditorFieldProps extends FieldProps {}
 
 export default function ContentEditorField({
   register,
-  initialValue,
 }: ContentEditorFieldProps) {
   const toolbarButtons = [
     { icon: LuBold, label: 'Bold', shortcut: '**text**' },
@@ -45,7 +42,7 @@ export default function ContentEditorField({
     { icon: LuImage, label: 'Image', shortcut: '![alt](url)' },
   ];
   const [tab, setTab] = useState<'write' | 'preview'>('write');
-  const [content, setContent] = useState(initialValue || '');
+  const [content, setContent] = useState('');
 
   return (
     <div
@@ -127,7 +124,6 @@ export default function ContentEditorField({
             placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
             className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
             {...register('content')}
-            defaultValue={initialValue}
             onChange={(e) => setContent(e.target.value)}
           />
         ) : (
