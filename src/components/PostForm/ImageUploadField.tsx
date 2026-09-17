@@ -15,6 +15,8 @@ export default function ImageUploadField({
   setValue,
 }: ImageUploadFieldProps) {
   const [isDragged, setIsDragged] = useState<boolean>(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const { onChange, ...restRegister } = register('postImage');
 
   const dropZone = useRef<HTMLLabelElement>(null);
 
@@ -43,6 +45,7 @@ export default function ImageUploadField({
   const handleOnDrop: DragEventHandler = (e) => {
     const files = e.dataTransfer.files;
     if (files && files.length > 0) {
+      setFileName(e.dataTransfer.files[0].name);
       setValue('postImage', files, {
         shouldValidate: true,
         shouldDirty: true,
@@ -120,7 +123,13 @@ export default function ImageUploadField({
           id="post-image-file"
           accept="image/png,image/jpeg,image/webp,image/gif"
           className="pointer-events-none hidden"
-          {...register('postImage')}
+          onChange={(e) => {
+            onChange(e);
+            if (e.target.files) {
+              setFileName(e.target.files[0].name);
+            }
+          }}
+          {...restRegister}
         />
       </div>
     </Label>
