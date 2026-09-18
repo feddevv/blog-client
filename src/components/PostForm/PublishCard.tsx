@@ -14,12 +14,14 @@ interface PublishCardProps {
   isPending: boolean;
   errors: FieldErrors<UpdatePostForm>;
   handleSaveDraft?: () => void;
+  isSubmitted: boolean;
 }
 
 export default function PublishCard({
   isPending,
   errors,
   handleSaveDraft,
+  isSubmitted,
 }: PublishCardProps) {
   return (
     <div
@@ -74,19 +76,27 @@ export default function PublishCard({
           Checklist
         </span>
         <ul className="space-y-1.5 text-xs font-paragraph text-muted-foreground">
-          <ListCheckItem error={errors.title} validText="Title provided" />
-          <ListCheckItem
-            error={errors.postImage}
-            validText="Cover image selected"
-          />
-          <ListCheckItem
-            error={errors.description}
-            validText="Short excerpt written"
-          />
-          <ListCheckItem
-            error={errors.content}
-            validText="Article content filled"
-          />
+          {isSubmitted ? (
+            <>
+              <ListCheckItem error={errors.title} validText="Title provided" />
+              <ListCheckItem
+                error={errors.postImage}
+                validText="Cover image selected"
+              />
+              <ListCheckItem
+                error={errors.description}
+                validText="Short excerpt written"
+              />
+              <ListCheckItem
+                error={errors.content}
+                validText="Article content filled"
+              />
+            </>
+          ) : (
+            <p className="font-paragraph text-xs text-muted-foreground">
+              Awaiting form submission...
+            </p>
+          )}
         </ul>
       </div>
 

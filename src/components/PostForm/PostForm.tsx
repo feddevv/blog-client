@@ -36,7 +36,7 @@ export default function PostForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     getValues,
     setValue,
   } = useForm<UpdatePostForm>({
@@ -67,6 +67,7 @@ export default function PostForm({
               handleSaveDraft={() => onSubmit(getValues(), true)}
               errors={errors}
               isPending={isPending}
+              isSubmitted={isSubmitted}
             />
             <StateField
               register={register}
