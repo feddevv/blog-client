@@ -14,7 +14,7 @@ import { describe, expect, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { createWrapper } from '@/tests/testUtils';
 import { mockPosts } from '@/mocks/data/posts';
-import type { GetPostsResponse } from '@/types';
+import type { PaginatedResponse, Post } from '@/types';
 
 describe('Home component', () => {
   const Stub = createRoutesStub([
@@ -101,7 +101,7 @@ describe('Home component', () => {
   describe('Pagination', () => {
     it('should properly render pagination and do navigation', async () => {
       server.use(
-        http.get<PathParams, DefaultBodyType, GetPostsResponse>(
+        http.get<PathParams, DefaultBodyType, PaginatedResponse<Post>>(
           blogApi('/api/posts'),
           async ({ request }) => {
             await delay(100);
@@ -122,7 +122,8 @@ describe('Home component', () => {
                     userId: 42,
                     state: 'PUBLISHED',
                     imageKey: 'post-image-1',
-                    imageUrl: 'https://placehold.co/400x300',
+                    coverImageUrl: 'https://placehold.co/400x300',
+                    thumbnailUrl: 'https://placehold.co/400x300',
                     isLiked: false,
                     likesCount: 0,
                   },
@@ -145,7 +146,8 @@ describe('Home component', () => {
                   userId: 42,
                   state: 'PUBLISHED',
                   imageKey: 'post-image-2',
-                  imageUrl: 'https://placehold.co/400x300',
+                  coverImageUrl: 'https://placehold.co/400x300',
+                  thumbnailUrl: 'https://placehold.co/400x300',
                   isLiked: false,
                   likesCount: 0,
                 },
