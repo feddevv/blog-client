@@ -15,6 +15,8 @@ export default function StateField({
   const [state, setState] = useState<'PUBLISHED' | 'HIDDEN'>(
     initialValue || 'PUBLISHED'
   );
+  const { onChange, ...restRegister } = register;
+
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -39,8 +41,11 @@ export default function StateField({
           id="post-state"
           defaultValue={initialValue}
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
-          {...register}
-          onChange={(e) => setState(e.target.value as 'PUBLISHED' | 'HIDDEN')}
+          {...restRegister}
+          onChange={(e) => {
+            setState(e.target.value as 'PUBLISHED' | 'HIDDEN');
+            onChange(e);
+          }}
         >
           <option value="PUBLISHED">Published</option>
           <option value="HIDDEN">Hidden</option>

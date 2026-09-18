@@ -44,6 +44,8 @@ export default function ContentEditorField({
   const [tab, setTab] = useState<'write' | 'preview'>('write');
   const [content, setContent] = useState('');
 
+  const { onChange, ...restRegister } = register;
+
   return (
     <div
       className={`bg-card border border-border rounded-xs overflow-hidden flex flex-col`}
@@ -123,8 +125,11 @@ export default function ContentEditorField({
             rows={18}
             placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
             className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
-            {...register}
-            onChange={(e) => setContent(e.target.value)}
+            {...restRegister}
+            onChange={(e) => {
+              setContent(e.target.value);
+              onChange(e);
+            }}
           />
         ) : (
           <div className="bg-card font-paragraph sm:text-base p-4 prose max-h-96 max-w-full w-full overflow-y-auto">
