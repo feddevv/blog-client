@@ -73,14 +73,15 @@ export const createPostSchema = postSchema.extend({
     .custom<FileList>()
     .refine((files) => files && files.length > 0, 'Image is required')
     .refine(
-      (files) => !files || files.length === 0 || files[0].size <= MAX_FILE_SIZE,
+      (files) => files && files.length > 0 && files[0].size <= MAX_FILE_SIZE,
       'Image must not exceed 5MB'
     )
     .refine(
       (files) =>
-        !files ||
-        files.length === 0 ||
-        ACCEPTED_IMAGE_TYPES.includes(files[0].type)
+        files &&
+        files.length > 0 &&
+        ACCEPTED_IMAGE_TYPES.includes(files[0].type),
+      'Only JPEG, PNG and WEBP allowed'
     ),
 });
 
