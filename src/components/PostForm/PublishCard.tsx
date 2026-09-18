@@ -23,6 +23,13 @@ export default function PublishCard({
   handleSaveDraft,
   isSubmitted,
 }: PublishCardProps) {
+  const listItems = [
+    { error: errors.title, validText: 'Title provided' },
+    { error: errors.description, validText: 'Short excerpt written' },
+    { error: errors.content, validText: 'Cover image selected' },
+    { error: errors.postImage, validText: 'Article content filled' },
+  ];
+
   return (
     <div
       className={`bg-card border border-border p-5 rounded-xs flex flex-col gap-4`}
@@ -77,21 +84,13 @@ export default function PublishCard({
         </span>
         <ul className="space-y-1.5 text-xs font-paragraph text-muted-foreground">
           {isSubmitted ? (
-            <>
-              <ListCheckItem error={errors.title} validText="Title provided" />
+            listItems.map((item, i) => (
               <ListCheckItem
-                error={errors.postImage}
-                validText="Cover image selected"
+                validText={item.validText}
+                error={item.error}
+                key={i}
               />
-              <ListCheckItem
-                error={errors.description}
-                validText="Short excerpt written"
-              />
-              <ListCheckItem
-                error={errors.content}
-                validText="Article content filled"
-              />
-            </>
+            ))
           ) : (
             <p className="font-paragraph text-xs text-muted-foreground">
               Awaiting form submission...
