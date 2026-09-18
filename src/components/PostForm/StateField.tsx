@@ -39,7 +39,7 @@ export default function StateField({
           id="post-state"
           defaultValue={initialValue}
           className="bg-secondary/60 font-paragraph pr-10 appearance-none rounded-xs"
-          {...register('state')}
+          {...register}
           onChange={(e) => setState(e.target.value as 'PUBLISHED' | 'HIDDEN')}
         >
           <option value="PUBLISHED">Published</option>

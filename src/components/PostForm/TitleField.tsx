@@ -28,7 +28,7 @@ export default function TitleField({ register }: TitleFieldProps) {
         type="text"
         placeholder="e.g., The Architecture of High-Scale Web Applications"
         className="text-base sm:text-lg font-heading font-medium p-3 placeholder:font-paragraph placeholder:text-sm"
-        {...register('title')}
+        {...register}
       />
 
       <p className="text-xs text-muted-foreground">

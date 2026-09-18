@@ -18,7 +18,7 @@ export default function ImageUploadField({
 }: ImageUploadFieldProps) {
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string | null>(initialValue || null);
-  const { onChange, ...restRegister } = register('postImage');
+  const { onChange, ...restRegister } = register;
 
   const dropZone = useRef<HTMLLabelElement>(null);
 

@@ -123,7 +123,7 @@ export default function ContentEditorField({
             rows={18}
             placeholder={`# Introduction\n\nStart writing your article here with rich Markdown formatting...\n\n## Key Takeaways\n\n- Highlight insightful takeaways\n- Use **bold** emphasis and *italic* nuance\n- Add code blocks and tables easily\n\n\`\`\`typescript\nfunction publishArticle(post: Post) {\n  console.log("Publishing:", post.title);\n}\n\`\`\`\n\n> "Clear writing begins with clear thinking."`}
             className="bg-card border-0 rounded-none font-paragraph sm:text-base leading-relaxed p-4 focus-visible:ring-0 focus-visible:border-0 resize-y"
-            {...register('content')}
+            {...register}
             onChange={(e) => setContent(e.target.value)}
           />
         ) : (

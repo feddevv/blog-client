@@ -57,9 +57,9 @@ export default function PostForm({
       <form className={`w-full`} onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2 flex flex-col gap-6">
-            <TitleField register={register} />
-            <DescriptionField register={register} />
-            <ContentEditorField register={register} />
+            <TitleField register={{ ...register('title') }} />
+            <DescriptionField register={{ ...register('description') }} />
+            <ContentEditorField register={{ ...register('content') }} />
           </div>
 
           <div className="lg:col-span-1 flex flex-col gap-6 sticky top-20">
@@ -70,12 +70,12 @@ export default function PostForm({
               isSubmitted={isSubmitted}
             />
             <StateField
-              register={register}
+              register={{ ...register('state') }}
               initialValue={initialValues?.state}
             />
             <ImageUploadField
               setValue={setValue}
-              register={register}
+              register={{ ...register('postImage') }}
               initialValue={initialValues?.postImage}
             />
           </div>

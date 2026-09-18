@@ -28,7 +28,7 @@ export default function DescriptionField({ register }: DescriptionFieldProps) {
         rows={3}
         placeholder="Provide a compelling summary that will entice readers to read the full article..."
         className="font-paragraph"
-        {...register('description')}
+        {...register}
       />
 
       <p className="text-xs text-muted-foreground">
