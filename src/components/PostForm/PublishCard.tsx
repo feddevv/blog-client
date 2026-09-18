@@ -1,6 +1,6 @@
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import type { PostFormValues } from '@/types/zod';
+import type { UpdatePostForm } from '@/types/zod';
 import type { FieldError, FieldErrors } from 'react-hook-form';
 import {
   LuSend,
@@ -12,7 +12,7 @@ import {
 
 interface PublishCardProps {
   isPending: boolean;
-  errors: FieldErrors<PostFormValues>;
+  errors: FieldErrors<UpdatePostForm>;
   handleSaveDraft?: () => void;
 }
 
