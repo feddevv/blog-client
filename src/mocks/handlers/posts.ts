@@ -89,4 +89,33 @@ export const postsHandlers = [
 
     return HttpResponse.json(newPost, { status: 201 });
   }),
+
+  http.put<{ id: string }, DefaultBodyType, Post>(
+    blogApi('/api/posts/:id'),
+    async ({ params }) => {
+      await delay(100);
+
+      const { id } = params;
+      const numId = Number(id);
+
+      return HttpResponse.json(
+        {
+          id: numId,
+          updatedAt: new Date().toISOString(),
+          title: 'Updated title',
+          description: 'Updated description',
+          content: 'Updated content',
+          createdAt: '2026-07-29T14:45:00.000Z',
+          imageKey: 'imageKey',
+          isLiked: false,
+          likesCount: 100,
+          state: 'PUBLISHED',
+          userId: 99,
+          coverImageUrl: 'coverImageUrl',
+          thumbnailUrl: 'thumbnailUrl',
+        },
+        { status: 200 }
+      );
+    }
+  ),
 ];
