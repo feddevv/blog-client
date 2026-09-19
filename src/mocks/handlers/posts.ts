@@ -7,7 +7,7 @@ import {
   type PathParams,
 } from 'msw';
 import { mockPosts } from '../data/posts';
-import type { PaginatedResponse, Post } from '@/types';
+import type { PaginatedResponse, Post, PostState } from '@/types';
 
 export const postsHandlers = [
   http.get<PathParams, DefaultBodyType, PaginatedResponse<Post>>(
@@ -49,4 +49,44 @@ export const postsHandlers = [
       return HttpResponse.json(post);
     }
   ),
+
+  http.post(blogApi('/api/posts'), async ({ request }) => {
+    await delay(100);
+
+    let title = 'Untitled Post';
+    let description = '';
+    let content = '';
+    let state: PostState = 'PUBLISHED';
+
+    try {
+      const formData = await request.formData();
+      title = (formData.get('title') as string) || title;
+      description = (formData.get('description') as string) || description;
+      content = (formData.get('content') as string) || content;
+      state = (formData.get('state') as PostState) || state;
+    } catch {
+      // Fallback if formData cannot be parsed
+    }
+
+    const newPost: Post = {
+      id:
+        mockPosts.length > 0 ? Math.max(...mockPosts.map((p) => p.id)) + 1 : 1,
+      title,
+      description,
+      content,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 42,
+      state,
+      imageKey: 'post-image-created',
+      coverImageUrl: 'https://placehold.co/400x300',
+      thumbnailUrl: 'https://placehold.co/400x300',
+      isLiked: false,
+      likesCount: 0,
+    };
+
+    mockPosts.push(newPost);
+
+    return HttpResponse.json(newPost, { status: 201 });
+  }),
 ];
