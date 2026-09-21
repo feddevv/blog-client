@@ -48,14 +48,6 @@ export default function Header() {
           >
             Home
           </NavLink>
-          <NavLink
-            to={'/about'}
-            className={(state) =>
-              `${state.isActive ? 'text-accent' : 'text-muted-foreground'} hover:text-accent`
-            }
-          >
-            About
-          </NavLink>
 
           {user?.role === 'ADMIN' && (
             <NavLink
@@ -118,16 +110,6 @@ export default function Header() {
             to={'/'}
           >
             Home
-          </NavLink>
-          <NavLink
-            className={(state) =>
-              `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
-            }
-            tabIndex={!isOpen ? -1 : 0}
-
-            to={'/about'}
-          >
-            About
           </NavLink>
 
           {user ? (
