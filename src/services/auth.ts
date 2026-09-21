@@ -45,7 +45,10 @@ export const getUser = async (): Promise<User | null> => {
     const res = await blogApi.get<User>('/api/auth/me');
     return res.data;
   } catch (err) {
-    if (isAxiosError(err) && err.status === 401) {
+    if (
+      (isAxiosError(err) && err.status === 401) ||
+      (isAxiosError(err) && !err.status)
+    ) {
       return null;
     }
 
