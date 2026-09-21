@@ -9,6 +9,8 @@ const formatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
+  hour: '2-digit',
+  minute: 'numeric',
 });
 
 export function formatDate(date: string | Date | number, fallback = '-') {
