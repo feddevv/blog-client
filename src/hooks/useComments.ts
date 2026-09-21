@@ -16,7 +16,7 @@ export const useCommentsByPostId = (id: number, page?: number) => {
   });
 };
 
-export const useCreateComment = (user?: User) => {
+export const useCreateComment = (user?: User | null) => {
   const queryClient = useQueryClient();
 
   return useMutation({
