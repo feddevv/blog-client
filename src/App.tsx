@@ -8,6 +8,10 @@ import ErrorPage from './components/ErrorPage';
 import SignInForm from './pages/Auth/SignInForm';
 import RegisterForm from './pages/Auth/RegisterForm';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
+import Admin from './pages/Admin';
+import CreatePost from './pages/CreatePost/CreatePost';
+import UpdatePost from './pages/UpdatePost/UpdatePost';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +26,7 @@ const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: '/post/:id',
+            path: '/posts/:id',
             element: <Post />,
           },
           {
@@ -39,6 +43,30 @@ const router = createBrowserRouter([
               <ProtectedRoute guestOnly={true}>
                 <RegisterForm />,
               </ProtectedRoute>
+            ),
+          },
+          {
+            path: '/admin',
+            element: (
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: '/posts/create',
+            element: (
+              <AdminRoute>
+                <CreatePost />
+              </AdminRoute>
+            ),
+          },
+          {
+            path: '/posts/:id/update',
+            element: (
+              <AdminRoute>
+                <UpdatePost />
+              </AdminRoute>
             ),
           },
         ],

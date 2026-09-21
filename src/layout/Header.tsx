@@ -56,6 +56,17 @@ export default function Header() {
           >
             About
           </NavLink>
+
+          {user?.role === 'ADMIN' && (
+            <NavLink
+              to={'/admin'}
+              className={(state) =>
+                `${state.isActive ? 'text-accent' : 'text-muted-foreground'} hover:text-accent`
+              }
+            >
+              Admin
+            </NavLink>
+          )}
         </nav>
 
         <div className="flex items-center gap-4">

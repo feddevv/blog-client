@@ -47,3 +47,60 @@ export const registerSchema = signInSchema.extend({
     .toLowerCase(),
 });
 export type RegisterRequest = z.infer<typeof registerSchema>;
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+export const postSchema = z.object({
+  title: z
+    .string('Not a string')
+    .trim()
+    .min(5, 'Title must be at least 5 characters')
+    .max(255, 'Title must not exceed 255 characters'),
+
+  description: z
+    .string('Not a string')
+    .trim()
+    .min(1, 'Description is required')
+    .max(300, 'Description should not exceed 300 characters'),
+
+  content: z.string().trim().min(1, 'Content should be at least 1 character'),
+
+  state: z.enum(['PUBLISHED', 'HIDDEN', 'DRAFT']),
+});
+
+export const createPostSchema = postSchema.extend({
+  postImage: z
+    .custom<FileList>()
+    .refine((files) => files && files.length > 0, 'Image is required')
+    .refine(
+      (files) => files && files.length > 0 && files[0].size <= MAX_FILE_SIZE,
+      'Image must not exceed 5MB'
+    )
+    .refine(
+      (files) =>
+        files &&
+        files.length > 0 &&
+        ACCEPTED_IMAGE_TYPES.includes(files[0].type),
+      'Only JPEG, PNG and WEBP allowed'
+    ),
+});
+
+export const updatePostSchema = postSchema.extend({
+  postImage: z
+    .custom<FileList>()
+    .optional()
+    .refine(
+      (files) => !files || files.length === 0 || files[0].size <= MAX_FILE_SIZE,
+      'Image must not exceed 5MB'
+    )
+    .refine(
+      (files) =>
+        !files ||
+        files.length === 0 ||
+        ACCEPTED_IMAGE_TYPES.includes(files[0].type)
+    ),
+});
+
+export type CreatePostForm = z.infer<typeof createPostSchema>;
+export type UpdatePostForm = z.infer<typeof updatePostSchema>;
+export type PostFormValues = z.infer<typeof postSchema>;

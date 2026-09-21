@@ -9,7 +9,9 @@ describe('Pagination component', () => {
       <Pagination currentPage={1} totalPages={7} handleChangePage={() => {}} />
     );
 
-    expect(screen.getAllByRole('button', { name: /^[0-9]+$/ })).toHaveLength(7);
+    expect(
+      screen.getAllByRole('button', { name: /^Page [0-9]+$/ })
+    ).toHaveLength(7);
   });
 
   it("should properly handle prev and next buttons' state when current page is the first page", () => {
