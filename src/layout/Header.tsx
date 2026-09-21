@@ -112,6 +112,18 @@ export default function Header() {
             Home
           </NavLink>
 
+          {user?.role === 'ADMIN' && (
+            <NavLink
+              to={'/admin'}
+              tabIndex={!isOpen ? -1 : 0}
+              className={(state) =>
+                `${state.isActive ? 'text-accent' : 'text-muted-foreground'} border-b border-border p-1`
+              }
+            >
+              Admin
+            </NavLink>
+          )}
+
           {user ? (
             <Button intent={'secondary'} className="group" onClick={logout}>
               <LuLogOut className="text-xl text-muted-foreground cursor-pointer group-hover:text-primary transition-colors duration-200" />
