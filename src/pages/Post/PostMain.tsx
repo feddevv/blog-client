@@ -18,7 +18,7 @@ export default function PostMain({ isPending, post }: PostMainProps) {
     post && (
       <section className="max-w-270 w-full mx-auto px-4 py-16 flex-1">
         <p className="font-paragraph text-muted-foreground text-sm mb-8">
-          {`${formatDate(post.createdAt, 'N/A')}`} · 4 823 views
+          {`${formatDate(post.createdAt, 'N/A')}`}
         </p>
 
         <h2 className="font-heading text-primary text-[clamp(1.7rem,3vw,3rem)] font-bold mb-4">
