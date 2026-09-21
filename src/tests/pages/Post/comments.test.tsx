@@ -15,7 +15,7 @@ import {
   type PathParams,
 } from 'msw';
 import { blogApi } from '@/utils/utils';
-import type { GetCommentsResponse } from '@/types';
+import type { PaginatedResponse, Comment } from '@/types';
 
 describe('Comments section component', () => {
   beforeEach(() => {
@@ -177,7 +177,7 @@ describe('Comments section component', () => {
   describe('Pagination', () => {
     it('should properly render pagination and do navigation', async () => {
       server.use(
-        http.get<PathParams, DefaultBodyType, GetCommentsResponse>(
+        http.get<PathParams, DefaultBodyType, PaginatedResponse<Comment>>(
           blogApi('/api/posts/:id/comments'),
           async ({ request }) => {
             await delay(100);
