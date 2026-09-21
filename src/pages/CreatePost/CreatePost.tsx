@@ -1,7 +1,8 @@
 import PostForm from '@/components/PostForm';
 import { useCreatePost } from '@/hooks/usePosts';
 import { type UpdatePostForm } from '@/types/zod';
-import { useNavigate } from 'react-router';
+import { IoIosArrowBack } from 'react-icons/io';
+import { NavLink, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 export default function CreatePost() {
@@ -28,5 +29,18 @@ export default function CreatePost() {
     });
   };
 
-  return <PostForm onSubmit={onSubmit} isPending={isPending} />;
+  return (
+    <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 flex flex-col items-start">
+      <NavLink
+        to={'/admin'}
+        className={
+          'text-muted-foreground hover:text-foreground transition-colors duration-200 text-[clamp(14px,2vw,16px)] flex items-center gap-2 mb-8'
+        }
+      >
+        <IoIosArrowBack />
+        Dashboard
+      </NavLink>
+      <PostForm onSubmit={onSubmit} isPending={isPending} />
+    </div>
+  );
 }
